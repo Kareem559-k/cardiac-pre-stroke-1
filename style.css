@@ -1,1037 +1,1908 @@
-<!-- index.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="AI-synchronized ECG system for early stroke risk prediction in CAD patients." />
-  <meta name="theme-color" content="#070A12" />
-  <title>Cardiac Pre-Stroke</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-
-<body>
-  <!-- Skip link (Accessibility) -->
-  <a class="skip-link" href="#overview">Skip to content</a>
-
-  <!-- Ambient blobs -->
-  <div class="bg-blobs" aria-hidden="true">
-    <span class="blob b1"></span>
-    <span class="blob b2"></span>
-    <span class="blob b3"></span>
-  </div>
-
-  <!-- Scroll progress -->
-  <div class="scroll-progress" aria-hidden="true">
-    <div class="scroll-progress-bar" id="scrollProgressBar"></div>
-  </div>
-
-  <!-- ================= TOP NAV ================= -->
-  <header class="top-nav" id="topNav">
-    <div class="nav-inner">
-      <a class="brand" href="#top" aria-label="Go to top">
-        <span class="brand-dot"></span>
-        CARDIAC <span class="brand-accent">PRE-STROKE</span>
-      </a>
-
-      <nav class="nav-links" aria-label="Primary">
-        <a href="#top" class="nav-link">Home</a>
-        <a href="#problem" class="nav-link">Problem</a>
-        <a href="#background" class="nav-link">Background</a>
-        <a href="#methodology" class="nav-link">Methods</a>
-        <a href="#results" class="nav-link">Results</a>
-        <a href="#future-work" class="nav-link">Future</a>
-        <a href="#contact" class="nav-link">Contact</a>
-      </nav>
-
-      <!-- Mobile toggle -->
-      <button class="nav-toggle" id="navToggle" type="button" aria-label="Open menu" aria-expanded="false">
-        ☰
-      </button>
-    </div>
-
-    <!-- Mobile panel -->
-    <div class="nav-mobile" id="navMobile" aria-label="Mobile menu">
-      <a href="#top" class="nav-m">Home</a>
-      <a href="#problem" class="nav-m">Problem</a>
-      <a href="#background" class="nav-m">Background</a>
-      <a href="#goals" class="nav-m">Goals</a>
-      <a href="#methodology" class="nav-m">Methods</a>
-      <a href="#results" class="nav-m">Results</a>
-      <a href="#future-work" class="nav-m">Future</a>
-      <a href="#contact" class="nav-m">Contact</a>
-    </div>
-  </header>
-
-  <!-- ================= HERO ================= -->
-  <section class="hero reveal" id="top">
-    <div class="hero-content glass">
-      <!-- ECG -->
-      <div class="ecg-top" aria-hidden="true">
-        <svg class="ecg" viewBox="0 0 1200 200" preserveAspectRatio="none">
-          <path class="ecg-holo"
-            d="M0,120 L120,120 L150,120 L170,70 L190,160 L210,120 L260,120
-               L330,120 L360,120 L380,85 L395,150 L410,120 L480,120
-               L520,120
-               C535,75 575,75 600,100
-               C625,75 665,75 680,120
-               C690,155 660,175 600,185
-               C540,175 510,155 520,120
-               L720,120
-               L820,120 L850,120 L870,90 L885,150 L900,120 L980,120
-               L1200,120" />
-          <path class="ecg-path"
-            d="M0,120 L120,120 L150,120 L170,70 L190,160 L210,120 L260,120
-               L330,120 L360,120 L380,85 L395,150 L410,120 L480,120
-               L520,120
-               C535,75 575,75 600,100
-               C625,75 665,75 680,120
-               C690,155 660,175 600,185
-               C540,175 510,155 520,120
-               L720,120
-               L820,120 L850,120 L870,90 L885,150 L900,120 L980,120
-               L1200,120" />
-          <path class="ecg-scan"
-            d="M0,120 L120,120 L150,120 L170,70 L190,160 L210,120 L260,120
-               L330,120 L360,120 L380,85 L395,150 L410,120 L480,120
-               L520,120
-               C535,75 575,75 600,100
-               C625,75 665,75 680,120
-               C690,155 660,175 600,185
-               C540,175 510,155 520,120
-               L720,120
-               L820,120 L850,120 L870,90 L885,150 L900,120 L980,120
-               L1200,120" />
-        </svg>
-      </div>
-
-      <h1 class="glow-title">Cardiac Pre-Stroke</h1>
-      <a class="app-cta" href="https://download1324.mediafire.com/xpcuukyqdhrggiI1x6wdjrusCnQAyXUD1TR0xLs1v0pan53XyZzuB8zsO4QVhYm6gjWmClbbX9NjAGI9zfMjAPXPUuu84qvOvQP-5-b-4Rcx65cjRMpsYNE48Ck6DqIjuKIKcOWetmzgpEK4deXqpQzQy1b1y28Sjr1psBlGEWY6dDM/21dciomqcwmnfl7/app-release.apk" download>
-        <span class="app-cta-k">Get the App</span>
-        <span class="app-cta-sub">Android APK • 49 MB</span>
-      </a>
-
-      <p class="hero-sub">
-        AI‑powered ECG monitoring that flags early stroke/ischemic risk in CAD patients
-        before obvious symptoms appear.
-      </p>
-
-    </div>
-    <div class="hero-floor" aria-hidden="true"></div>
-  </section>
-
-  <!-- OVERVIEW -->
-  <section class="section reveal" id="overview">
-    <div class="section-inner">
-      <header class="sec-head">
-        <h2 class="sec-title">Overview</h2>
-        <p class="sec-sub">
-          From raw ECG signals to an early-warning risk signal — designed for continuous monitoring and clinical clarity.
-        </p>
-      </header>
-
-      <div class="glass-card grid-2">
-        <div class="copy">
-          <p class="glow-paragraph">
-            Cardiovascular diseases and stroke are among the leading causes of death worldwide, often occurring without early warning symptoms.
-            Subtle electrical micro-dynamic changes can precede critical events, yet remain invisible to standard short ECG snapshots.
-          </p>
-          <p class="glow-paragraph">
-            This project proposes an AI-synchronized ECG workflow that extracts micro-dynamics, learns latent risk patterns, and produces an interpretable risk score
-            for early preventive action — especially in CAD patients.
-          </p>
-        </div>
-
-        <div class="mini-pipeline">
-          <div class="mp-step">
-            <span class="mp-no">01</span>
-            <span class="mp-title">Acquire</span>
-            <span class="mp-desc">Wearable + verified datasets</span>
-          </div>
-          <div class="mp-step">
-            <span class="mp-no">02</span>
-            <span class="mp-title">Clean</span>
-            <span class="mp-desc">Filtering + normalization</span>
-          </div>
-          <div class="mp-step">
-            <span class="mp-no">03</span>
-            <span class="mp-title">Extract</span>
-            <span class="mp-desc">Micro-dynamic feature engine</span>
-          </div>
-          <div class="mp-step">
-            <span class="mp-no">04</span>
-            <span class="mp-title">Predict</span>
-            <span class="mp-desc">Risk probability + confidence</span>
-          </div>
-          <div class="mp-step">
-            <span class="mp-no">05</span>
-            <span class="mp-title">Monitor</span>
-            <span class="mp-desc">Continuous, clinician-ready view</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PROBLEM -->
-  <section class="section reveal" id="problem">
-    <div class="section-inner">
-      <header class="sec-head">
-        <h2 class="sec-title">Problem</h2>
-        <p class="sec-sub">
-          Cardiovascular disease is a leading cause of mortality — yet early metabolic-induced cardiac stress often goes undetected.
-          This diagnostic gap demands more sensitive, personalized screening.
-        </p>
-      </header>
-
-      <div class="problem-wrap glass">
-        <div class="problem-top">
-          <div class="problem-hero">
-            <div class="problem-badge">Clinical Gap</div>
-            <h3 class="problem-title">Early stress is silent — until it isn’t.</h3>
-            <p class="problem-lead">
-              Current ECG workflows detect abnormalities only after symptoms appear.
-              That creates a delay where micro-dynamic deterioration accumulates silently.
-            </p>
-            <div class="problem-metrics">
-              <div class="pm">
-                <span class="pm-k">Key risk</span>
-                <span class="pm-v">Subclinical progression</span>
-              </div>
-              <div class="pm">
-                <span class="pm-k">What’s missed</span>
-                <span class="pm-v">Micro-dynamic signals</span>
-              </div>
-              <div class="pm">
-                <span class="pm-k">Needed</span>
-                <span class="pm-v">Sensitive + personalized ECG</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="problem-side">
-            <div class="glass-card compact">
-              <div class="label">Core statement</div>
-              <p class="glow-paragraph" style="margin:0;">
-                “Urgent need for sensitive, personalized cardiac screening approaches” —
-                because early metabolic-induced stress can remain invisible to conventional standards.
-              </p>
-            </div>
-
-            <div class="sparkline" aria-hidden="true">
-              <div class="spark"></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="problem-grid">
-          <article class="p-card">
-            <h4>Urgency of Early Detection</h4>
-            <p>
-              Early cardiac stress is treatable if identified early, but many diagnostics fail to detect it before irreversible damage occurs.
-            </p>
-            <div class="p-foot"><span class="tag">Urgency</span><span class="tag">Prevention</span></div>
-          </article>
-
-          <article class="p-card">
-            <h4>Limits of Conventional Standards</h4>
-            <p>
-              Standard ECG detects abnormalities mainly after symptom onset, creating a significant diagnostic lag in real cases.
-            </p>
-            <div class="p-foot"><span class="tag">Static ECG</span><span class="tag">Lag</span></div>
-          </article>
-
-          <article class="p-card">
-            <h4>Unaddressed Bioenergetic Changes</h4>
-            <p>
-              Early disturbances in cardiac energy dynamics can precede events, but remain invisible to existing clinical tools.
-            </p>
-            <div class="p-foot"><span class="tag">Micro-dynamics</span><span class="tag">Hidden patterns</span></div>
-          </article>
-
-          <article class="p-card">
-            <h4>Portable & Personalized Gaps</h4>
-            <p>
-              Wearables suffer from motion noise and non-personalized thresholds, limiting accuracy across metabolically diverse populations.
-            </p>
-            <div class="p-foot"><span class="tag">Wearables</span><span class="tag">Personalization</span></div>
-          </article>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- BACKGROUND -->
-  <section class="section reveal" id="background">
-    <div class="section-inner">
-      <header class="sec-head">
-        <h2 class="sec-title">Background</h2>
-        <p class="sec-sub">
-          Why traditional analysis misses early risk — and what a personalized bioenergetic lens changes.
-        </p>
-      </header>
-
-      <div class="bg-layout">
-        <div class="bg-left glass-card">
-          <h3 class="bg-big">The Gap</h3>
-          <p class="glow-paragraph">
-            Conventional ECG often relies on population-wide thresholds without individual metabolic context.
-            That creates blind spots where early stress signals are treated as noise.
-          </p>
-
-          <div class="bg-pills">
-            <span class="pill neon">Calibration & Validation</span>
-            <span class="pill">Static Thresholds</span>
-            <span class="pill">Diagnostic Lag</span>
-            <span class="pill">Kinetic Interference</span>
-            <span class="pill">Morphological Reliance</span>
-            <span class="pill neon">Personalization Gap (η-factor)</span>
-          </div>
-
-          <div class="bg-quote glass">
-            <div class="q-mark">“</div>
-            <div class="q-body">
-              Adaptive monitoring is needed to detect silent ischemia earlier — especially under real-world motion and metabolic diversity.
-            </div>
-          </div>
-        </div>
-
-        <div class="bg-right">
-          <div class="flow glass">
-            <div class="flow-head">
-              <div class="flow-title">Research Foundation</div>
-              <div class="flow-sub">From limitations → to solutions</div>
-            </div>
-
-            <div class="flow-steps">
-              <div class="fstep">
-                <div class="ficon">⚙️</div>
-                <div class="fcopy">
-                  <div class="ft">Calibration & Validation</div>
-                  <div class="fd">Reduce false positives and improve stability across diverse profiles.</div>
-                </div>
-              </div>
-
-              <div class="fstep">
-                <div class="ficon">🧬</div>
-                <div class="fcopy">
-                  <div class="ft">Personalization Gap (η-factor)</div>
-                  <div class="fd">Adjust sensitivity using metabolic profiles to avoid “one-size-fits-all”.</div>
-                </div>
-              </div>
-
-              <div class="fstep">
-                <div class="ficon">🏃</div>
-                <div class="fcopy">
-                  <div class="ft">Kinetic Interference</div>
-                  <div class="fd">Motion-aware filtering to preserve signal integrity during movement.</div>
-                </div>
-              </div>
-
-              <div class="fstep">
-                <div class="ficon">🧠</div>
-                <div class="fcopy">
-                  <div class="ft">Morphological Reliance</div>
-                  <div class="fd">Go beyond shapes: detect silent ischemia at micro-metabolic level.</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="foundation glass-card">
-              <div class="foundation-title">Impact</div>
-              <div class="foundation-grid">
-                <div class="fi">
-                  <div class="fi-no">1</div>
-                  <div class="fi-body">
-                    <div class="fi-t">Precision Risk Stratification</div>
-                    <div class="fi-d">Adaptive zoning from micro-dynamic energy patterns.</div>
-                  </div>
-                </div>
-                <div class="fi">
-                  <div class="fi-no">2</div>
-                  <div class="fi-body">
-                    <div class="fi-t">Reduced Blind Spots</div>
-                    <div class="fi-d">Better detection for metabolically vulnerable patients.</div>
-                  </div>
-                </div>
-                <div class="fi">
-                  <div class="fi-no">3</div>
-                  <div class="fi-body">
-                    <div class="fi-t">Robust Continuous Monitoring</div>
-                    <div class="fi-d">Reliable metrics during real-life activity.</div>
-                  </div>
-                </div>
-                <div class="fi">
-                  <div class="fi-no">4</div>
-                  <div class="fi-body">
-                    <div class="fi-t">Early Intervention Window</div>
-                    <div class="fi-d">Predictive lead time before irreversible damage.</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- GOALS -->
-  <section class="section reveal" id="goals">
-    <div class="section-inner">
-      <header class="sec-head">
-        <h2 class="sec-title">Goals</h2>
-        <p class="sec-sub">Key objectives guiding the system design and deployment direction.</p>
-      </header>
-
-      <div class="goals-grid">
-        <article class="goal-card glass">
-          <h3 class="goal-title">Early Risk Prediction</h3>
-          <p class="goal-text">Detect micro-dynamic ECG changes before obvious symptoms to enable early intervention.</p>
-        </article>
-
-        <article class="goal-card glass">
-          <h3 class="goal-title">Continuous Monitoring</h3>
-          <p class="goal-text">Support long-session monitoring using wearable acquisition and automated AI analysis.</p>
-        </article>
-
-        <article class="goal-card glass">
-          <h3 class="goal-title">Clinical Reliability</h3>
-          <p class="goal-text">Maintain high sensitivity for high-risk cases with stable specificity to reduce false alarms.</p>
-        </article>
-
-        <article class="goal-card glass">
-          <h3 class="goal-title">Scalable Deployment</h3>
-          <p class="goal-text">Enable integration into mobile apps and clinician dashboards for real-world usability.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- METHODOLOGY -->
-  <section class="section reveal" id="methodology">
-    <div class="section-inner">
-      <header class="sec-head">
-        <h2 class="sec-title">Methodology</h2>
-        <p class="sec-sub">
-          A research-style pipeline: workflow, AI processing, hardware, and decision-making — organized for instant clarity.
-        </p>
-      </header>
-
-      <div class="method-grid">
-
-        <section class="mblock glass">
-          <div class="mhead">
-            <h3 class="mtitle">System Workflow</h3>
-            <span class="mpill">End-to-end</span>
-          </div>
-
-          <div class="workflow">
-            <div class="wstep"><span class="wno">1</span><span class="wlabel">Data Acquisition</span></div>
-            <div class="wline"></div>
-            <div class="wstep"><span class="wno">2</span><span class="wlabel">Signal Preparation</span></div>
-            <div class="wline"></div>
-            <div class="wstep"><span class="wno">3</span><span class="wlabel">Lead Reconstruction</span></div>
-            <div class="wline"></div>
-            <div class="wstep"><span class="wno">4</span><span class="wlabel">Risk Analysis</span></div>
-            <div class="wline"></div>
-            <div class="wstep"><span class="wno">5</span><span class="wlabel">Clinical Output</span></div>
-          </div>
-
-          <div class="wf-cards">
-            <article class="wf glass-card">
-              <h4>Acquisition</h4>
-              <ul>
-                <li>Wearable ECG acquisition (real-time).</li>
-                <li>Verified clinical + public datasets.</li>
-                <li>Normal + abnormal patterns.</li>
-              </ul>
-            </article>
-            <article class="wf glass-card">
-              <h4>Preparation</h4>
-              <ul>
-                <li>Noise removal & baseline correction.</li>
-                <li>Normalization for stable scaling.</li>
-                <li>Segmentation into fixed windows.</li>
-              </ul>
-            </article>
-            <article class="wf glass-card">
-              <h4>Reconstruction</h4>
-              <ul>
-                <li>Single-lead ECG as primary input.</li>
-                <li>AI-based virtual lead reconstruction.</li>
-                <li>Stability under motion.</li>
-              </ul>
-            </article>
-            <article class="wf glass-card">
-              <h4>Risk Analysis</h4>
-              <ul>
-                <li>Micro-dynamic feature extraction.</li>
-                <li>Model predicts risk probability.</li>
-                <li>Confidence-aware output.</li>
-              </ul>
-            </article>
-          </div>
-        </section>
-
-        <section class="mblock glass">
-          <div class="mhead">
-            <h3 class="mtitle">AI Processing Pipeline</h3>
-            <span class="mpill neon">Micro-Dynamics</span>
-          </div>
-
-          <div class="pipe2">
-            <div class="node glass-card">
-              <div class="node-k">Dataset</div>
-              <div class="node-v">PTB-XL ECG</div>
-              <div class="node-s">+ real recordings</div>
-            </div>
-
-            <div class="arrow2">➜</div>
-
-            <div class="node glass-card">
-              <div class="node-k">Preprocess</div>
-              <div class="node-v">Filter / Normalize</div>
-              <div class="node-s">motion-aware</div>
-            </div>
-
-            <div class="arrow2">➜</div>
-
-            <div class="node glass-card">
-              <div class="node-k">Features</div>
-              <div class="node-v">Micro-dynamics</div>
-              <div class="node-s">energy & variability</div>
-            </div>
-
-            <div class="arrow2">➜</div>
-
-            <div class="node glass-card">
-              <div class="node-k">Model</div>
-              <div class="node-v">Ensemble</div>
-              <div class="node-s">robust classification</div>
-            </div>
-
-            <div class="arrow2">➜</div>
-
-            <div class="node glass-card">
-              <div class="node-k">Decision</div>
-              <div class="node-v">Risk Score</div>
-              <div class="node-s">alerts + report</div>
-            </div>
-          </div>
-        </section>
-
-        <section class="mblock glass">
-          <div class="mhead">
-            <h3 class="mtitle">Hardware System</h3>
-            <span class="mpill">Wearable</span>
-          </div>
-
-          <div class="hw-grid">
-            <div class="hw glass-card">
-              <div class="hw-t">Device Design</div>
-              <div class="hw-d">Wearable vest designed for continuous monitoring.</div>
-              <div class="hw-tags">
-                <span class="tag">Comfort</span><span class="tag">Non-invasive</span><span class="tag">Long-session</span>
-              </div>
-            </div>
-            <div class="hw glass-card">
-              <div class="hw-t">Components</div>
-              <div class="hw-d">Single-lead electrodes, integrated sensors, stable coil routing.</div>
-              <div class="hw-tags">
-                <span class="tag">ECG</span><span class="tag">Sensors</span><span class="tag">Integrity</span>
-              </div>
-            </div>
-            <div class="hw glass-card">
-              <div class="hw-t">Mobile App</div>
-              <div class="hw-d">Wireless transmission + real-time ECG visualization & analysis.</div>
-              <div class="hw-tags">
-                <span class="tag">Realtime</span><span class="tag">Dashboard</span><span class="tag">Reports</span>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section class="mblock glass">
-          <div class="mhead">
-            <h3 class="mtitle">AI Inference & Decision Making</h3>
-            <span class="mpill neon">Clinical-ready</span>
-          </div>
-
-          <div class="infer-grid">
-            <div class="infer glass-card">
-              <div class="infer-k">Input</div>
-              <div class="infer-v">ECG windows</div>
-              <div class="infer-d">Standardized segments to preserve micro-dynamics.</div>
-            </div>
-            <div class="infer glass-card">
-              <div class="infer-k">Core engine</div>
-              <div class="infer-v">Feature → Model</div>
-              <div class="infer-d">Micro-dynamic extraction + robust classifier.</div>
-            </div>
-            <div class="infer glass-card">
-              <div class="infer-k">Output</div>
-              <div class="infer-v">Risk + Confidence</div>
-              <div class="infer-d">Probability score with clinical-friendly explanation.</div>
-            </div>
-          </div>
-        </section>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- RESULTS -->
-  <section class="section reveal" id="results">
-    <div class="section-inner results-wrap">
-
-      <header class="results-head">
-        <div class="results-head-text">
-          <h2 class="sec-title">Results</h2>
-          <p class="sec-sub results-sub">
-            Clinically-styled dashboard: performance, reliability, and curves — designed for instant trust.
-          </p>
-        </div>
-
-        <div class="results-badge glass">
-          <span class="rb-label">Final Model</span>
-          <span class="rb-value">V14</span>
-          <span class="rb-note">Micro-Dynamic Features</span>
-        </div>
-      </header>
-
-      <!-- KPI Strip -->
-      <div class="kpi-strip" role="list">
-        <div class="kpi-card glass" role="listitem">
-          <div class="kpi-top">
-            <span class="kpi-label">Overall Accuracy</span>
-            <span class="kpi-value"><span class="countup" data-to="95.4">0</span>%</span>
-          </div>
-          <div class="kpi-bar"><div class="kpi-fill" data-fill="95.4"></div></div>
-          <div class="kpi-note">Stable across classes.</div>
-        </div>
-
-        <div class="kpi-card glass" role="listitem">
-          <div class="kpi-top">
-            <span class="kpi-label">Precision</span>
-            <span class="kpi-value"><span class="countup" data-to="94.8">0</span>%</span>
-          </div>
-          <div class="kpi-bar"><div class="kpi-fill" data-fill="94.8"></div></div>
-          <div class="kpi-note">Low false positives.</div>
-        </div>
-
-        <div class="kpi-card glass" role="listitem">
-          <div class="kpi-top">
-            <span class="kpi-label">Recall (Sensitivity)</span>
-            <span class="kpi-value"><span class="countup" data-to="96.1">0</span>%</span>
-          </div>
-          <div class="kpi-bar"><div class="kpi-fill" data-fill="96.1"></div></div>
-          <div class="kpi-note">High-risk rarely missed.</div>
-        </div>
-
-        <div class="kpi-card glass" role="listitem">
-          <div class="kpi-top">
-            <span class="kpi-label">AUC</span>
-            <span class="kpi-value"><span class="countup" data-to="98.0">0</span>%</span>
-          </div>
-          <div class="kpi-bar"><div class="kpi-fill" data-fill="98.0"></div></div>
-          <div class="kpi-note">Strong separability.</div>
-        </div>
-      </div>
-
-      <div class="results-top">
-
-        <aside class="results-panel glass results-panel--tight">
-          <div class="panel-head">
-            <h3 class="panel-title">Key Outcome</h3>
-            <span class="panel-pill">Clinical Impact</span>
-          </div>
-
-          <p class="panel-text">
-            Micro-dynamic ECG analysis combined with AI enables earlier detection of silent ischemia and pre-stroke risk —
-            with high reliability under real-world conditions.
-          </p>
-
-          <div class="mini-metrics">
-            <div class="mini">
-              <span class="mini-k">Specificity</span>
-              <span class="mini-v">94.3%</span>
-            </div>
-            <div class="mini">
-              <span class="mini-k">Sensitivity</span>
-              <span class="mini-v">96.1%</span>
-            </div>
-            <div class="mini">
-              <span class="mini-k">MCC</span>
-              <span class="mini-v">0.92</span>
-            </div>
-          </div>
-        </aside>
-
-        <aside class="results-panel glass">
-          <div class="panel-head">
-            <h3 class="panel-title">Class-wise Reliability</h3>
-            <span class="panel-pill">Balanced</span>
-          </div>
-
-          <div class="table-shell">
-            <table class="data-table">
-              <thead>
-                <tr>
-                  <th>Class</th>
-                  <th>Precision</th>
-                  <th>Recall</th>
-                  <th>F1-Score</th>
-                  <th>Support</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Normal (Healthy)</td>
-                  <td>0.94</td>
-                  <td>0.93</td>
-                  <td>0.94</td>
-                  <td>2249</td>
-                </tr>
-                <tr>
-                  <td>Abnormal (Stroke Risk)</td>
-                  <td>0.95</td>
-                  <td>0.96</td>
-                  <td>0.96</td>
-                  <td>6451</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <div class="panel-foot">
-            High recall for abnormal cases ensures high-risk patients are rarely missed.
-          </div>
-        </aside>
-
-      </div>
-
-      <!-- CHARTS -->
-      <section class="results-charts">
-        <div class="fig-grid">
-
-          <article class="fig-card glass">
-            <div class="fig-head">
-              <h3 class="fig-title">Model Evolution (V12 → V14)</h3>
-              <div class="fig-pill">Accuracy / Sensitivity / Specificity</div>
-            </div>
-            <div class="chart-shell">
-              <canvas class="chart" id="chartVersions"></canvas>
-            </div>
-
-            <details class="fig-details">
-              <summary>Show table</summary>
-              <div class="table-shell">
-                <table class="data-table">
-                  <thead>
-                    <tr>
-                      <th>Version</th>
-                      <th>Accuracy (%)</th>
-                      <th>Sensitivity (%)</th>
-                      <th>Specificity (%)</th>
-                      <th>Key Feature</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>V12 (Baseline)</td>
-                      <td>86.2</td>
-                      <td>84.0</td>
-                      <td>88.1</td>
-                      <td>Basic ML</td>
-                    </tr>
-                    <tr>
-                      <td>V13 (Optimized)</td>
-                      <td>91.2</td>
-                      <td>90.4</td>
-                      <td>91.8</td>
-                      <td>Tuned Ensemble</td>
-                    </tr>
-                    <tr>
-                      <td>V14 (Final)</td>
-                      <td>95.4</td>
-                      <td>96.1</td>
-                      <td>94.3</td>
-                      <td>Micro-Dynamic Features + calibration</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </details>
-          </article>
-
-          <article class="fig-card glass">
-            <div class="fig-head">
-              <h3 class="fig-title">Confusion Matrix</h3>
-              <div class="fig-pill">Normal vs Abnormal</div>
-            </div>
-            <div class="chart-shell chart-shell--matrix">
-              <canvas class="chart" id="chartConfusion"></canvas>
-            </div>
-            <div class="fig-foot">Clear separation between normal and high-risk ECG patterns.</div>
-          </article>
-
-          <article class="fig-card glass">
-            <div class="fig-head">
-              <h3 class="fig-title">Learning Curve</h3>
-              <div class="fig-pill">Scale & stability</div>
-            </div>
-            <div class="chart-shell">
-              <canvas class="chart" id="chartLearning"></canvas>
-            </div>
-            <div class="fig-foot">Performance improves with increased training data (0 → ~87K windows).</div>
-          </article>
-
-          <article class="fig-card glass">
-            <div class="fig-head">
-              <h3 class="fig-title">ROC Curve</h3>
-              <div class="fig-pill">AUC ≈ 0.98</div>
-            </div>
-            <div class="chart-shell">
-              <canvas class="chart" id="chartROC"></canvas>
-            </div>
-            <div class="fig-foot">High AUC indicates robust generalization and clinical reliability.</div>
-          </article>
-
-        </div>
-      </section>
-
-    </div>
-  </section>
-
-  <div id="chartTip" class="chart-tip" role="status" aria-live="polite"></div>
-
-  <!-- FUTURE WORK -->
-  <section class="section reveal" id="future-work">
-    <div class="section-inner">
-      <header class="sec-head">
-        <h2 class="sec-title">Future Work</h2>
-        <p class="sec-sub">Roadmap items exactly aligned with the research direction.</p>
-      </header>
-
-      <div class="future-grid future-grid--6">
-
-        <article class="future-card glass">
-          <div class="future-head">
-            <div class="future-icon">🧪</div>
-            <h3 class="future-title">Statistical Calibration</h3>
-            <span class="future-no">01</span>
-          </div>
-          <p class="future-text">
-            Refining model calibration to reduce false positives and ensure stable performance across diverse patient profiles.
-            This aims to improve reliability under varying physiological and signal-quality conditions.
-          </p>
-        </article>
-
-        <article class="future-card glass">
-          <div class="future-head">
-            <div class="future-icon">🏥</div>
-            <h3 class="future-title">Clinical Scaling</h3>
-            <span class="future-no">02</span>
-          </div>
-          <p class="future-text">
-            Expanding from pilot studies to multi-center clinical validation using larger verified ECG datasets.
-            This strengthens clinical credibility and supports broader adoption.
-          </p>
-        </article>
-
-        <article class="future-card glass">
-          <div class="future-head">
-            <div class="future-icon">🦺</div>
-            <h3 class="future-title">Smart Vest</h3>
-            <span class="future-no">03</span>
-          </div>
-          <p class="future-text">
-            Transitioning the current system into a medical-grade smart vest with enhanced signal integrity during motion.
-            Future designs focus on comfort, safety, and continuous real-world usability.
-          </p>
-        </article>
-
-        <article class="future-card glass">
-          <div class="future-head">
-            <div class="future-icon">📡</div>
-            <h3 class="future-title">Electromagnetic Sensing</h3>
-            <span class="future-no">04</span>
-          </div>
-          <p class="future-text">
-            Exploring low-frequency electromagnetic sensing to detect subtle myocardial bio-impedance changes beyond surface ECG.
-            This may enable non-contact detection of early cardiac stress not visible in conventional signals.
-          </p>
-        </article>
-
-        <article class="future-card glass">
-          <div class="future-head">
-            <div class="future-icon">🧭</div>
-            <h3 class="future-title">Dynamic Remapping</h3>
-            <span class="future-no">05</span>
-          </div>
-          <p class="future-text">
-            Developing adaptive electrical heart mapping that updates reference patterns based on real-time energy redistribution.
-            This could reveal transient abnormalities masked by static cardiac models.
-          </p>
-        </article>
-
-        <article class="future-card glass">
-          <div class="future-head">
-            <div class="future-icon">🧩</div>
-            <h3 class="future-title">Energy Fingerprinting</h3>
-            <span class="future-no">06</span>
-          </div>
-          <p class="future-text">
-            Defining a unique cardiac energy signature for each individual to identify early pathological changes
-            despite normal ECG morphology. Enables personalized long-term monitoring beyond waveform analysis.
-          </p>
-        </article>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= CONTACT TEAM (same content, new look) ================= -->
-  <section class="section contact-section reveal" id="contact">
-    <div class="section-inner">
-
-      <header class="contact-head">
-        <h2 class="contact-title">Contact Team</h2>
-        <p class="contact-sub">
-          Reach out for collaboration, questions, or project details.
-        </p>
-      </header>
-
-      <!-- Contact form (on-page) -->
-      <div class="contact-form glass">
-        <div class="cf-head">
-          <h3 class="cf-title">Send a Message</h3>
-          <p class="cf-sub">Write your message here. It will be sent directly from the website.</p>
-        </div>
-
-        <form class="cf-grid" id="contactForm"
-              action="https://formsubmit.co/kareem.2124071@stemobour.moe.edu.eg"
-              method="POST" autocomplete="on">
-          <input type="hidden" name="_cc" value="zeyad.2124067@stemobour.moe.edu.eg" />
-          <input type="hidden" name="_subject" value="Cardiac Pre-Stroke Project" />
-          <input type="hidden" name="_captcha" value="false" />
-          <input type="hidden" name="_template" value="table" />
-          <input type="text" name="_honey" class="cf-honey" tabindex="-1" autocomplete="off" />
-          <input type="hidden" name="_next" id="contactNext" value="" />
-
-          <label class="cf-field">
-            <span class="cf-label">Your Name</span>
-            <input type="text" name="name" placeholder="Full name" required />
-          </label>
-
-          <label class="cf-field">
-            <span class="cf-label">Your Email</span>
-            <input type="email" name="email" placeholder="you@example.com" required />
-          </label>
-
-          <div class="cf-field">
-            <span class="cf-label">Recipients</span>
-            <div class="cf-static">Kareem + Zeyad</div>
-          </div>
-
-          <label class="cf-field cf-field--full">
-            <span class="cf-label">Message</span>
-            <textarea name="message" rows="5" placeholder="Write your message..." required></textarea>
-          </label>
-
-          <button class="cf-send" type="submit">Send Email</button>
-        </form>
-
-        <div class="cf-success" id="cfSuccess" role="status" aria-live="polite">
-          Your message was sent successfully. We will reply soon.
-        </div>
-
-        <div class="cf-note">
-          Tip: First submit will ask Kareem to confirm the FormSubmit email.
-        </div>
-      </div>
-
-      <div class="contact-grid">
-
-        <!-- Kareem -->
-        <article class="contact-block glass">
-          <div class="cb-top">
-            <div class="cb-avatar">K</div>
-            <div class="cb-id">
-              <h3 class="cb-name">Kareem Ismail</h3>
-              <p class="cb-role">AI Engineer</p>
-            </div>
-            <span class="cb-tag">Core</span>
-          </div>
-
-          <div class="cb-actions">
-            <a class="cb-mail"
-               href="mailto:kareem.2124071@stemobour.moe.edu.eg-subject=Cardiac%20Pre-Stroke%20Project&body=Hello%20Kareem,%0D%0A%0D%0A"
-               target="_blank" rel="noopener">
-              kareem.2124071@stemobour.moe.edu.eg
-            </a>
-
-            <a class="cb-btn"
-               href="mailto:kareem.2124071@stemobour.moe.edu.eg-subject=Cardiac%20Pre-Stroke%20Project&body=Hello%20Kareem,%0D%0A%0D%0A"
-               target="_blank" rel="noopener">
-              Send Email
-            </a>
-          </div>
-        </article>
-
-        <!-- Zeyad -->
-        <article class="contact-block glass">
-          <div class="cb-top">
-            <div class="cb-avatar">Z</div>
-            <div class="cb-id">
-              <h3 class="cb-name">Zeyad Ayman</h3>
-              <p class="cb-role">Research</p>
-            </div>
-            <span class="cb-tag">Research</span>
-          </div>
-
-          <div class="cb-actions">
-            <a class="cb-mail"
-               href="mailto:zeyad.2124067@stemobour.moe.edu.eg-subject=Cardiac%20Pre-Stroke%20Project&body=Hello%20Zeyad,%0D%0A%0D%0A"
-               target="_blank" rel="noopener">
-              zeyad.2124067@stemobour.moe.edu.eg
-            </a>
-
-            <a class="cb-btn"
-               href="mailto:zeyad.2124067@stemobour.moe.edu.eg-subject=Cardiac%20Pre-Stroke%20Project&body=Hello%20Zeyad,%0D%0A%0D%0A"
-               target="_blank" rel="noopener">
-              Send Email
-            </a>
-          </div>
-        </article>
-
-      </div>
-
-      <div class="contact-foot glass">
-        <span class="contact-hint">Tip:</span>
-        Clicking the email will open your mail app with a ready message.
-      </div>
-
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="site-footer">
-    <div class="footer-inner">
-      <div class="footer-left">
-        <span class="footer-title">Cardiac Pre-Stroke</span>
-        <span class="footer-dot">•</span>
-        <span class="footer-note">ECG Micro-Dynamics + AI Prediction</span>
-      </div>
-      <a class="footer-link" href="#top">Back to top</a>
-    </div>
-  </footer>
-
-  <!-- Back to Top -->
-  <button class="back-top" id="backTop" type="button" aria-label="Back to top">↑</button>
-
-  <script src="script.js"></script>
-</body>
-</html>
+/* style.css */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap');
+
+:root{
+  /* Refined clinical theme */
+  --bg0: #0A0F16;
+  --bg1: #101A26;
+  --glass: rgba(255,255,255,0.06);
+  --glass2: rgba(255,255,255,0.10);
+  --stroke: rgba(255,255,255,0.10);
+  --stroke2: rgba(255,255,255,0.18);
+
+  --text: rgba(245,247,255,0.92);
+  --muted: rgba(245,247,255,0.72);
+
+  --neon: #42D4C5;
+  --neon2: #78A8FF;
+  --neon3: #6BE6B0;
+  --neon-rgb: 66,212,197;
+  --neon2-rgb: 120,168,255;
+  --neon3-rgb: 107,230,176;
+
+  --shadow: 0 24px 60px rgba(0,0,0,0.45);
+  --shadow2: 0 16px 44px rgba(0,0,0,0.35);
+  --shadow-strong: 0 30px 90px rgba(0,0,0,0.55);
+
+  --navH: 74px;
+  --r-xl: 26px;
+  --r-lg: 20px;
+  --r-md: 16px;
+  --page-max: 1120px;
+
+  --ease: cubic-bezier(.2,.8,.2,1);
+}
+
+*{
+  margin:0; padding:0; box-sizing:border-box;
+  font-family: "Space Grotesk", "Segoe UI", Arial, sans-serif;
+}
+html{ scroll-behavior:smooth; }
+body{
+  background:
+    radial-gradient(900px 600px at 15% -10%, rgba(var(--neon2-rgb),0.14), transparent 60%),
+    radial-gradient(700px 460px at 85% 10%, rgba(var(--neon-rgb),0.12), transparent 55%),
+    radial-gradient(900px 520px at 50% 120%, rgba(var(--neon3-rgb),0.10), transparent 55%),
+    linear-gradient(180deg, var(--bg0), var(--bg1));
+  color: var(--text);
+  padding-top: var(--navH);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+body::before{
+  content:"";
+  position: fixed;
+  inset:0;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255,255,255,0.04), transparent 45%),
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.02) 0 1px, transparent 1px 90px),
+    repeating-linear-gradient(0deg, rgba(255,255,255,0.015) 0 1px, transparent 1px 90px);
+  opacity:.25;
+  z-index:0;
+}
+body::after{
+  content:"";
+  position: fixed;
+  inset:-20%;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 15% 25%, rgba(var(--neon2-rgb),0.10), transparent 55%),
+    radial-gradient(circle at 85% 70%, rgba(var(--neon-rgb),0.08), transparent 55%);
+  animation: none;
+  opacity:.7;
+  z-index:0;
+}
+
+/* ---------- Global Glass ---------- */
+.glass{
+  background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.04));
+  border: 1px solid var(--stroke);
+  backdrop-filter: blur(14px) saturate(120%);
+  box-shadow: var(--shadow2);
+}
+.glass{
+  transition: border-color .25s var(--ease), box-shadow .25s var(--ease), transform .25s var(--ease);
+}
+.glass:hover{
+  border-color: rgba(var(--neon-rgb),0.18);
+  box-shadow: var(--shadow);
+}
+.glass-card{
+  border-radius: var(--r-lg);
+  background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.04));
+  border: 1px solid var(--stroke);
+  backdrop-filter: blur(14px) saturate(120%);
+  box-shadow: var(--shadow2);
+}
+.glass-card:hover{
+  border-color: rgba(var(--neon-rgb),0.18);
+  box-shadow: var(--shadow);
+}
+.compact{ padding: 16px; }
+
+/* ---------- Ambient blobs ---------- */
+.bg-blobs{ position: fixed; inset:0; pointer-events:none; z-index:0; opacity:0.95; }
+.blob{ position:absolute; filter: blur(45px); border-radius: 999px; mix-blend-mode: screen; }
+.b1{
+  width: 520px; height: 520px; left:-180px; top:-140px;
+  background: radial-gradient(circle, rgba(var(--neon2-rgb),0.55), transparent 60%);
+  animation: none;
+}
+.b2{
+  width: 520px; height: 520px; right:-180px; top:-90px;
+  background: radial-gradient(circle, rgba(var(--neon-rgb),0.50), transparent 60%);
+  animation: none;
+}
+.b3{
+  width: 560px; height: 560px; left:20%; bottom:-220px;
+  background: radial-gradient(circle, rgba(var(--neon3-rgb),0.45), transparent 60%);
+  animation: none;
+}
+@keyframes blob1{ 0%,100%{ transform: translate(0,0) scale(1);} 50%{ transform: translate(40px, 60px) scale(1.08);} }
+@keyframes blob2{ 0%,100%{ transform: translate(0,0) scale(1);} 50%{ transform: translate(-60px, 40px) scale(1.08);} }
+@keyframes blob3{ 0%,100%{ transform: translate(0,0) scale(1);} 50%{ transform: translate(70px,-40px) scale(1.06);} }
+
+/* ---------- Accessibility ---------- */
+.skip-link{
+  position:absolute; left:12px; top:10px; transform: translateY(-180%);
+  padding:10px 12px; border-radius: 12px;
+  background: rgba(10,16,34,0.95);
+  border: 1px solid rgba(var(--neon-rgb),0.22);
+  color: var(--text); text-decoration:none; font-weight: 900;
+  z-index: 999999;
+}
+.skip-link:focus{
+  transform: translateY(0);
+  outline:none;
+  box-shadow: 0 0 0 2px rgba(var(--neon-rgb),0.25), 0 0 0 6px rgba(var(--neon2-rgb),0.14);
+}
+
+/* ---------- Scroll progress ---------- */
+.scroll-progress{
+  position: fixed; top: var(--navH); left:0; right:0; height: 4px;
+  z-index: 99998;
+  background: rgba(255,255,255,0.06);
+}
+.scroll-progress-bar{
+  height:100%; width:0%;
+  background: linear-gradient(90deg, rgba(var(--neon2-rgb),0.45), rgba(var(--neon-rgb),0.95), rgba(var(--neon3-rgb),0.70));
+  box-shadow: 0 0 18px rgba(var(--neon-rgb),0.22);
+}
+
+/* make scroll stop under fixed nav */
+section{ scroll-margin-top: calc(var(--navH) + 16px); }
+#top{ scroll-margin-top: calc(var(--navH) + 16px); }
+
+/* ---------- Top nav ---------- */
+.top-nav{
+  position: fixed; top:0; left:0; right:0; z-index:99999;
+  background: rgba(7,10,18,0.45);
+  border-bottom: 1px solid rgba(255,255,255,0.10);
+  backdrop-filter: blur(12px);
+}
+.top-nav::after{
+  content:"";
+  position:absolute;
+  left:0; right:0; bottom:-1px;
+  height:2px;
+  background: linear-gradient(90deg, transparent, rgba(var(--neon-rgb),0.55), rgba(var(--neon2-rgb),0.55), transparent);
+  opacity:.6;
+  animation: navPulse 3.2s var(--ease) infinite;
+}
+.nav-inner{
+  height: var(--navH);
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 0 18px;
+  display:flex; align-items:center; justify-content:space-between; gap:16px;
+}
+.brand{
+  display:flex; align-items:center; gap:10px;
+  color: var(--text);
+  font-weight: 950;
+  letter-spacing: .8px;
+  text-decoration:none;
+  font-size: 1.15rem;
+  white-space: nowrap;
+}
+.brand-dot{
+  width: 10px; height:10px; border-radius: 999px;
+  background: radial-gradient(circle, var(--neon), rgba(var(--neon-rgb),0.12));
+  box-shadow: 0 0 18px rgba(var(--neon-rgb),0.55), 0 0 26px rgba(var(--neon2-rgb),0.18);
+}
+.brand-accent{
+  color: rgba(var(--neon-rgb),0.95);
+  text-shadow: 0 0 18px rgba(var(--neon-rgb),0.25);
+}
+
+.nav-links{ display:flex; align-items:center; gap:22px; }
+.nav-link{
+  color: rgba(245,247,255,0.86);
+  text-decoration:none;
+  font-weight: 850;
+  padding: 10px 2px;
+  position: relative;
+  transition: transform .2s var(--ease), opacity .2s var(--ease);
+  opacity: .95;
+}
+.nav-link:hover{ opacity: 1; transform: translateY(-1px); }
+.nav-link::after{
+  content:""; position:absolute; left:0; right:0; bottom:2px;
+  height: 2px; border-radius:999px;
+  width: 0%;
+  background: linear-gradient(90deg, rgba(var(--neon2-rgb),0.6), rgba(var(--neon-rgb),0.95));
+  transition: width .25s var(--ease);
+}
+.nav-link:hover::after{ width:100%; }
+.nav-link.active{ color:#fff; }
+.nav-link.active::after{ width:100%; }
+
+.nav-toggle{
+  display:none;
+  width:44px; height:44px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.06);
+  color: rgba(245,247,255,0.92);
+  font-weight: 950;
+  cursor:pointer;
+}
+.nav-toggle:focus-visible{
+  outline:none;
+  box-shadow: 0 0 0 2px rgba(var(--neon-rgb),0.25), 0 0 0 6px rgba(var(--neon2-rgb),0.14);
+}
+.nav-mobile{
+  display:none;
+  padding: 10px 18px 16px;
+  border-top: 1px solid rgba(255,255,255,0.10);
+  background: rgba(7,10,18,0.35);
+  backdrop-filter: blur(12px);
+}
+.nav-mobile .nav-m{
+  display:block;
+  padding:10px 12px;
+  border-radius: 14px;
+  text-decoration:none;
+  color: rgba(245,247,255,0.90);
+  font-weight: 900;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.10);
+  margin-top: 10px;
+  transition: transform .2s var(--ease), border-color .2s var(--ease);
+}
+.nav-mobile .nav-m:hover{ transform: translateY(-1px); border-color: rgba(var(--neon-rgb),0.22); }
+.nav-mobile .nav-m:focus-visible{
+  outline:none;
+  box-shadow: 0 0 0 2px rgba(var(--neon-rgb),0.25), 0 0 0 6px rgba(var(--neon2-rgb),0.14);
+}
+@media (max-width: 950px){
+  .nav-links{ display:none; }
+  .nav-toggle{ display:inline-grid; place-items:center; }
+  .nav-mobile.open{ display:block; }
+}
+
+/* ---------- Hero ---------- */
+.hero{
+  min-height: 96vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding: 28px 18px;
+  position: relative;
+  z-index: 1;
+}
+.hero::before{
+  content:"";
+  position:absolute; inset:-2px;
+  background:
+    radial-gradient(circle at 20% 10%, rgba(var(--neon-rgb),0.14), transparent 55%),
+    radial-gradient(circle at 80% 30%, rgba(var(--neon2-rgb),0.16), transparent 58%),
+    radial-gradient(circle at 50% 100%, rgba(var(--neon3-rgb),0.12), transparent 55%);
+  opacity: 1;
+  pointer-events:none;
+}
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:-10% -20%;
+  background: linear-gradient(120deg, transparent 20%, rgba(var(--neon-rgb),0.12) 45%, transparent 70%);
+  display:none;
+  opacity:.7;
+  pointer-events:none;
+}
+.hero-floor{
+  position:absolute; left:50%; bottom: 4%;
+  transform: translateX(-50%);
+  width: min(980px, 92vw);
+  height: 140px;
+  background: radial-gradient(circle at center, rgba(var(--neon-rgb),0.16), transparent 65%);
+  filter: blur(24px);
+  opacity: .8;
+  pointer-events:none;
+}
+.hero-content{
+  max-width: 1040px;
+  width: min(1040px, 92vw);
+  padding: 48px 40px 44px;
+  border-radius: 22px;
+  position: relative;
+  z-index: 2;
+  text-align: center;
+
+  opacity: 0;
+  transform: translateY(10px) scale(0.99);
+  transition: opacity .9s var(--ease), transform .9s var(--ease);
+}
+ .hero-content{
+  box-shadow: 0 0 0 1px rgba(var(--neon-rgb),0.12), 0 28px 80px rgba(0,0,0,0.45);
+}
+body.page-ready .hero-content{
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+.hero-content:hover{
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: var(--shadow-strong);
+  border-color: rgba(var(--neon-rgb),0.22);
+}
+.hero-content::before{
+  content:"";
+  position:absolute;
+  inset:-1px;
+  border-radius: 22px;
+  border: 1px solid rgba(var(--neon-rgb),0.16);
+  opacity:.35;
+  pointer-events:none;
+}
+
+.ecg-top{
+  width:100%;
+  margin-bottom: 12px;
+  opacity: 0;
+  transform: translateY(-10px);
+}
+body.page-ready .ecg-top{
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity .9s var(--ease), transform .9s var(--ease);
+}
+.ecg-top .ecg{
+  width:100%;
+  height: 110px;
+  filter: drop-shadow(0 0 10px rgba(var(--neon-rgb),0.22))
+          drop-shadow(0 0 20px rgba(var(--neon2-rgb),0.12));
+}
+
+.ecg-holo{
+  fill:none;
+  stroke: rgba(var(--neon-rgb),0.85);
+  stroke-width: 10;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.14;
+  stroke-dasharray: 1700;
+  stroke-dashoffset: 1700;
+  filter: blur(1.2px);
+  animation: none;
+}
+.ecg-path{
+  fill:none;
+  stroke: rgba(var(--neon-rgb),0.92);
+  stroke-width: 3.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1700;
+  stroke-dashoffset: 1700;
+  animation: none;
+}
+.ecg-scan{
+  fill:none;
+  stroke: rgba(var(--neon2-rgb),0.92);
+  stroke-width: 4.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0;
+  stroke-dasharray: 50 1700;
+  stroke-dashoffset: 1700;
+  filter: drop-shadow(0 0 14px rgba(var(--neon2-rgb),0.30));
+  animation: none;
+}
+@keyframes ecgDraw{
+  0%   { stroke-dashoffset: 1700; opacity: 0.18; }
+  18%  { opacity: 1; }
+  55%  { opacity: 0.9; }
+  100% { stroke-dashoffset: 0; opacity: 0.22; }
+}
+@keyframes ecgGlow{
+  0%, 100%{ opacity: .42; filter: drop-shadow(0 0 0 rgba(var(--neon-rgb),0)); }
+  50%{ opacity: 1; filter: drop-shadow(0 0 10px rgba(var(--neon-rgb),0.35)); }
+}
+@keyframes holoBreathe{ 0%,100%{ opacity:.12;} 50%{ opacity:.22;} }
+@keyframes ecgScan{
+  0%{ stroke-dashoffset:1700; opacity:0; }
+  10%{ opacity:1; }
+  92%{ opacity:1; }
+  100%{ stroke-dashoffset:0; opacity:0; }
+}
+
+.hero-kicker{
+  display:flex; flex-wrap: wrap;
+  gap: 10px;
+  justify-content:center;
+  margin-bottom: 12px;
+}
+.pill{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(245,247,255,0.86);
+  font-weight: 900;
+  font-size: .9rem;
+  transition: transform .2s var(--ease), border-color .2s var(--ease);
+}
+.pill:hover{ transform: translateY(-1px); border-color: rgba(var(--neon-rgb),0.22); }
+.pill.neon{
+  border-color: rgba(var(--neon-rgb),0.22);
+  box-shadow: 0 0 0 1px rgba(var(--neon-rgb),0.10), 0 18px 55px rgba(0,0,0,0.35);
+  color: rgba(var(--neon-rgb),0.95);
+}
+
+.glow-title{
+  font-weight: 900;
+  letter-spacing: .4px;
+  margin-bottom: 10px;
+  font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+
+  opacity:0;
+  transform: translateY(10px);
+}
+
+.app-cta{
+  display:inline-flex;
+  align-items:center;
+  gap: 12px;
+  margin: 10px auto 16px;
+  padding: 12px 18px;
+  border-radius: 999px;
+  text-decoration:none;
+  font-weight: 950;
+  color: rgba(245,247,255,0.96);
+  border: 1px solid rgba(var(--neon-rgb),0.26);
+  background: linear-gradient(90deg, rgba(var(--neon2-rgb),0.28), rgba(var(--neon-rgb),0.22));
+  box-shadow: 0 14px 40px rgba(0,0,0,0.40);
+  transition: transform .2s var(--ease), box-shadow .2s var(--ease), border-color .2s var(--ease);
+}
+.app-cta:hover{
+  transform: translateY(-2px);
+  border-color: rgba(var(--neon-rgb),0.40);
+  box-shadow: var(--shadow2);
+}
+.app-cta-k{
+  text-transform: uppercase;
+  letter-spacing: .8px;
+  font-size: .9rem;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(0,0,0,0.20);
+  border: 1px solid rgba(255,255,255,0.12);
+}
+.app-cta-sub{ font-size: .82rem; color: rgba(245,247,255,0.80); font-weight: 850; }
+body.page-ready .glow-title{
+  opacity:1;
+  transform: translateY(0);
+  transition: opacity .9s var(--ease), transform .9s var(--ease);
+}
+.glow-title::after{
+  content:"";
+  display:none;
+}
+.glow-title{
+  text-shadow:
+    0 8px 30px rgba(0,0,0,0.45),
+    0 0 14px rgba(var(--neon-rgb),0.20);
+}
+@keyframes ledPulse{
+  0%,100%{ transform: scaleX(1); opacity:.65; }
+  50%{ transform: scaleX(1.08); opacity: 1; box-shadow: 0 0 22px rgba(var(--neon-rgb),0.20); }
+}
+@keyframes headPulse{
+  0%,100%{ opacity:.6; transform: scaleX(1); }
+  50%{ opacity:1; transform: scaleX(1.08); }
+}
+@keyframes btnGlow{
+  0%,100%{ box-shadow: 0 0 0 1px rgba(var(--neon-rgb),0.12), 0 18px 45px rgba(0,0,0,0.35); }
+  50%{ box-shadow: 0 0 0 1px rgba(var(--neon-rgb),0.22), 0 22px 55px rgba(0,0,0,0.45); }
+}
+@keyframes navPulse{
+  0%,100%{ opacity:.4; }
+  50%{ opacity:.9; }
+}
+@keyframes heroSweep{
+  0%{ transform: translateX(-30%); opacity:.1; }
+  50%{ opacity:.7; }
+  100%{ transform: translateX(30%); opacity:.15; }
+}
+@keyframes bgDrift{
+  0%,100%{ transform: translate3d(0,0,0) scale(1); }
+  50%{ transform: translate3d(2%, -2%, 0) scale(1.02); }
+}
+
+.hero-sub{
+  font-size: 1.02rem;
+  line-height: 1.65;
+  color: rgba(245,247,255,0.78);
+  max-width: 820px;
+  margin: 0 auto 12px;
+
+  opacity:0;
+  transform: translateY(10px);
+}
+body.page-ready .hero-sub{
+  opacity:1;
+  transform: translateY(0);
+  transition: opacity .9s var(--ease) .06s, transform .9s var(--ease) .06s;
+}
+
+@media (max-width: 860px){
+  .hero{ text-align:center; }
+  .hero-content{ padding: 36px 20px; }
+  .app-cta{ align-items:center; }
+  .hero-sub{ margin: 0 auto 14px; }
+}
+
+.hero-authors{
+  margin: 6px 0 16px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap: 10px;
+  flex-wrap: wrap;
+
+  opacity:0;
+  transform: translateY(10px);
+}
+body.page-ready .hero-authors{
+  opacity:1;
+  transform: translateY(0);
+  transition: opacity .9s var(--ease) .12s, transform .9s var(--ease) .12s;
+}
+.author-chip{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  font-weight: 950;
+  color: rgba(245,247,255,0.90);
+  box-shadow: 0 0 0 1px rgba(var(--neon-rgb),0.06);
+  transition: transform .25s var(--ease), border-color .25s var(--ease);
+}
+.author-chip:hover{ transform: translateY(-2px); border-color: rgba(var(--neon-rgb),0.22); }
+.dot{
+  width:10px; height:10px; border-radius:999px;
+  background: radial-gradient(circle, rgba(var(--neon-rgb),0.95), rgba(var(--neon-rgb),0.12));
+  box-shadow: 0 0 18px rgba(var(--neon-rgb),0.45);
+}
+.chip-meta{
+  font-weight: 850;
+  font-size: .86rem;
+  color: rgba(245,247,255,0.68);
+  padding-left: 8px;
+  border-left: 1px solid rgba(255,255,255,0.12);
+}
+.author-sep{ color: rgba(var(--neon2-rgb),0.85); font-weight: 950; }
+
+
+.hero-stats{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 12px 0 18px;
+}
+.hstat{
+  border-radius: 18px;
+  padding: 14px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  transition: transform .25s var(--ease), border-color .25s var(--ease);
+}
+.hstat:hover{ transform: translateY(-3px); border-color: rgba(var(--neon-rgb),0.22); }
+.hstat-top{ display:flex; justify-content:space-between; gap:10px; align-items:baseline; margin-bottom: 6px; }
+.hstat-k{ color: rgba(245,247,255,0.72); font-weight: 850; font-size: .92rem; }
+.hstat-v{ font-weight: 950; font-size: 1.25rem; color: #fff; }
+.hstat-sub{ color: rgba(245,247,255,0.70); font-weight: 750; font-size: .92rem; }
+
+.hero-cta{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  padding: 12px 16px;
+  border-radius: 16px;
+  text-decoration:none;
+  font-weight: 950;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.06);
+  color: rgba(245,247,255,0.92);
+  transition: transform .22s var(--ease), box-shadow .22s var(--ease), border-color .22s var(--ease);
+  position: relative;
+  overflow: hidden;
+}
+.btn:hover{ transform: translateY(-2px); border-color: rgba(var(--neon-rgb),0.22); box-shadow: var(--shadow2); }
+.btn::after{
+  content:"";
+  position:absolute;
+  inset:-40% -60%;
+  background: linear-gradient(120deg, transparent 20%, rgba(255,255,255,0.25) 45%, transparent 70%);
+  transform: translateX(-60%);
+  transition: transform .6s var(--ease);
+  opacity:.5;
+}
+.btn:hover::after{ transform: translateX(60%); }
+.btn-primary{
+  background: linear-gradient(90deg, rgba(var(--neon2-rgb),0.35), rgba(var(--neon-rgb),0.30));
+  border-color: rgba(var(--neon-rgb),0.22);
+}
+.btn-primary{
+  box-shadow: 0 0 0 1px rgba(var(--neon-rgb),0.12), 0 18px 45px rgba(0,0,0,0.35);
+  animation: none;
+}
+.btn-ghost{
+  background: rgba(255,255,255,0.04);
+}
+.arrow{ opacity: .9; }
+
+.hero-fine{
+  margin-top: 14px;
+  display:flex; justify-content:center; gap: 10px; flex-wrap: wrap;
+}
+.fine-chip{
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.10);
+  color: rgba(245,247,255,0.74);
+  font-weight: 850;
+}
+
+/* ---------- Sections ---------- */
+.section{
+  padding: 88px 18px 96px;
+  position: relative;
+  z-index: 1;
+}
+.section::before{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:0;
+  width:min(980px, 92vw);
+  height:1px;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+  opacity:.6;
+}
+.section-inner{ max-width: var(--page-max); margin:0 auto; }
+.sec-head{ text-align:center; margin-bottom: 22px; }
+.sec-title{
+  margin:0;
+  font-size: 2.15rem;
+  font-weight: 950;
+  letter-spacing: .2px;
+  text-transform: uppercase;
+  text-shadow: 0 0 22px rgba(var(--neon-rgb),0.14);
+}
+.sec-head{
+  position: relative;
+}
+.sec-head::after{
+  content:"";
+  display:block;
+  width: 120px;
+  height: 3px;
+  margin: 12px auto 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(var(--neon2-rgb),0.25), rgba(var(--neon-rgb),0.8), rgba(var(--neon3-rgb),0.25));
+  animation: headPulse 2.2s var(--ease) infinite;
+}
+.sec-sub{
+  margin: 10px auto 0;
+  max-width: 900px;
+  color: rgba(245,247,255,0.74);
+  line-height: 1.75;
+  font-weight: 750;
+}
+
+.grid-2{
+  display:grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 14px;
+  padding: 18px;
+}
+.copy{ text-align:left; }
+.glow-paragraph{
+  color: rgba(245,247,255,0.82);
+  line-height: 1.9;
+  font-size: 1.02rem;
+  margin-bottom: 12px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.10);
+  transition: transform .22s var(--ease), border-color .22s var(--ease);
+}
+.glow-paragraph:hover{ transform: translateY(-2px); border-color: rgba(var(--neon-rgb),0.18); }
+
+.mini-pipeline{
+  display:grid;
+  gap: 10px;
+}
+.mp-step{
+  border-radius: 16px;
+  padding: 12px 12px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.10);
+  display:grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 10px;
+  row-gap: 2px;
+  transition: transform .22s var(--ease), border-color .22s var(--ease);
+}
+.mp-step:hover{ transform: translateY(-2px); border-color: rgba(var(--neon2-rgb),0.18); }
+.mp-no{
+  grid-row: 1 / span 2;
+  width: 34px; height:34px;
+  border-radius: 14px;
+  display:grid; place-items:center;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(var(--neon-rgb),0.16);
+  color: rgba(var(--neon-rgb),0.95);
+  font-weight: 950;
+}
+.mp-title{ font-weight: 950; }
+.mp-desc{ color: rgba(245,247,255,0.70); font-weight: 750; font-size: .92rem; }
+
+@media (max-width: 900px){
+  .grid-2{ grid-template-columns: 1fr; }
+  .hero-stats{ grid-template-columns: 1fr; }
+}
+
+/* ---------- Problem ---------- */
+.problem-wrap{
+  border-radius: var(--r-xl);
+  padding: 18px;
+  position: relative;
+}
+.problem-wrap::before{
+  content:"";
+  position:absolute;
+  inset:-80px -120px;
+  background: radial-gradient(circle, rgba(var(--neon2-rgb),0.10), transparent 60%);
+  opacity:.6;
+  pointer-events:none;
+}
+.problem-top{
+  display:grid;
+  grid-template-columns: 1.25fr 0.75fr;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+.problem-hero{
+  border-radius: var(--r-lg);
+  padding: 18px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.10);
+  text-align:left;
+}
+.problem-badge{
+  display:inline-flex;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(var(--neon-rgb),0.10);
+  border: 1px solid rgba(var(--neon-rgb),0.18);
+  color: rgba(var(--neon-rgb),0.95);
+  font-weight: 950;
+  margin-bottom: 10px;
+}
+.problem-title{ margin:0 0 8px; font-size: 1.45rem; font-weight: 950; }
+.problem-lead{ margin:0; color: rgba(245,247,255,0.78); line-height: 1.8; font-weight: 750; }
+
+.problem-metrics{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 12px;
+}
+.pm{
+  border-radius: 16px;
+  padding: 12px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.10);
+}
+.pm-k{ display:block; color: rgba(245,247,255,0.70); font-weight: 850; font-size: .9rem; margin-bottom: 4px; }
+.pm-v{ display:block; font-weight: 950; }
+
+.problem-side{ display:grid; gap: 12px; }
+.label{ color: rgba(245,247,255,0.70); font-weight: 850; font-size: .9rem; margin-bottom: 8px; }
+
+.sparkline{
+  border-radius: var(--r-lg);
+  padding: 18px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.10);
+  overflow:hidden;
+  position: relative;
+  min-height: 130px;
+}
+.spark{
+  position:absolute;
+  inset: -30px -40px;
+  background:
+    radial-gradient(circle at 20% 40%, rgba(var(--neon-rgb),0.20), transparent 55%),
+    radial-gradient(circle at 70% 60%, rgba(var(--neon2-rgb),0.18), transparent 55%),
+    linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
+  animation: sparkMove 2.8s linear infinite;
+}
+@keyframes sparkMove{ 0%{ transform: translateX(-20%);} 100%{ transform: translateX(20%);} }
+
+.problem-grid{
+  display:grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+.p-card{
+  border-radius: var(--r-lg);
+  padding: 16px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.10);
+  text-align:left;
+  transition: transform .22s var(--ease), border-color .22s var(--ease);
+  position: relative;
+  overflow:hidden;
+}
+.p-card::before{
+  content:"";
+  position:absolute;
+  inset:-120px -120px;
+  background: radial-gradient(circle, rgba(var(--neon-rgb),0.16), transparent 60%);
+  opacity:0;
+  transform: translateX(-10%);
+  transition: opacity .35s var(--ease), transform .35s var(--ease);
+}
+.p-card:hover::before{ opacity:1; transform: translateX(10%); }
+.p-card:hover{ transform: translateY(-4px); border-color: rgba(var(--neon-rgb),0.18); }
+.p-card h4{ margin:0 0 8px; font-weight: 950; }
+.p-card p{ margin:0 0 10px; color: rgba(245,247,255,0.76); line-height: 1.75; font-weight: 750; }
+.p-foot{ display:flex; gap:8px; flex-wrap: wrap; }
+
+.tag{
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.10);
+  color: rgba(245,247,255,0.78);
+  font-weight: 900;
+  font-size: .82rem;
+}
+@media (max-width: 1050px){
+  .problem-grid{ grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 900px){
+  .problem-top{ grid-template-columns: 1fr; }
+  .problem-metrics{ grid-template-columns: 1fr; }
+}
+@media (max-width: 520px){
+  .problem-grid{ grid-template-columns: 1fr; }
+}
+
+/* ---------- Background section layout ---------- */
+.bg-layout{
+  display:grid;
+  grid-template-columns: 0.95fr 1.05fr;
+  gap: 14px;
+  align-items: start;
+}
+.bg-left{ padding: 18px; text-align:left; }
+.bg-big{ margin: 0 0 8px; font-size: 1.6rem; font-weight: 950; }
+.bg-pills{ display:flex; gap:10px; flex-wrap: wrap; margin-top: 12px; }
+
+.bg-quote{
+  margin-top: 12px;
+  border-radius: var(--r-lg);
+  padding: 16px;
+  display:flex;
+  gap: 12px;
+  align-items:flex-start;
+  background: rgba(255,255,255,0.05);
+}
+.q-mark{
+  width: 42px; height: 42px;
+  border-radius: 16px;
+  display:grid; place-items:center;
+  background: rgba(var(--neon-rgb),0.10);
+  border: 1px solid rgba(var(--neon-rgb),0.16);
+  color: rgba(var(--neon-rgb),0.95);
+  font-weight: 950;
+  font-size: 1.4rem;
+}
+.q-body{
+  color: rgba(245,247,255,0.78);
+  font-weight: 750;
+  line-height: 1.75;
+}
+
+.flow{
+  border-radius: var(--r-xl);
+  padding: 18px;
+}
+.flow-head{
+  display:flex; align-items:flex-end; justify-content:space-between; gap: 10px; margin-bottom: 12px;
+}
+.flow-title{ font-weight: 950; font-size: 1.15rem; }
+.flow-sub{ color: rgba(245,247,255,0.70); font-weight: 750; }
+
+.flow-steps{ display:grid; gap: 10px; margin-bottom: 12px; }
+.fstep{
+  display:grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px;
+  padding: 14px;
+  border-radius: var(--r-lg);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.10);
+  transition: transform .22s var(--ease), border-color .22s var(--ease);
+}
+.fstep:hover{ transform: translateY(-2px); border-color: rgba(var(--neon2-rgb),0.18); }
+.ficon{
+  width: 44px; height:44px;
+  border-radius: 16px;
+  display:grid; place-items:center;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(var(--neon-rgb),0.14);
+  font-size: 1.15rem;
+}
+.ft{ font-weight: 950; margin-bottom: 4px; }
+.fd{ color: rgba(245,247,255,0.74); line-height: 1.7; font-weight: 750; font-size: .95rem; }
+
+.foundation{ padding: 16px; }
+.foundation-title{ font-weight: 950; margin-bottom: 10px; }
+.foundation-grid{ display:grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.fi{
+  display:grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.10);
+}
+.fi-no{
+  width: 34px; height:34px;
+  border-radius: 14px;
+  display:grid; place-items:center;
+  background: rgba(var(--neon2-rgb),0.12);
+  border: 1px solid rgba(var(--neon2-rgb),0.18);
+  color: rgba(var(--neon2-rgb),0.95);
+  font-weight: 950;
+}
+.fi-t{ font-weight: 950; margin-bottom: 4px; }
+.fi-d{ color: rgba(245,247,255,0.72); font-weight: 750; line-height: 1.65; font-size: .94rem; }
+
+@media (max-width: 980px){
+  .bg-layout{ grid-template-columns: 1fr; }
+  .foundation-grid{ grid-template-columns: 1fr; }
+}
+
+/* ---------- Goals ---------- */
+.goals-grid{
+  display:grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+.goal-card{
+  border-radius: var(--r-lg);
+  padding: 16px;
+  position: relative;
+  overflow:hidden;
+  transition: transform .22s var(--ease), border-color .22s var(--ease);
+}
+.goal-card::before{
+  content:"";
+  position:absolute; inset:-120px -120px;
+  background: radial-gradient(circle, rgba(var(--neon-rgb),0.16), transparent 60%);
+  opacity:0;
+  transform: translateX(-10%);
+  transition: opacity .35s var(--ease), transform .35s var(--ease);
+}
+.goal-card:hover::before{ opacity:1; transform: translateX(10%); }
+.goal-card:hover{ transform: translateY(-3px); border-color: rgba(var(--neon-rgb),0.18); }
+.goal-title{ margin:0 0 8px; font-size: 1.06rem; font-weight: 950; }
+.goal-text{ margin:0; color: rgba(245,247,255,0.78); font-weight: 750; line-height: 1.75; }
+@media (max-width: 800px){
+  .goals-grid{ grid-template-columns: 1fr; }
+}
+
+/* ---------- Methodology ---------- */
+.method-grid{
+  display:grid;
+  gap: 14px;
+}
+.mblock{
+  border-radius: var(--r-xl);
+  padding: 18px;
+}
+.mhead{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.mtitle{ margin:0; font-weight: 950; }
+.mpill{
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(245,247,255,0.82);
+  font-weight: 950;
+  font-size: .86rem;
+}
+.mpill.neon{
+  border-color: rgba(var(--neon-rgb),0.20);
+  color: rgba(var(--neon-rgb),0.95);
+}
+
+.workflow{
+  display:grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  align-items:center;
+  margin-bottom: 12px;
+}
+.wstep{
+  border-radius: 16px;
+  padding: 12px 12px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.10);
+  display:flex;
+  gap: 10px;
+  align-items:center;
+  justify-content:center;
+  transition: transform .22s var(--ease), border-color .22s var(--ease);
+}
+.wstep:hover{ transform: translateY(-2px); border-color: rgba(var(--neon2-rgb),0.18); }
+.wno{
+  width: 32px; height: 32px;
+  border-radius: 14px;
+  display:grid; place-items:center;
+  background: rgba(var(--neon-rgb),0.10);
+  border: 1px solid rgba(var(--neon-rgb),0.16);
+  color: rgba(var(--neon-rgb),0.95);
+  font-weight: 950;
+}
+.wlabel{ font-weight: 950; font-size: .92rem; color: rgba(245,247,255,0.90); }
+.wline{
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(var(--neon2-rgb),0.25), rgba(var(--neon-rgb),0.35));
+  opacity: .8;
+}
+@media (max-width: 980px){
+  .workflow{ grid-template-columns: 1fr; }
+  .wline{ display:none; }
+}
+
+.wf-cards{
+  display:grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+.wf{
+  padding: 14px;
+  text-align:left;
+}
+.wf h4{ margin:0 0 8px; font-weight: 950; }
+.wf ul{ margin:0; padding-left: 18px; color: rgba(245,247,255,0.76); font-weight: 750; line-height: 1.75; }
+.wf li{ margin-bottom: 8px; }
+
+@media (max-width: 1050px){
+  .wf-cards{ grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px){
+  .wf-cards{ grid-template-columns: 1fr; }
+}
+
+.pipe2{
+  display:grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr auto 1fr;
+  gap: 10px;
+  align-items:center;
+}
+.node{
+  padding: 14px;
+  text-align:left;
+}
+.node-k{ color: rgba(245,247,255,0.70); font-weight: 850; font-size: .9rem; margin-bottom: 6px; }
+.node-v{ font-weight: 950; }
+.node-s{ color: rgba(245,247,255,0.70); font-weight: 750; margin-top: 4px; font-size: .92rem; }
+.arrow2{
+  color: rgba(var(--neon-rgb),0.85);
+  font-weight: 950;
+  text-shadow: 0 0 18px rgba(var(--neon-rgb),0.18);
+}
+@media (max-width: 980px){
+  .pipe2{ grid-template-columns: 1fr; }
+  .arrow2{ display:none; }
+}
+
+.hw-grid{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.hw{ padding: 14px; text-align:left; }
+.hw-t{ font-weight: 950; margin-bottom: 6px; }
+.hw-d{ color: rgba(245,247,255,0.76); font-weight: 750; line-height: 1.7; margin-bottom: 10px; }
+.hw-tags{ display:flex; gap:8px; flex-wrap: wrap; }
+@media (max-width: 980px){
+  .hw-grid{ grid-template-columns: 1fr; }
+}
+
+.infer-grid{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.infer{ padding: 14px; text-align:left; }
+.infer-k{ color: rgba(245,247,255,0.70); font-weight: 850; margin-bottom: 6px; }
+.infer-v{ font-weight: 950; margin-bottom: 6px; }
+.infer-d{ color: rgba(245,247,255,0.76); font-weight: 750; line-height: 1.7; }
+@media (max-width: 980px){
+  .infer-grid{ grid-template-columns: 1fr; }
+}
+
+/* ---------- Results ---------- */
+.results-wrap{ display:flex; flex-direction: column; gap: 18px; position: relative; }
+.results-wrap::before{
+  content:"";
+  position:absolute;
+  inset:-100px -120px;
+  background: radial-gradient(circle at 20% 10%, rgba(var(--neon2-rgb),0.10), transparent 60%);
+  opacity:.6;
+  pointer-events:none;
+}
+.results-head{
+  display:flex;
+  gap: 14px;
+  align-items:flex-end;
+  justify-content:space-between;
+  flex-wrap: wrap;
+}
+.results-sub{ margin: 0; }
+.results-badge{
+  padding: 12px 14px;
+  border-radius: var(--r-lg);
+  display:grid;
+  gap: 4px;
+  min-width: 210px;
+}
+.rb-label{ color: rgba(245,247,255,0.70); font-weight: 850; font-size: .88rem; }
+.rb-value{ font-weight: 950; font-size: 1.45rem; color: #fff; }
+.rb-note{ color: rgba(var(--neon-rgb),0.90); font-weight: 850; }
+
+.kpi-strip{
+  display:grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+.kpi-card{
+  border-radius: var(--r-lg);
+  padding: 14px;
+  position: relative;
+  overflow:hidden;
+  transition: transform .22s var(--ease), border-color .22s var(--ease);
+}
+.kpi-card:hover{ box-shadow: var(--shadow2); }
+.kpi-card::before{
+  content:"";
+  position:absolute;
+  inset:-120px -120px;
+  background: radial-gradient(circle, rgba(var(--neon-rgb),0.14), transparent 60%);
+  opacity:0;
+  transform: translateX(-10%);
+  transition: opacity .35s var(--ease), transform .35s var(--ease);
+}
+.kpi-card:hover::before{ opacity:1; transform: translateX(10%); }
+.kpi-card:hover{ transform: translateY(-3px); border-color: rgba(var(--neon-rgb),0.18); }
+
+.kpi-top{ display:flex; justify-content:space-between; gap: 10px; align-items:baseline; margin-bottom: 10px; }
+.kpi-label{ color: rgba(245,247,255,0.70); font-weight: 850; font-size: .92rem; }
+.kpi-value{ font-weight: 950; font-size: 1.35rem; }
+
+.kpi-bar{
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(0,0,0,0.30);
+  border: 1px solid rgba(255,255,255,0.12);
+  overflow:hidden;
+  margin-bottom: 8px;
+}
+.kpi-fill{
+  height: 100%;
+  width: 0%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(var(--neon2-rgb),0.35), rgba(var(--neon-rgb),0.95), rgba(var(--neon3-rgb),0.65));
+  box-shadow: 0 0 18px rgba(var(--neon-rgb),0.18);
+  transition: width 1.0s var(--ease);
+}
+.results-animate .kpi-fill{ width: var(--w, 0%); }
+.kpi-note{ color: rgba(245,247,255,0.70); font-weight: 750; font-size: .92rem; }
+
+.results-top{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  align-items: stretch;
+}
+.results-panel{
+  border-radius: var(--r-lg);
+  padding: 16px;
+}
+.results-panel{
+  transition: transform .22s var(--ease), border-color .22s var(--ease), box-shadow .22s var(--ease);
+}
+.results-panel:hover{ transform: translateY(-2px); border-color: rgba(var(--neon-rgb),0.18); box-shadow: var(--shadow2); }
+.panel-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.panel-title{ margin:0; font-weight: 950; font-size: 1.05rem; }
+.panel-pill{
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: rgba(var(--neon-rgb),0.10);
+  border: 1px solid rgba(var(--neon-rgb),0.18);
+  color: rgba(var(--neon-rgb),0.95);
+  font-weight: 950;
+  font-size: .82rem;
+  white-space: nowrap;
+}
+.panel-text{ color: rgba(245,247,255,0.78); font-weight: 750; line-height: 1.8; margin-bottom: 12px; }
+.panel-foot{
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255,255,255,0.10);
+  color: rgba(245,247,255,0.70);
+  font-weight: 750;
+  font-size: .92rem;
+}
+
+.mini-metrics{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.mini{
+  border-radius: 16px;
+  padding: 12px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.10);
+}
+.mini-k{ display:block; color: rgba(245,247,255,0.70); font-weight: 850; font-size: .86rem; margin-bottom: 4px; }
+.mini-v{ display:block; font-weight: 950; font-size: 1.05rem; }
+
+.fig-grid{
+  display:grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+.fig-card{
+  border-radius: var(--r-xl);
+  padding: 18px;
+  position: relative;
+  overflow: hidden;
+  display:flex;
+  flex-direction: column;
+  transition: transform .25s var(--ease), border-color .25s var(--ease), box-shadow .25s var(--ease);
+}
+.fig-card:hover{ transform: translateY(-3px); border-color: rgba(var(--neon2-rgb),0.18); box-shadow: var(--shadow2); }
+.fig-card::before{
+  content:"";
+  position:absolute;
+  inset:-140px -180px;
+  background:
+    radial-gradient(circle, rgba(var(--neon-rgb),0.14), transparent 60%),
+    linear-gradient(90deg, transparent, rgba(255,255,255,0.04), transparent);
+  opacity:0;
+  transform: translateX(-10%);
+  transition: opacity .35s var(--ease), transform .35s var(--ease);
+}
+.fig-card:hover::before{ opacity:1; transform: translateX(10%); }
+.fig-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.fig-title{ margin:0; font-weight: 950; font-size: 1.05rem; line-height: 1.2; }
+.fig-pill{
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: rgba(0,0,0,0.20);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(245,247,255,0.72);
+  font-weight: 850;
+  font-size: .80rem;
+  white-space: nowrap;
+}
+
+.chart-shell{
+  border-radius: var(--r-lg);
+  overflow:hidden;
+  background: linear-gradient(180deg, rgba(7,12,20,0.68), rgba(7,12,20,0.38));
+  border: 1px solid rgba(255,255,255,0.16);
+  padding: 14px;
+  aspect-ratio: 16 / 9;
+  min-height: 280px;
+  display:flex; align-items:center; justify-content:center;
+  position: relative;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06), 0 16px 48px rgba(0,0,0,0.35);
+  flex: 1;
+}
+.chart-shell::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: linear-gradient(120deg, transparent 30%, rgba(var(--neon-rgb),0.10), transparent 70%);
+  transform: translateX(-60%);
+  animation: none;
+  opacity: .8;
+  pointer-events:none;
+}
+.chart-shell--matrix{
+  aspect-ratio: 1 / 1;
+  min-height: 300px;
+}
+.chart{
+  width: 100%;
+  height:100%;
+  display:block;
+  animation: chartPop .9s var(--ease);
+}
+
+@keyframes chartPop{
+  0%{ transform: translateY(10px) scale(.98); opacity: .25; }
+  100%{ transform: translateY(0) scale(1); opacity: 1; }
+}
+@keyframes chartSweep{
+  0%{ transform: translateX(-70%); opacity: .15; }
+  40%{ opacity: .7; }
+  100%{ transform: translateX(70%); opacity: .2; }
+}
+
+@keyframes figIn{
+  0%{ transform: translateY(14px); opacity: 0; }
+  100%{ transform: translateY(0); opacity: 1; }
+}
+.reveal.in .fig-card{ animation: figIn .8s var(--ease) both; }
+.reveal.in .fig-card:nth-child(2){ animation-delay: .08s; }
+.reveal.in .fig-card:nth-child(3){ animation-delay: .16s; }
+.reveal.in .fig-card:nth-child(4){ animation-delay: .24s; }
+
+.fig-details{ margin-top: 10px; border-radius: var(--r-lg); }
+.fig-details > summary{
+  cursor:pointer;
+  list-style:none;
+  user-select:none;
+  padding: 10px 12px;
+  border-radius: 16px;
+  background: rgba(var(--neon-rgb),0.08);
+  border: 1px solid rgba(var(--neon-rgb),0.14);
+  color: rgba(var(--neon-rgb),0.95);
+  font-weight: 950;
+  transition: transform .2s var(--ease), border-color .2s var(--ease);
+}
+.fig-details > summary:hover{ transform: translateY(-1px); border-color: rgba(var(--neon-rgb),0.22); }
+.fig-details[open] > summary{ border-color: rgba(var(--neon-rgb),0.26); background: rgba(var(--neon-rgb),0.12); }
+
+.table-shell{
+  margin-top: 10px;
+  border-radius: var(--r-lg);
+  overflow:hidden;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(0,0,0,0.18);
+}
+.data-table{ width:100%; border-collapse: collapse; }
+.data-table thead th{
+  text-align:left;
+  padding: 12px;
+  font-size: .9rem;
+  color: rgba(245,247,255,0.74);
+  background: rgba(255,255,255,0.06);
+  border-bottom: 1px solid rgba(255,255,255,0.10);
+}
+.data-table td{
+  padding: 12px;
+  color: rgba(245,247,255,0.84);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  font-weight: 750;
+}
+.data-table tbody tr:hover td{ background: rgba(var(--neon-rgb),0.06); }
+.fig-foot{ margin-top: 10px; color: rgba(245,247,255,0.70); font-weight: 750; font-size: .92rem; }
+
+@media (max-width: 1100px){
+  .kpi-strip{ grid-template-columns: repeat(2, 1fr); }
+  .results-top{ grid-template-columns: 1fr; }
+  .fig-grid{ grid-template-columns: 1fr; }
+}
+@media (max-width: 520px){
+  .kpi-strip{ grid-template-columns: 1fr; }
+  .mini-metrics{ grid-template-columns: 1fr; }
+}
+
+/* ================= FUTURE WORK SECTION ================= */
+.future-section{
+  background:
+    radial-gradient(circle at top, rgba(29, 84, 109, 0.16), rgba(0,0,0,0) 62%),
+    radial-gradient(circle at right, rgba(var(--neon-rgb), 0.08), rgba(0,0,0,0) 55%);
+}
+
+.future-grid{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  align-items: stretch;
+}
+
+.future-card{
+  border-radius: 18px;
+  background: rgba(29, 84, 109, 0.16);
+  border: 1px solid rgba(243, 244, 244, 0.10);
+  backdrop-filter: blur(8px);
+  padding: 16px;
+  position: relative;
+  overflow: hidden;
+
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+.future-card:hover{ border-color: rgba(var(--neon-rgb),0.24); }
+.future-card:hover{ box-shadow: var(--shadow2); }
+
+.future-card::before{
+  content:"";
+  position:absolute;
+  inset:-90px -120px;
+  background: radial-gradient(circle, rgba(var(--neon-rgb),0.14), rgba(var(--neon-rgb),0.0) 55%);
+  opacity: 0;
+  transform: translateX(-12%);
+  transition: opacity .35s ease, transform .35s ease;
+}
+
+.future-card:hover::before{
+  opacity: 1;
+  transform: translateX(12%);
+}
+
+.future-card:hover{
+  transform: translateY(-3px);
+  border-color: rgba(var(--neon-rgb),0.22);
+  box-shadow:
+    0 0 0 1px rgba(var(--neon-rgb),0.12),
+    var(--shadow-strong);
+}
+
+.future-head{
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.future-icon{
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+
+  background: rgba(6,30,41,0.55);
+  border: 1px solid rgba(var(--neon-rgb),0.18);
+  font-size: 1.15rem;
+}
+
+.future-title{
+  margin: 0;
+  font-weight: 900;
+  font-size: 1.05rem;
+  line-height: 1.25;
+}
+
+.future-no{
+  font-weight: 900;
+  font-size: 1.15rem;
+  color: rgba(var(--neon-rgb),0.95);
+}
+
+.future-text{
+  color: rgba(243,244,244,0.84);
+  line-height: 1.85;
+  font-weight: 700;
+}
+
+@media (max-width: 1100px){
+  .future-grid{ grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 650px){
+  .future-grid{ grid-template-columns: 1fr; }
+}
+
+/* ---------- Contact: keep content, improve look ---------- */
+.contact-section{ position: relative; }
+.contact-title{
+  margin: 0;
+  font-size: 2.1rem;
+  font-weight: 950;
+  letter-spacing: .3px;
+  text-transform: uppercase;
+}
+.contact-sub{ margin: 0; color: rgba(245,247,255,0.74); line-height: 1.7; font-weight: 750; }
+
+.contact-form{
+  border-radius: var(--r-xl);
+  padding: 18px;
+  margin: 16px 0 18px;
+  position: relative;
+  overflow: hidden;
+}
+.contact-form::before{
+  content:"";
+  position:absolute;
+  inset:-180px -260px;
+  background:
+    radial-gradient(circle, rgba(var(--neon-rgb),0.16), transparent 60%),
+    radial-gradient(circle, rgba(var(--neon2-rgb),0.14), transparent 60%);
+  opacity:.7;
+  transform: translateX(-8%);
+}
+.contact-form::after{
+  content:"";
+  position:absolute;
+  inset:auto 18px 14px 18px;
+  height:3px;
+  border-radius:999px;
+  background: linear-gradient(90deg, rgba(var(--neon2-rgb),0.25), rgba(var(--neon-rgb),0.55), rgba(var(--neon3-rgb),0.25));
+  opacity:.8;
+}
+.cf-head{ position: relative; z-index: 2; margin-bottom: 12px; }
+.cf-title{ margin:0 0 4px; font-weight: 950; font-size: 1.25rem; }
+.cf-sub{ margin:0; color: rgba(245,247,255,0.72); font-weight: 750; }
+
+.cf-grid{
+  position: relative;
+  z-index: 2;
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.cf-field{
+  display:grid;
+  gap: 6px;
+}
+.cf-field--full{ grid-column: 1 / -1; }
+.cf-label{
+  color: rgba(245,247,255,0.78);
+  font-weight: 850;
+  font-size: .9rem;
+}
+.cf-field input,
+.cf-field textarea,
+.cf-field select{
+  width: 100%;
+  padding: 12px 12px;
+  border-radius: 14px;
+  background: rgba(0,0,0,0.24);
+  border: 1px solid rgba(255,255,255,0.14);
+  color: rgba(245,247,255,0.92);
+  font-weight: 800;
+  outline: none;
+  transition: border-color .2s var(--ease), box-shadow .2s var(--ease), transform .2s var(--ease);
+}
+.cf-field input:focus,
+.cf-field textarea:focus,
+.cf-field select:focus{
+  border-color: rgba(var(--neon-rgb),0.28);
+  box-shadow: 0 0 0 3px rgba(var(--neon-rgb),0.12);
+  transform: translateY(-1px);
+}
+.cf-field textarea{ resize: vertical; min-height: 140px; }
+.cf-honey{ display:none; }
+.cf-static{
+  padding: 12px 12px;
+  border-radius: 14px;
+  background: rgba(0,0,0,0.22);
+  border: 1px solid rgba(255,255,255,0.14);
+  color: rgba(245,247,255,0.90);
+  font-weight: 850;
+  display:flex;
+  align-items:center;
+}
+.cf-success{
+  margin-top: 12px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: rgba(12,35,26,0.55);
+  border: 1px solid rgba(62,255,190,0.35);
+  color: rgba(216,255,240,0.95);
+  font-weight: 850;
+  display:none;
+}
+.cf-success.show{ display:block; }
+
+.cf-send{
+  grid-column: 1 / -1;
+  padding: 12px 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(var(--neon-rgb),0.22);
+  background: linear-gradient(90deg, rgba(var(--neon2-rgb),0.25), rgba(var(--neon-rgb),0.22));
+  color: rgba(245,247,255,0.96);
+  font-weight: 950;
+  cursor: pointer;
+  transition: transform .2s var(--ease), box-shadow .2s var(--ease), border-color .2s var(--ease);
+}
+.cf-send:hover{
+  transform: translateY(-1px);
+  border-color: rgba(var(--neon-rgb),0.35);
+  box-shadow: var(--shadow2);
+}
+.cf-note{
+  margin-top: 10px;
+  color: rgba(245,247,255,0.72);
+  font-weight: 750;
+}
+
+.contact-grid{
+  display:grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+.contact-block{
+  border-radius: var(--r-xl);
+  padding: 16px;
+  position: relative;
+  overflow:hidden;
+  transition: transform .22s var(--ease), border-color .22s var(--ease);
+}
+.contact-block:hover{ box-shadow: var(--shadow2); }
+.contact-block::before{
+  content:"";
+  position:absolute;
+  inset:-140px -220px;
+  background: radial-gradient(circle, rgba(var(--neon-rgb),0.16), transparent 60%);
+  opacity:0;
+  transform: translateX(-10%);
+  transition: opacity .35s var(--ease), transform .35s var(--ease);
+}
+.contact-block:hover::before{ opacity:1; transform: translateX(10%); }
+.contact-block:hover{ transform: translateY(-4px); border-color: rgba(var(--neon-rgb),0.20); }
+
+.cb-top{
+  position: relative;
+  z-index: 2;
+  display:grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 12px;
+  align-items:center;
+  margin-bottom: 12px;
+}
+.cb-avatar{
+  width: 54px; height: 54px;
+  border-radius: 18px;
+  display:grid; place-items:center;
+  font-weight: 950;
+  font-size: 1.25rem;
+  letter-spacing: .8px;
+  color: rgba(245,247,255,0.95);
+  background: radial-gradient(circle at top, rgba(var(--neon-rgb),0.35), rgba(var(--neon2-rgb),0.18));
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow: 0 0 18px rgba(var(--neon-rgb),0.14);
+}
+.cb-name{ margin:0; font-weight: 950; font-size: 1.2rem; }
+.cb-role{ margin:2px 0 0; font-weight: 850; color: rgba(var(--neon-rgb),0.90); }
+
+.cb-tag{
+  position: relative;
+  z-index: 2;
+  padding: 8px 10px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(245,247,255,0.80);
+  font-weight: 950;
+  font-size: .82rem;
+}
+
+.cb-actions{
+  position: relative;
+  z-index: 2;
+  display:grid;
+  gap: 10px;
+}
+.cb-mail{
+  display:block;
+  padding: 12px;
+  border-radius: 16px;
+  background: rgba(0,0,0,0.22);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(245,247,255,0.88);
+  text-decoration:none;
+  font-weight: 850;
+  word-break: break-all;
+  transition: transform .2s var(--ease), border-color .2s var(--ease);
+}
+.cb-mail:hover{
+  transform: translateY(-1px);
+  border-color: rgba(var(--neon-rgb),0.20);
+}
+
+.cb-btn{
+  display:inline-flex;
+  justify-content:center;
+  align-items:center;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: linear-gradient(90deg, rgba(var(--neon2-rgb),0.22), rgba(var(--neon-rgb),0.18));
+  border: 1px solid rgba(var(--neon-rgb),0.18);
+  color: rgba(245,247,255,0.92);
+  font-weight: 950;
+  text-decoration:none;
+  transition: transform .2s var(--ease), border-color .2s var(--ease), box-shadow .2s var(--ease);
+}
+.cb-btn:hover{
+  transform: translateY(-1px);
+  border-color: rgba(var(--neon-rgb),0.26);
+  box-shadow: var(--shadow2);
+}
+
+.contact-foot{
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-radius: var(--r-lg);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.10);
+  color: rgba(245,247,255,0.72);
+  font-weight: 750;
+}
+.contact-hint{ color: rgba(var(--neon-rgb),0.95); font-weight: 950; margin-right: 6px; }
+
+@media (max-width: 900px){
+  .contact-grid{ grid-template-columns: 1fr; }
+  .cf-grid{ grid-template-columns: 1fr; }
+}
+
+/* ---------- Tooltip ---------- */
+.chart-tip{
+  position: fixed;
+  left:0; top:0;
+  transform: translate(-9999px, -9999px);
+  z-index: 999999;
+  pointer-events: none;
+  padding: 10px 12px;
+  border-radius: 16px;
+  background: rgba(7,10,18,0.92);
+  border: 1px solid rgba(var(--neon-rgb),0.20);
+  color: rgba(245,247,255,0.92);
+  font-weight: 900;
+  font-size: .92rem;
+  line-height: 1.35;
+  box-shadow: var(--shadow);
+  opacity: 0;
+  transition: opacity .15s var(--ease);
+}
+.chart-tip.show{ opacity: 1; }
+
+/* ---------- Footer ---------- */
+.site-footer{
+  padding: 22px 18px 32px;
+  border-top: 1px solid rgba(255,255,255,0.10);
+  background: rgba(7,10,18,0.40);
+  backdrop-filter: blur(16px);
+}
+.footer-inner{
+  max-width: 1100px;
+  margin:0 auto;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.footer-left{
+  display:flex; align-items:center; gap: 10px;
+  color: rgba(245,247,255,0.74);
+  font-weight: 850;
+}
+.footer-title{ color: rgba(245,247,255,0.92); font-weight: 950; }
+.footer-dot{ color: rgba(var(--neon-rgb),0.90); }
+.footer-note{ color: rgba(245,247,255,0.70); }
+.footer-link{
+  color: rgba(var(--neon-rgb),0.95);
+  text-decoration:none;
+  font-weight: 950;
+  padding: 10px 12px;
+  border-radius: 16px;
+  background: rgba(var(--neon-rgb),0.08);
+  border: 1px solid rgba(var(--neon-rgb),0.14);
+  transition: transform .2s var(--ease), border-color .2s var(--ease);
+}
+.footer-link:hover{ transform: translateY(-1px); border-color: rgba(var(--neon-rgb),0.22); }
+
+/* ---------- Back to top ---------- */
+.back-top{
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 99999;
+  width: 48px; height: 48px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.06);
+  color: rgba(245,247,255,0.92);
+  font-weight: 950;
+  cursor:pointer;
+  display:grid; place-items:center;
+  opacity:0;
+  transform: translateY(10px);
+  pointer-events:none;
+  transition: opacity .2s var(--ease), transform .2s var(--ease), border-color .2s var(--ease);
+}
+.back-top.show{
+  opacity:1;
+  transform: translateY(0);
+  pointer-events:auto;
+}
+.back-top:hover{ border-color: rgba(var(--neon-rgb),0.22); }
+
+/* ---------- Reveal animations ---------- */
+.reveal{
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity .85s var(--ease), transform .85s var(--ease);
+}
+.reveal.in{
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes cardIn{
+  0%{ opacity: 0; transform: translateY(14px) scale(.98); }
+  100%{ opacity: 1; transform: translateY(0) scale(1); }
+}
+.reveal.in :where(
+  .glass-card,
+  .p-card,
+  .goal-card,
+  .wf,
+  .node,
+  .hw,
+  .infer,
+  .kpi-card,
+  .results-panel,
+  .fig-card,
+  .future-card,
+  .contact-block
+){
+  animation: cardIn .8s var(--ease) both;
+}
+.reveal.in :where(.p-card,.goal-card,.wf,.node,.hw,.infer,.kpi-card,.fig-card,.future-card,.contact-block):nth-child(2){ animation-delay: .06s; }
+.reveal.in :where(.p-card,.goal-card,.wf,.node,.hw,.infer,.kpi-card,.fig-card,.future-card,.contact-block):nth-child(3){ animation-delay: .12s; }
+.reveal.in :where(.p-card,.goal-card,.wf,.node,.hw,.infer,.kpi-card,.fig-card,.future-card,.contact-block):nth-child(4){ animation-delay: .18s; }
+.reveal.in :where(.p-card,.goal-card,.wf,.node,.hw,.infer,.kpi-card,.fig-card,.future-card,.contact-block):nth-child(5){ animation-delay: .24s; }
+.reveal.in :where(.p-card,.goal-card,.wf,.node,.hw,.infer,.kpi-card,.fig-card,.future-card,.contact-block):nth-child(6){ animation-delay: .30s; }
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior: auto; }
+  *{ animation:none !important; transition:none !important; }
+  .reveal{ opacity:1; transform:none; }
+}
+
+
+

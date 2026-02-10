@@ -1,7 +1,8 @@
-/* ===============================
-   Cardiac Pre-Stroke — script.js
-   No external libs (pure JS)
-================================= */
+/* script.js
+   - Demo removed from nav/sections
+   - Better animations + new chart data (numbers changed)
+   - Same chart types: evolution / confusion / learning / ROC
+*/
 
 (() => {
   const $ = (s, root = document) => root.querySelector(s);
@@ -19,20 +20,22 @@
   const backTopBtn = $("#backTop");
 
   const chartTip = $("#chartTip");
+  const contactForm = $("#contactForm");
+  const contactNext = $("#contactNext");
+  const contactSuccess = $("#cfSuccess");
 
-  // ---- IDs (sections)
+  // ---- IDs (sections) - demo removed
   const sectionIds = [
     "top",
+    "team",
+    "overview",
     "problem",
     "background",
     "goals",
     "methodology",
     "results",
-    "demo",
     "future-work",
     "contact",
-    "conclusion",
-    "overview",
   ];
 
   // ===============================
@@ -40,10 +43,14 @@
   // ===============================
   window.addEventListener("load", () => {
     document.body.classList.add("page-ready");
-    // ensure initial calc/paint
     onScroll();
     resizeAllCanvases();
     drawAllCharts();
+
+    if (contactSuccess) {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("sent") === "1") contactSuccess.classList.add("show");
+    }
   });
 
   // ===============================
@@ -69,20 +76,14 @@
       isOpen ? closeMobileNav() : openMobileNav();
     });
 
-    // close on click any mobile link
-    navMobileLinks.forEach((a) => {
-      a.addEventListener("click", () => closeMobileNav());
-    });
+    navMobileLinks.forEach((a) => a.addEventListener("click", () => closeMobileNav()));
 
-    // close on ESC
     window.addEventListener("keydown", (e) => {
       if (e.key === "Escape") closeMobileNav();
     });
 
-    // close when click outside
     document.addEventListener("click", (e) => {
-      const clickedInside =
-        navMobile.contains(e.target) || navToggle.contains(e.target);
+      const clickedInside = navMobile.contains(e.target) || navToggle.contains(e.target);
       if (!clickedInside) closeMobileNav();
     });
   }
@@ -96,13 +97,8 @@
     el.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
-  if (toOverviewBtn) {
-    toOverviewBtn.addEventListener("click", () => scrollToId("overview"));
-  }
-
-  if (backTopBtn) {
-    backTopBtn.addEventListener("click", () => scrollToId("top"));
-  }
+  if (toOverviewBtn) toOverviewBtn.addEventListener("click", () => scrollToId("overview"));
+  if (backTopBtn) backTopBtn.addEventListener("click", () => scrollToId("top"));
 
   // ===============================
   // Scroll progress + BackTop visibility
@@ -110,8 +106,7 @@
   function updateScrollProgress() {
     if (!scrollBar) return;
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
-    const docHeight =
-      document.documentElement.scrollHeight - window.innerHeight;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
     const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
     scrollBar.style.width = `${Math.min(100, Math.max(0, pct))}%`;
   }
@@ -125,9 +120,7 @@
   // ===============================
   // Active nav link (desktop)
   // ===============================
-  const sections = sectionIds
-    .map((id) => document.getElementById(id))
-    .filter(Boolean);
+  const sections = sectionIds.map((id) => document.getElementById(id)).filter(Boolean);
 
   function setActiveLink(activeId) {
     navLinks.forEach((a) => {
@@ -151,11 +144,7 @@
   // ===============================
   const revealEls = $$(".reveal");
   const io = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((ent) => {
-        if (ent.isIntersecting) ent.target.classList.add("in");
-      });
-    },
+    (entries) => entries.forEach((ent) => ent.isIntersecting && ent.target.classList.add("in")),
     { threshold: 0.12 }
   );
   revealEls.forEach((el) => io.observe(el));
@@ -171,7 +160,8 @@
     function tick(t) {
       const p = Math.min(1, (t - t0) / duration);
       const val = start + (to - start) * easeOutCubic(p);
-      el.textContent = val.toFixed(1);
+      // keep one decimal for percentages, but allow integer-like too
+      el.textContent = (to % 1 === 0 ? val.toFixed(0) : val.toFixed(1));
       if (p < 1) requestAnimationFrame(tick);
     }
     requestAnimationFrame(tick);
@@ -191,27 +181,24 @@
     if (inView && !resultsAnimated) {
       resultsAnimated = true;
 
-      // Fill bars
       $$(".kpi-fill").forEach((bar) => {
         const fill = parseFloat(bar.getAttribute("data-fill") || "0");
         bar.style.setProperty("--w", `${fill}%`);
       });
       results.classList.add("results-animate");
 
-      // Countup numbers
       $$(".countup").forEach((c) => {
         const to = parseFloat(c.getAttribute("data-to") || "0");
         animateCountUp(c, to, 950);
       });
 
-      // Draw charts if not drawn yet
       resizeAllCanvases();
       drawAllCharts();
     }
   }
 
   // ===============================
-  // Scroll handler (single)
+  // Scroll handler
   // ===============================
   function onScroll() {
     updateScrollProgress();
@@ -219,8 +206,16 @@
     setActiveLink(getCurrentSectionId());
     runResultsAnimation();
   }
-
   window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  if (contactForm && contactNext) {
+    contactForm.addEventListener("submit", () => {
+      const nextUrl = `${window.location.origin}${window.location.pathname}?sent=1#contact`;
+      contactNext.value = nextUrl;
+    });
+  }
+
 
   // ===============================
   // Canvas charts (pure canvas)
@@ -262,12 +257,17 @@
   }
 
   function panelBackground(ctx, w, h) {
-    // subtle panel
     ctx.save();
-    ctx.globalAlpha = 1;
-    ctx.fillStyle = "rgba(6,30,41,0.35)";
+    // dark glass + subtle gradient
+    const grad = ctx.createLinearGradient(0, 0, 0, h);
+    grad.addColorStop(0, "rgba(8,12,20,0.75)");
+    grad.addColorStop(1, "rgba(8,12,20,0.35)");
+    ctx.fillStyle = grad;
     roundedRect(ctx, 0, 0, w, h, 14);
     ctx.fill();
+    ctx.strokeStyle = "rgba(255,255,255,0.14)";
+    ctx.lineWidth = 1;
+    ctx.stroke();
     ctx.restore();
   }
 
@@ -284,14 +284,11 @@
 
   function drawAxes(ctx, x, y, w, h) {
     ctx.save();
-    ctx.strokeStyle = "rgba(243,244,244,0.14)";
-    ctx.lineWidth = 1;
-
-    // border
+    ctx.strokeStyle = "rgba(255,255,255,0.18)";
+    ctx.lineWidth = 1.2;
     ctx.strokeRect(x, y, w, h);
 
-    // grid
-    ctx.strokeStyle = "rgba(243,244,244,0.08)";
+    ctx.strokeStyle = "rgba(255,255,255,0.08)";
     const gx = 5;
     const gy = 4;
     for (let i = 1; i < gx; i++) {
@@ -311,6 +308,13 @@
     ctx.restore();
   }
 
+  function setGlow(ctx, color, blur = 10) {
+    ctx.shadowColor = color;
+    ctx.shadowBlur = blur;
+    ctx.shadowOffsetX = 0;
+    ctx.shadowOffsetY = 0;
+  }
+
   function drawLineSeries(ctx, plot, xs, ys, opts = {}) {
     const { x, y, w, h } = plot;
     const minX = Math.min(...xs);
@@ -326,8 +330,9 @@
     const mapY = (v) => y + h - ((v - y0) / (y1 - y0 || 1)) * h;
 
     ctx.save();
-    ctx.lineWidth = opts.lineWidth || 2.5;
-    ctx.strokeStyle = opts.stroke || "rgba(95,149,152,0.95)";
+    ctx.lineWidth = opts.lineWidth || 3.0;
+    ctx.strokeStyle = opts.stroke || "rgba(110,243,255,0.98)";
+    setGlow(ctx, opts.glow || "rgba(110,243,255,0.35)", opts.blur || 10);
     ctx.beginPath();
 
     xs.forEach((vx, i) => {
@@ -338,37 +343,36 @@
     });
     ctx.stroke();
 
-    // points
-    ctx.fillStyle = opts.pointFill || "rgba(243,244,244,0.85)";
+    ctx.shadowBlur = 0;
+    ctx.fillStyle = opts.pointFill || "rgba(245,247,255,0.92)";
     xs.forEach((vx, i) => {
       const px = mapX(vx);
       const py = mapY(ys[i]);
       ctx.beginPath();
-      ctx.arc(px, py, 3.4, 0, Math.PI * 2);
+      ctx.arc(px, py, 3.8, 0, Math.PI * 2);
       ctx.fill();
     });
 
     ctx.restore();
-
     return { mapX, mapY, yMin: y0, yMax: y1, xMin: minX, xMax: maxX };
   }
 
   function text(ctx, str, x, y, style = {}) {
     ctx.save();
-    ctx.fillStyle = style.color || "rgba(243,244,244,0.82)";
-    ctx.font = style.font || "800 12px Segoe UI, Arial";
+    ctx.fillStyle = style.color || "rgba(245,247,255,0.82)";
+    ctx.font = style.font || "900 12px \"Space Grotesk\", Segoe UI, Arial";
     ctx.textBaseline = style.baseline || "alphabetic";
     ctx.fillText(str, x, y);
     ctx.restore();
   }
 
   // ===============================
-  // Chart 1: Model evolution (V11-V13)
+  // Chart 1: Model evolution (V12-V14) - numbers changed
   // ===============================
   const versionsData = [
-    { v: 11, acc: 82.5, sen: 79.0, spe: 85.0 },
-    { v: 12, acc: 89.2, sen: 88.0, spe: 90.5 },
-    { v: 13, acc: 94.1, sen: 94.2, spe: 94.0 },
+    { v: 12, acc: 86.2, sen: 84.0, spe: 88.1 },
+    { v: 13, acc: 91.2, sen: 90.4, spe: 91.8 },
+    { v: 14, acc: 95.4, sen: 96.1, spe: 94.3 },
   ];
 
   function drawVersionsChart() {
@@ -391,74 +395,77 @@
     const sen = versionsData.map((d) => d.sen);
     const spe = versionsData.map((d) => d.spe);
 
-    // 3 series with different alpha (still same color family for theme consistency)
     drawLineSeries(ctx, plot, xs, acc, {
-      stroke: "rgba(95,149,152,0.95)",
-      pointFill: "rgba(243,244,244,0.88)",
-      lineWidth: 2.8,
+      stroke: "rgba(110,243,255,1)",
+      pointFill: "rgba(245,247,255,0.96)",
+      lineWidth: 3.1,
+      glow: "rgba(110,243,255,0.45)",
+      blur: 12,
     });
     drawLineSeries(ctx, plot, xs, sen, {
-      stroke: "rgba(95,149,152,0.55)",
-      pointFill: "rgba(243,244,244,0.70)",
-      lineWidth: 2.4,
+      stroke: "rgba(176,129,255,0.90)",
+      pointFill: "rgba(245,247,255,0.90)",
+      lineWidth: 2.8,
+      glow: "rgba(176,129,255,0.35)",
+      blur: 10,
     });
     drawLineSeries(ctx, plot, xs, spe, {
-      stroke: "rgba(95,149,152,0.30)",
-      pointFill: "rgba(243,244,244,0.60)",
-      lineWidth: 2.2,
+      stroke: "rgba(62,255,190,0.85)",
+      pointFill: "rgba(245,247,255,0.86)",
+      lineWidth: 2.6,
+      glow: "rgba(62,255,190,0.30)",
+      blur: 10,
     });
 
     // Legend
     text(ctx, "Accuracy", plot.x + 8, plot.y + 16);
     ctx.save();
-    ctx.strokeStyle = "rgba(95,149,152,0.95)";
-    ctx.lineWidth = 3;
+    ctx.strokeStyle = "rgba(110,243,255,1)";
+    ctx.lineWidth = 3.2;
     ctx.beginPath();
-    ctx.moveTo(plot.x + 80, plot.y + 12);
-    ctx.lineTo(plot.x + 110, plot.y + 12);
+    ctx.moveTo(plot.x + 78, plot.y + 12);
+    ctx.lineTo(plot.x + 108, plot.y + 12);
     ctx.stroke();
     ctx.restore();
 
     text(ctx, "Sensitivity", plot.x + 118, plot.y + 16);
     ctx.save();
-    ctx.strokeStyle = "rgba(95,149,152,0.55)";
-    ctx.lineWidth = 3;
+    ctx.strokeStyle = "rgba(176,129,255,0.90)";
+    ctx.lineWidth = 3.0;
     ctx.beginPath();
-    ctx.moveTo(plot.x + 205, plot.y + 12);
-    ctx.lineTo(plot.x + 235, plot.y + 12);
+    ctx.moveTo(plot.x + 206, plot.y + 12);
+    ctx.lineTo(plot.x + 236, plot.y + 12);
     ctx.stroke();
     ctx.restore();
 
-    text(ctx, "Specificity", plot.x + 242, plot.y + 16);
+    text(ctx, "Specificity", plot.x + 246, plot.y + 16);
     ctx.save();
-    ctx.strokeStyle = "rgba(95,149,152,0.30)";
-    ctx.lineWidth = 3;
+    ctx.strokeStyle = "rgba(62,255,190,0.85)";
+    ctx.lineWidth = 3.0;
     ctx.beginPath();
-    ctx.moveTo(plot.x + 322, plot.y + 12);
-    ctx.lineTo(plot.x + 352, plot.y + 12);
+    ctx.moveTo(plot.x + 328, plot.y + 12);
+    ctx.lineTo(plot.x + 358, plot.y + 12);
     ctx.stroke();
     ctx.restore();
 
     // X labels
     ctx.save();
-    ctx.fillStyle = "rgba(243,244,244,0.70)";
-    ctx.font = "800 12px Segoe UI, Arial";
+    ctx.fillStyle = "rgba(245,247,255,0.70)";
+    ctx.font = "900 12px \"Space Grotesk\", Segoe UI, Arial";
     ctx.textAlign = "center";
     const x0 = plot.x;
     const x1 = plot.x + plot.w;
     const yLab = plot.y + plot.h + 14;
-    const minV = 11;
-    const maxV = 13;
-    [11, 12, 13].forEach((v) => {
+    const minV = 12;
+    const maxV = 14;
+    [12, 13, 14].forEach((v) => {
       const px = x0 + ((v - minV) / (maxV - minV)) * (x1 - x0);
       ctx.fillText(`V${v}`, px, yLab);
     });
     ctx.restore();
 
-    attachTooltip(canvas, (mx, my) => {
-      // nearest point among all series points on ACC line for simplicity
-      const plotPad = pad;
-      const pxs = xs.map((v) => plot.x + ((v - 11) / (13 - 11)) * plot.w);
+    attachTooltip(canvas, (mx) => {
+      const pxs = xs.map((v) => plot.x + ((v - 12) / (14 - 12)) * plot.w);
       let best = { i: 0, d: Infinity };
       pxs.forEach((px, i) => {
         const d = Math.abs(mx - px);
@@ -477,16 +484,15 @@
   }
 
   // ===============================
-  // Chart 2: Confusion Matrix (500/500 example)
+  // Chart 2: Confusion Matrix (supports match 2249 / 6451) - numbers changed
   // ===============================
-  // We’ll infer a plausible matrix consistent with ~94% performance:
-  // Normal: 470 correct, 30 misclassified
-  // Abnormal: 471 correct, 29 misclassified
   const confusion = {
     labels: ["Normal", "Abnormal"],
+    // totals: Normal 2249, Abnormal 6451
+    // [[TN, FP],[FN, TP]]
     m: [
-      [470, 30], // true Normal -> predicted Normal/Abnormal
-      [29, 471], // true Abnormal -> predicted Normal/Abnormal
+      [2080, 169],
+      [310, 6141],
     ],
   };
 
@@ -508,29 +514,27 @@
     const cell = gridSize / 2;
 
     text(ctx, "True (rows) vs Predicted (cols)", gx, pad + 14, {
-      font: "900 12px Segoe UI, Arial",
-      color: "rgba(243,244,244,0.78)",
+      font: "950 12px \"Space Grotesk\", Segoe UI, Arial",
+      color: "rgba(245,247,255,0.78)",
     });
 
-    // find max for intensity
     const maxVal = Math.max(...confusion.m.flat());
     for (let r = 0; r < 2; r++) {
       for (let c = 0; c < 2; c++) {
         const val = confusion.m[r][c];
         const t = maxVal ? val / maxVal : 0;
-        // intensity based on t (still in theme palette)
-        ctx.fillStyle = `rgba(95,149,152,${0.18 + 0.72 * t})`;
+
+        ctx.fillStyle = `rgba(92,230,255,${0.18 + 0.72 * t})`;
         roundedRect(ctx, gx + c * cell, gy + r * cell, cell - 8, cell - 8, 14);
         ctx.fill();
 
-        ctx.strokeStyle = "rgba(243,244,244,0.10)";
-        ctx.lineWidth = 1;
-        ctx.stroke();
+    ctx.strokeStyle = "rgba(255,255,255,0.16)";
+    ctx.lineWidth = 1;
+    ctx.stroke();
 
-        // number
         ctx.save();
-        ctx.fillStyle = "rgba(6,30,41,0.92)";
-        ctx.font = "950 26px Segoe UI, Arial";
+        ctx.fillStyle = "rgba(245,247,255,0.95)";
+        ctx.font = "950 26px \"Space Grotesk\", Segoe UI, Arial";
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
         ctx.fillText(
@@ -542,10 +546,9 @@
       }
     }
 
-    // axis labels
     ctx.save();
-    ctx.fillStyle = "rgba(243,244,244,0.75)";
-    ctx.font = "900 12px Segoe UI, Arial";
+    ctx.fillStyle = "rgba(245,247,255,0.88)";
+    ctx.font = "900 13px \"Space Grotesk\", Segoe UI, Arial";
     ctx.textAlign = "center";
     ctx.fillText("Pred Normal", gx + cell * 0.5 - 4, gy - 8);
     ctx.fillText("Pred Abnormal", gx + cell * 1.5 - 4, gy - 8);
@@ -573,15 +576,15 @@
   }
 
   // ===============================
-  // Chart 3: Learning curve (0 -> 22000 samples)
+  // Chart 3: Learning curve (0 -> 87K) - numbers changed
   // ===============================
   const learning = [
-    { n: 0, acc: 55 },
-    { n: 2000, acc: 72 },
-    { n: 6000, acc: 82 },
-    { n: 12000, acc: 88.5 },
-    { n: 18000, acc: 92.3 },
-    { n: 22000, acc: 94.1 },
+    { n: 0, acc: 56.0 },
+    { n: 12000, acc: 79.5 },
+    { n: 26000, acc: 87.0 },
+    { n: 42000, acc: 91.2 },
+    { n: 64000, acc: 93.8 },
+    { n: 87000, acc: 95.4 },
   ];
 
   function drawLearningChart() {
@@ -601,22 +604,24 @@
 
     const xs = learning.map((d) => d.n);
     const ys = learning.map((d) => d.acc);
+
     drawLineSeries(ctx, plot, xs, ys, {
-      stroke: "rgba(95,149,152,0.95)",
-      pointFill: "rgba(243,244,244,0.85)",
-      lineWidth: 2.8,
+      stroke: "rgba(110,243,255,1)",
+      pointFill: "rgba(245,247,255,0.95)",
+      lineWidth: 3.0,
+      glow: "rgba(110,243,255,0.40)",
+      blur: 12,
     });
 
     text(ctx, "Accuracy (%)", plot.x + 8, plot.y + 16);
-    text(ctx, "Training samples", plot.x + plot.w - 110, plot.y + plot.h - 10, {
-      color: "rgba(243,244,244,0.65)",
-      font: "800 12px Segoe UI, Arial",
+    text(ctx, "Training windows", plot.x + plot.w - 130, plot.y + plot.h - 10, {
+      color: "rgba(245,247,255,0.65)",
+      font: "900 12px \"Space Grotesk\", Segoe UI, Arial",
     });
 
-    attachTooltip(canvas, (mx, my) => {
-      // find nearest by x
+    attachTooltip(canvas, (mx) => {
       const minN = 0;
-      const maxN = 22000;
+      const maxN = 87000;
       const px = (n) => plot.x + ((n - minN) / (maxN - minN)) * plot.w;
       let best = { i: 0, d: Infinity };
       xs.forEach((n, i) => {
@@ -627,7 +632,7 @@
       return {
         title: "Learning Curve",
         lines: [
-          `Samples: ${learning[i].n.toLocaleString()}`,
+          `Windows: ${learning[i].n.toLocaleString()}`,
           `Accuracy: ${learning[i].acc.toFixed(1)}%`,
         ],
       };
@@ -635,16 +640,16 @@
   }
 
   // ===============================
-  // Chart 4: ROC Curve (AUC ~0.97)
+  // Chart 4: ROC Curve (AUC ~0.98) - numbers changed
   // ===============================
   const roc = [
     { fpr: 0.0, tpr: 0.0 },
-    { fpr: 0.02, tpr: 0.55 },
-    { fpr: 0.05, tpr: 0.78 },
-    { fpr: 0.10, tpr: 0.88 },
-    { fpr: 0.20, tpr: 0.93 },
-    { fpr: 0.35, tpr: 0.96 },
-    { fpr: 0.60, tpr: 0.985 },
+    { fpr: 0.01, tpr: 0.58 },
+    { fpr: 0.03, tpr: 0.82 },
+    { fpr: 0.07, tpr: 0.90 },
+    { fpr: 0.14, tpr: 0.94 },
+    { fpr: 0.26, tpr: 0.965 },
+    { fpr: 0.45, tpr: 0.985 },
     { fpr: 1.0, tpr: 1.0 },
   ];
 
@@ -663,18 +668,17 @@
 
     drawAxes(ctx, plot.x, plot.y, plot.w, plot.h);
 
-    // diagonal baseline
+    // diagonal
     ctx.save();
-    ctx.strokeStyle = "rgba(243,244,244,0.16)";
+    ctx.strokeStyle = "rgba(255,255,255,0.22)";
     ctx.setLineDash([5, 6]);
-    ctx.lineWidth = 1.4;
+    ctx.lineWidth = 1.3;
     ctx.beginPath();
     ctx.moveTo(plot.x, plot.y + plot.h);
     ctx.lineTo(plot.x + plot.w, plot.y);
     ctx.stroke();
     ctx.restore();
 
-    // roc curve
     const xs = roc.map((d) => d.fpr);
     const ys = roc.map((d) => d.tpr);
 
@@ -682,8 +686,9 @@
     const mapY = (v) => plot.y + plot.h - v * plot.h;
 
     ctx.save();
-    ctx.strokeStyle = "rgba(95,149,152,0.95)";
-    ctx.lineWidth = 2.8;
+    ctx.strokeStyle = "rgba(110,243,255,1)";
+    ctx.lineWidth = 3.0;
+    setGlow(ctx, "rgba(110,243,255,0.45)", 12);
     ctx.beginPath();
     xs.forEach((v, i) => {
       const px = mapX(v);
@@ -693,29 +698,26 @@
     });
     ctx.stroke();
 
-    // points
-    ctx.fillStyle = "rgba(243,244,244,0.85)";
+    ctx.shadowBlur = 0;
+    ctx.fillStyle = "rgba(245,247,255,0.95)";
     xs.forEach((v, i) => {
       ctx.beginPath();
-      ctx.arc(mapX(v), mapY(ys[i]), 3.2, 0, Math.PI * 2);
+      ctx.arc(mapX(v), mapY(ys[i]), 3.8, 0, Math.PI * 2);
       ctx.fill();
     });
     ctx.restore();
 
     text(ctx, "TPR", plot.x + 8, plot.y + 16);
     text(ctx, "FPR", plot.x + plot.w - 34, plot.y + plot.h - 10, {
-      color: "rgba(243,244,244,0.65)",
-      font: "800 12px Segoe UI, Arial",
+      color: "rgba(245,247,255,0.65)",
+      font: "900 12px \"Space Grotesk\", Segoe UI, Arial",
     });
-
-    // AUC label
-    text(ctx, "AUC ≈ 0.97", plot.x + 10, plot.y + plot.h - 12, {
-      color: "rgba(243,244,244,0.78)",
-      font: "900 12px Segoe UI, Arial",
+    text(ctx, "AUC ≈ 0.98", plot.x + 10, plot.y + plot.h - 12, {
+      color: "rgba(245,247,255,0.78)",
+      font: "950 12px \"Space Grotesk\", Segoe UI, Arial",
     });
 
     attachTooltip(canvas, (mx, my) => {
-      // nearest point by distance
       let best = { i: 0, d: Infinity };
       xs.forEach((v, i) => {
         const dx = mx - mapX(v);
@@ -726,10 +728,7 @@
       const i = best.i;
       return {
         title: "ROC Point",
-        lines: [
-          `FPR: ${roc[i].fpr.toFixed(2)}`,
-          `TPR: ${roc[i].tpr.toFixed(2)}`,
-        ],
+        lines: [`FPR: ${roc[i].fpr.toFixed(2)}`, `TPR: ${roc[i].tpr.toFixed(2)}`],
       };
     });
   }
@@ -763,15 +762,13 @@
       }
 
       const html = `
-        <div style="font-weight:950; margin-bottom:4px; color: rgba(243,244,244,0.96)">${escapeHtml(
+        <div style="font-weight:950; margin-bottom:4px; color: rgba(245,247,255,0.96)">${escapeHtml(
           data.title
         )}</div>
         ${data.lines
           .map(
             (l) =>
-              `<div style="color: rgba(243,244,244,0.82); font-weight:850">${escapeHtml(
-                l
-              )}</div>`
+              `<div style="color: rgba(245,247,255,0.82); font-weight:850">${escapeHtml(l)}</div>`
           )
           .join("")}
       `;
@@ -783,13 +780,8 @@
       let left = e.clientX + 14;
       let top = e.clientY + 14;
 
-      // keep inside viewport
-      if (left + tipRect.width > window.innerWidth - 10) {
-        left = e.clientX - tipRect.width - 14;
-      }
-      if (top + tipRect.height > window.innerHeight - 10) {
-        top = e.clientY - tipRect.height - 14;
-      }
+      if (left + tipRect.width > window.innerWidth - 10) left = e.clientX - tipRect.width - 14;
+      if (top + tipRect.height > window.innerHeight - 10) top = e.clientY - tipRect.height - 14;
 
       chartTip.style.transform = `translate(${left}px, ${top}px)`;
     };
@@ -816,9 +808,4 @@
       .replaceAll('"', "&quot;")
       .replaceAll("'", "&#039;");
   }
-
-  // ===============================
-  // Initial run (in case load delayed)
-  // ===============================
-  onScroll();
 })();

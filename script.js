@@ -27,7 +27,6 @@
   // ---- IDs (sections) - demo removed
   const sectionIds = [
     "top",
-    "team",
     "overview",
     "problem",
     "background",

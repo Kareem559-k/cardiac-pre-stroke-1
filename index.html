@@ -1,1036 +1,411 @@
-<!-- index.html -->
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="AI-synchronized ECG system for early stroke risk prediction in CAD patients." />
-  <meta name="theme-color" content="#070A12" />
-  <title>Cardiac Pre-Stroke</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Cardiac Pre-Ischemia is a research ECG screening platform that turns multi-lead recordings into signal measurements, calibrated AI output, and clinician-ready reports.">
+  <meta name="theme-color" content="#f2efe8">
+  <meta property="og:title" content="Cardiac Pre-Ischemia">
+  <meta property="og:description" content="ECG intelligence, from signal to structured screening report.">
+  <title>Cardiac Pre-Ischemia | ECG Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-  <!-- Skip link (Accessibility) -->
-  <a class="skip-link" href="#overview">Skip to content</a>
+  <a class="skip-link" href="#main">Skip to content</a>
 
-  <!-- Ambient blobs -->
-  <div class="bg-blobs" aria-hidden="true">
-    <span class="blob b1"></span>
-    <span class="blob b2"></span>
-    <span class="blob b3"></span>
+  <div class="loader" id="loader" aria-hidden="true">
+    <div class="loader-mark">
+      <svg viewBox="0 0 160 42" role="presentation">
+        <path d="M2 22h37l8-14 12 27 12-18 9 5h78"/>
+      </svg>
+    </div>
+    <div class="loader-copy"><span>CALIBRATING SIGNAL</span><b id="loadValue">00</b></div>
   </div>
 
-  <!-- Scroll progress -->
-  <div class="scroll-progress" aria-hidden="true">
-    <div class="scroll-progress-bar" id="scrollProgressBar"></div>
-  </div>
+  <div class="scroll-progress" aria-hidden="true"><span id="scrollProgress"></span></div>
+  <div class="cursor" id="cursor" aria-hidden="true"><i></i></div>
 
-  <!-- ================= TOP NAV ================= -->
-  <header class="top-nav" id="topNav">
-    <div class="nav-inner">
-      <a class="brand" href="#top" aria-label="Go to top">
-        <span class="brand-dot"></span>
-        CARDIAC <span class="brand-accent">PRE-STROKE</span>
-      </a>
+  <header class="site-header" id="siteHeader">
+    <a class="brand" href="#top" aria-label="Cardiac Pre-Ischemia home">
+      <svg class="brand-symbol" viewBox="0 0 44 44" aria-hidden="true">
+        <rect x="1" y="1" width="42" height="42" rx="13"/>
+        <path d="M8 23h8l3-8 6 16 4-10 3 2h5"/>
+      </svg>
+      <span>CARDIAC<br><strong>PRE-ISCHEMIA</strong></span>
+    </a>
 
-      <nav class="nav-links" aria-label="Primary">
-        <a href="#top" class="nav-link">Home</a>
-        <a href="#problem" class="nav-link">Problem</a>
-        <a href="#background" class="nav-link">Background</a>
-        <a href="#methodology" class="nav-link">Methods</a>
-        <a href="#results" class="nav-link">Results</a>
-        <a href="#future-work" class="nav-link">Future</a>
-        <a href="#contact" class="nav-link">Contact</a>
-      </nav>
+    <nav class="desktop-nav" aria-label="Primary navigation">
+      <a href="#system">System</a>
+      <a href="#pipeline">Pipeline</a>
+      <a href="#model">Model</a>
+      <a href="#evidence">Evidence</a>
+    </nav>
 
-      <!-- Mobile toggle -->
-      <button class="nav-toggle" id="navToggle" type="button" aria-label="Open menu" aria-expanded="false">
-        ☰
-      </button>
-    </div>
+    <a class="header-launch magnetic" href="https://cardiac-pre-ischemia-production.up.railway.app/" target="_blank" rel="noopener">
+      Launch platform <span aria-hidden="true">↗</span>
+    </a>
 
-    <!-- Mobile panel -->
-    <div class="nav-mobile" id="navMobile" aria-label="Mobile menu">
-      <a href="#top" class="nav-m">Home</a>
-      <a href="#problem" class="nav-m">Problem</a>
-      <a href="#background" class="nav-m">Background</a>
-      <a href="#goals" class="nav-m">Goals</a>
-      <a href="#methodology" class="nav-m">Methods</a>
-      <a href="#results" class="nav-m">Results</a>
-      <a href="#future-work" class="nav-m">Future</a>
-      <a href="#contact" class="nav-m">Contact</a>
-    </div>
+    <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open navigation" aria-expanded="false">
+      <span></span><span></span>
+    </button>
   </header>
 
-  <!-- ================= HERO ================= -->
-  <section class="hero reveal" id="top">
-    <div class="hero-content glass">
-      <!-- ECG -->
-      <div class="ecg-top" aria-hidden="true">
-        <svg class="ecg" viewBox="0 0 1200 200" preserveAspectRatio="none">
-          <path class="ecg-holo"
-            d="M0,120 L120,120 L150,120 L170,70 L190,160 L210,120 L260,120
-               L330,120 L360,120 L380,85 L395,150 L410,120 L480,120
-               L520,120
-               C535,75 575,75 600,100
-               C625,75 665,75 680,120
-               C690,155 660,175 600,185
-               C540,175 510,155 520,120
-               L720,120
-               L820,120 L850,120 L870,90 L885,150 L900,120 L980,120
-               L1200,120" />
-          <path class="ecg-path"
-            d="M0,120 L120,120 L150,120 L170,70 L190,160 L210,120 L260,120
-               L330,120 L360,120 L380,85 L395,150 L410,120 L480,120
-               L520,120
-               C535,75 575,75 600,100
-               C625,75 665,75 680,120
-               C690,155 660,175 600,185
-               C540,175 510,155 520,120
-               L720,120
-               L820,120 L850,120 L870,90 L885,150 L900,120 L980,120
-               L1200,120" />
-          <path class="ecg-scan"
-            d="M0,120 L120,120 L150,120 L170,70 L190,160 L210,120 L260,120
-               L330,120 L360,120 L380,85 L395,150 L410,120 L480,120
-               L520,120
-               C535,75 575,75 600,100
-               C625,75 665,75 680,120
-               C690,155 660,175 600,185
-               C540,175 510,155 520,120
-               L720,120
-               L820,120 L850,120 L870,90 L885,150 L900,120 L980,120
-               L1200,120" />
-        </svg>
-      </div>
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <nav>
+      <a href="#system"><small>01</small> System</a>
+      <a href="#pipeline"><small>02</small> Pipeline</a>
+      <a href="#model"><small>03</small> Model</a>
+      <a href="#evidence"><small>04</small> Evidence</a>
+      <a href="#contact"><small>05</small> Contact</a>
+    </nav>
+    <a class="button button-dark" href="https://cardiac-pre-ischemia-production.up.railway.app/" target="_blank" rel="noopener">Open live application <span>↗</span></a>
+  </div>
 
-      <h1 class="glow-title">Cardiac Pre-Stroke</h1>
-      <a class="app-cta" href="https://download1324.mediafire.com/xpcuukyqdhrggiI1x6wdjrusCnQAyXUD1TR0xLs1v0pan53XyZzuB8zsO4QVhYm6gjWmClbbX9NjAGI9zfMjAPXPUuu84qvOvQP-5-b-4Rcx65cjRMpsYNE48Ck6DqIjuKIKcOWetmzgpEK4deXqpQzQy1b1y28Sjr1psBlGEWY6dDM/21dciomqcwmnfl7/app-release.apk" download>
-        <span class="app-cta-k">Get the App</span>
-        <span class="app-cta-sub">Android APK • 49 MB</span>
-      </a>
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="hero-aura" aria-hidden="true"></div>
+      <div class="hero-grid" aria-hidden="true"></div>
 
-      <p class="hero-sub">
-        AI‑powered ECG monitoring that flags early stroke/ischemic risk in CAD patients
-        before obvious symptoms appear.
-      </p>
-
-    </div>
-    <div class="hero-floor" aria-hidden="true"></div>
-  </section>
-
-  <!-- OVERVIEW -->
-  <section class="section reveal" id="overview">
-    <div class="section-inner">
-      <header class="sec-head">
-        <h2 class="sec-title">Overview</h2>
-        <p class="sec-sub">
-          From raw ECG signals to an early-warning risk signal — designed for continuous monitoring and clinical clarity.
-        </p>
-      </header>
-
-      <div class="glass-card grid-2">
-        <div class="copy">
-          <p class="glow-paragraph">
-            Cardiovascular diseases and stroke are among the leading causes of death worldwide, often occurring without early warning symptoms.
-            Subtle electrical micro-dynamic changes can precede critical events, yet remain invisible to standard short ECG snapshots.
-          </p>
-          <p class="glow-paragraph">
-            This project proposes an AI-synchronized ECG workflow that extracts micro-dynamics, learns latent risk patterns, and produces an interpretable risk score
-            for early preventive action — especially in CAD patients.
-          </p>
-        </div>
-
-        <div class="mini-pipeline">
-          <div class="mp-step">
-            <span class="mp-no">01</span>
-            <span class="mp-title">Acquire</span>
-            <span class="mp-desc">Wearable + verified datasets</span>
-          </div>
-          <div class="mp-step">
-            <span class="mp-no">02</span>
-            <span class="mp-title">Clean</span>
-            <span class="mp-desc">Filtering + normalization</span>
-          </div>
-          <div class="mp-step">
-            <span class="mp-no">03</span>
-            <span class="mp-title">Extract</span>
-            <span class="mp-desc">Micro-dynamic feature engine</span>
-          </div>
-          <div class="mp-step">
-            <span class="mp-no">04</span>
-            <span class="mp-title">Predict</span>
-            <span class="mp-desc">Risk probability + confidence</span>
-          </div>
-          <div class="mp-step">
-            <span class="mp-no">05</span>
-            <span class="mp-title">Monitor</span>
-            <span class="mp-desc">Continuous, clinician-ready view</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PROBLEM -->
-  <section class="section reveal" id="problem">
-    <div class="section-inner">
-      <header class="sec-head">
-        <h2 class="sec-title">Problem</h2>
-        <p class="sec-sub">
-          Cardiovascular disease is a leading cause of mortality — yet early metabolic-induced cardiac stress often goes undetected.
-          This diagnostic gap demands more sensitive, personalized screening.
-        </p>
-      </header>
-
-      <div class="problem-wrap glass">
-        <div class="problem-top">
-          <div class="problem-hero">
-            <div class="problem-badge">Clinical Gap</div>
-            <h3 class="problem-title">Early stress is silent — until it isn’t.</h3>
-            <p class="problem-lead">
-              Current ECG workflows detect abnormalities only after symptoms appear.
-              That creates a delay where micro-dynamic deterioration accumulates silently.
-            </p>
-            <div class="problem-metrics">
-              <div class="pm">
-                <span class="pm-k">Key risk</span>
-                <span class="pm-v">Subclinical progression</span>
-              </div>
-              <div class="pm">
-                <span class="pm-k">What’s missed</span>
-                <span class="pm-v">Micro-dynamic signals</span>
-              </div>
-              <div class="pm">
-                <span class="pm-k">Needed</span>
-                <span class="pm-v">Sensitive + personalized ECG</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="problem-side">
-            <div class="glass-card compact">
-              <div class="label">Core statement</div>
-              <p class="glow-paragraph" style="margin:0;">
-                “Urgent need for sensitive, personalized cardiac screening approaches” —
-                because early metabolic-induced stress can remain invisible to conventional standards.
-              </p>
-            </div>
-
-            <div class="sparkline" aria-hidden="true">
-              <div class="spark"></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="problem-grid">
-          <article class="p-card">
-            <h4>Urgency of Early Detection</h4>
-            <p>
-              Early cardiac stress is treatable if identified early, but many diagnostics fail to detect it before irreversible damage occurs.
-            </p>
-            <div class="p-foot"><span class="tag">Urgency</span><span class="tag">Prevention</span></div>
-          </article>
-
-          <article class="p-card">
-            <h4>Limits of Conventional Standards</h4>
-            <p>
-              Standard ECG detects abnormalities mainly after symptom onset, creating a significant diagnostic lag in real cases.
-            </p>
-            <div class="p-foot"><span class="tag">Static ECG</span><span class="tag">Lag</span></div>
-          </article>
-
-          <article class="p-card">
-            <h4>Unaddressed Bioenergetic Changes</h4>
-            <p>
-              Early disturbances in cardiac energy dynamics can precede events, but remain invisible to existing clinical tools.
-            </p>
-            <div class="p-foot"><span class="tag">Micro-dynamics</span><span class="tag">Hidden patterns</span></div>
-          </article>
-
-          <article class="p-card">
-            <h4>Portable & Personalized Gaps</h4>
-            <p>
-              Wearables suffer from motion noise and non-personalized thresholds, limiting accuracy across metabolically diverse populations.
-            </p>
-            <div class="p-foot"><span class="tag">Wearables</span><span class="tag">Personalization</span></div>
-          </article>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- BACKGROUND -->
-  <section class="section reveal" id="background">
-    <div class="section-inner">
-      <header class="sec-head">
-        <h2 class="sec-title">Background</h2>
-        <p class="sec-sub">
-          Why traditional analysis misses early risk — and what a personalized bioenergetic lens changes.
-        </p>
-      </header>
-
-      <div class="bg-layout">
-        <div class="bg-left glass-card">
-          <h3 class="bg-big">The Gap</h3>
-          <p class="glow-paragraph">
-            Conventional ECG often relies on population-wide thresholds without individual metabolic context.
-            That creates blind spots where early stress signals are treated as noise.
-          </p>
-
-          <div class="bg-pills">
-            <span class="pill neon">Calibration & Validation</span>
-            <span class="pill">Static Thresholds</span>
-            <span class="pill">Diagnostic Lag</span>
-            <span class="pill">Kinetic Interference</span>
-            <span class="pill">Morphological Reliance</span>
-            <span class="pill neon">Personalization Gap (η-factor)</span>
-          </div>
-
-          <div class="bg-quote glass">
-            <div class="q-mark">“</div>
-            <div class="q-body">
-              Adaptive monitoring is needed to detect silent ischemia earlier — especially under real-world motion and metabolic diversity.
-            </div>
-          </div>
-        </div>
-
-        <div class="bg-right">
-          <div class="flow glass">
-            <div class="flow-head">
-              <div class="flow-title">Research Foundation</div>
-              <div class="flow-sub">From limitations → to solutions</div>
-            </div>
-
-            <div class="flow-steps">
-              <div class="fstep">
-                <div class="ficon">⚙️</div>
-                <div class="fcopy">
-                  <div class="ft">Calibration & Validation</div>
-                  <div class="fd">Reduce false positives and improve stability across diverse profiles.</div>
-                </div>
-              </div>
-
-              <div class="fstep">
-                <div class="ficon">🧬</div>
-                <div class="fcopy">
-                  <div class="ft">Personalization Gap (η-factor)</div>
-                  <div class="fd">Adjust sensitivity using metabolic profiles to avoid “one-size-fits-all”.</div>
-                </div>
-              </div>
-
-              <div class="fstep">
-                <div class="ficon">🏃</div>
-                <div class="fcopy">
-                  <div class="ft">Kinetic Interference</div>
-                  <div class="fd">Motion-aware filtering to preserve signal integrity during movement.</div>
-                </div>
-              </div>
-
-              <div class="fstep">
-                <div class="ficon">🧠</div>
-                <div class="fcopy">
-                  <div class="ft">Morphological Reliance</div>
-                  <div class="fd">Go beyond shapes: detect silent ischemia at micro-metabolic level.</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="foundation glass-card">
-              <div class="foundation-title">Impact</div>
-              <div class="foundation-grid">
-                <div class="fi">
-                  <div class="fi-no">1</div>
-                  <div class="fi-body">
-                    <div class="fi-t">Precision Risk Stratification</div>
-                    <div class="fi-d">Adaptive zoning from micro-dynamic energy patterns.</div>
-                  </div>
-                </div>
-                <div class="fi">
-                  <div class="fi-no">2</div>
-                  <div class="fi-body">
-                    <div class="fi-t">Reduced Blind Spots</div>
-                    <div class="fi-d">Better detection for metabolically vulnerable patients.</div>
-                  </div>
-                </div>
-                <div class="fi">
-                  <div class="fi-no">3</div>
-                  <div class="fi-body">
-                    <div class="fi-t">Robust Continuous Monitoring</div>
-                    <div class="fi-d">Reliable metrics during real-life activity.</div>
-                  </div>
-                </div>
-                <div class="fi">
-                  <div class="fi-no">4</div>
-                  <div class="fi-body">
-                    <div class="fi-t">Early Intervention Window</div>
-                    <div class="fi-d">Predictive lead time before irreversible damage.</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- GOALS -->
-  <section class="section reveal" id="goals">
-    <div class="section-inner">
-      <header class="sec-head">
-        <h2 class="sec-title">Goals</h2>
-        <p class="sec-sub">Key objectives guiding the system design and deployment direction.</p>
-      </header>
-
-      <div class="goals-grid">
-        <article class="goal-card glass">
-          <h3 class="goal-title">Early Risk Prediction</h3>
-          <p class="goal-text">Detect micro-dynamic ECG changes before obvious symptoms to enable early intervention.</p>
-        </article>
-
-        <article class="goal-card glass">
-          <h3 class="goal-title">Continuous Monitoring</h3>
-          <p class="goal-text">Support long-session monitoring using wearable acquisition and automated AI analysis.</p>
-        </article>
-
-        <article class="goal-card glass">
-          <h3 class="goal-title">Clinical Reliability</h3>
-          <p class="goal-text">Maintain high sensitivity for high-risk cases with stable specificity to reduce false alarms.</p>
-        </article>
-
-        <article class="goal-card glass">
-          <h3 class="goal-title">Scalable Deployment</h3>
-          <p class="goal-text">Enable integration into mobile apps and clinician dashboards for real-world usability.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- METHODOLOGY -->
-  <section class="section reveal" id="methodology">
-    <div class="section-inner">
-      <header class="sec-head">
-        <h2 class="sec-title">Methodology</h2>
-        <p class="sec-sub">
-          A research-style pipeline: workflow, AI processing, hardware, and decision-making — organized for instant clarity.
-        </p>
-      </header>
-
-      <div class="method-grid">
-
-        <section class="mblock glass">
-          <div class="mhead">
-            <h3 class="mtitle">System Workflow</h3>
-            <span class="mpill">End-to-end</span>
-          </div>
-
-          <div class="workflow">
-            <div class="wstep"><span class="wno">1</span><span class="wlabel">Data Acquisition</span></div>
-            <div class="wline"></div>
-            <div class="wstep"><span class="wno">2</span><span class="wlabel">Signal Preparation</span></div>
-            <div class="wline"></div>
-            <div class="wstep"><span class="wno">3</span><span class="wlabel">Lead Reconstruction</span></div>
-            <div class="wline"></div>
-            <div class="wstep"><span class="wno">4</span><span class="wlabel">Risk Analysis</span></div>
-            <div class="wline"></div>
-            <div class="wstep"><span class="wno">5</span><span class="wlabel">Clinical Output</span></div>
-          </div>
-
-          <div class="wf-cards">
-            <article class="wf glass-card">
-              <h4>Acquisition</h4>
-              <ul>
-                <li>Wearable ECG acquisition (real-time).</li>
-                <li>Verified clinical + public datasets.</li>
-                <li>Normal + abnormal patterns.</li>
-              </ul>
-            </article>
-            <article class="wf glass-card">
-              <h4>Preparation</h4>
-              <ul>
-                <li>Noise removal & baseline correction.</li>
-                <li>Normalization for stable scaling.</li>
-                <li>Segmentation into fixed windows.</li>
-              </ul>
-            </article>
-            <article class="wf glass-card">
-              <h4>Reconstruction</h4>
-              <ul>
-                <li>Single-lead ECG as primary input.</li>
-                <li>AI-based virtual lead reconstruction.</li>
-                <li>Stability under motion.</li>
-              </ul>
-            </article>
-            <article class="wf glass-card">
-              <h4>Risk Analysis</h4>
-              <ul>
-                <li>Micro-dynamic feature extraction.</li>
-                <li>Model predicts risk probability.</li>
-                <li>Confidence-aware output.</li>
-              </ul>
-            </article>
-          </div>
-        </section>
-
-        <section class="mblock glass">
-          <div class="mhead">
-            <h3 class="mtitle">AI Processing Pipeline</h3>
-            <span class="mpill neon">Micro-Dynamics</span>
-          </div>
-
-          <div class="pipe2">
-            <div class="node glass-card">
-              <div class="node-k">Dataset</div>
-              <div class="node-v">PTB-XL ECG</div>
-              <div class="node-s">+ real recordings</div>
-            </div>
-
-            <div class="arrow2">➜</div>
-
-            <div class="node glass-card">
-              <div class="node-k">Preprocess</div>
-              <div class="node-v">Filter / Normalize</div>
-              <div class="node-s">motion-aware</div>
-            </div>
-
-            <div class="arrow2">➜</div>
-
-            <div class="node glass-card">
-              <div class="node-k">Features</div>
-              <div class="node-v">Micro-dynamics</div>
-              <div class="node-s">energy & variability</div>
-            </div>
-
-            <div class="arrow2">➜</div>
-
-            <div class="node glass-card">
-              <div class="node-k">Model</div>
-              <div class="node-v">Ensemble</div>
-              <div class="node-s">robust classification</div>
-            </div>
-
-            <div class="arrow2">➜</div>
-
-            <div class="node glass-card">
-              <div class="node-k">Decision</div>
-              <div class="node-v">Risk Score</div>
-              <div class="node-s">alerts + report</div>
-            </div>
-          </div>
-        </section>
-
-        <section class="mblock glass">
-          <div class="mhead">
-            <h3 class="mtitle">Hardware System</h3>
-            <span class="mpill">Wearable</span>
-          </div>
-
-          <div class="hw-grid">
-            <div class="hw glass-card">
-              <div class="hw-t">Device Design</div>
-              <div class="hw-d">Wearable vest designed for continuous monitoring.</div>
-              <div class="hw-tags">
-                <span class="tag">Comfort</span><span class="tag">Non-invasive</span><span class="tag">Long-session</span>
-              </div>
-            </div>
-            <div class="hw glass-card">
-              <div class="hw-t">Components</div>
-              <div class="hw-d">Single-lead electrodes, integrated sensors, stable coil routing.</div>
-              <div class="hw-tags">
-                <span class="tag">ECG</span><span class="tag">Sensors</span><span class="tag">Integrity</span>
-              </div>
-            </div>
-            <div class="hw glass-card">
-              <div class="hw-t">Mobile App</div>
-              <div class="hw-d">Wireless transmission + real-time ECG visualization & analysis.</div>
-              <div class="hw-tags">
-                <span class="tag">Realtime</span><span class="tag">Dashboard</span><span class="tag">Reports</span>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section class="mblock glass">
-          <div class="mhead">
-            <h3 class="mtitle">AI Inference & Decision Making</h3>
-            <span class="mpill neon">Clinical-ready</span>
-          </div>
-
-          <div class="infer-grid">
-            <div class="infer glass-card">
-              <div class="infer-k">Input</div>
-              <div class="infer-v">ECG windows</div>
-              <div class="infer-d">Standardized segments to preserve micro-dynamics.</div>
-            </div>
-            <div class="infer glass-card">
-              <div class="infer-k">Core engine</div>
-              <div class="infer-v">Feature → Model</div>
-              <div class="infer-d">Micro-dynamic extraction + robust classifier.</div>
-            </div>
-            <div class="infer glass-card">
-              <div class="infer-k">Output</div>
-              <div class="infer-v">Risk + Confidence</div>
-              <div class="infer-d">Probability score with clinical-friendly explanation.</div>
-            </div>
-          </div>
-        </section>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- RESULTS -->
-  <section class="section reveal" id="results">
-    <div class="section-inner results-wrap">
-
-      <header class="results-head">
-        <div class="results-head-text">
-          <h2 class="sec-title">Results</h2>
-          <p class="sec-sub results-sub">
-            Clinically-styled dashboard: performance, reliability, and curves — designed for instant trust.
-          </p>
-        </div>
-
-        <div class="results-badge glass">
-          <span class="rb-label">Final Model</span>
-          <span class="rb-value">V14</span>
-          <span class="rb-note">Micro-Dynamic Features</span>
-        </div>
-      </header>
-
-      <!-- KPI Strip -->
-      <div class="kpi-strip" role="list">
-        <div class="kpi-card glass" role="listitem">
-          <div class="kpi-top">
-            <span class="kpi-label">Overall Accuracy</span>
-            <span class="kpi-value"><span class="countup" data-to="95.4">0</span>%</span>
-          </div>
-          <div class="kpi-bar"><div class="kpi-fill" data-fill="95.4"></div></div>
-          <div class="kpi-note">Stable across classes.</div>
-        </div>
-
-        <div class="kpi-card glass" role="listitem">
-          <div class="kpi-top">
-            <span class="kpi-label">Precision</span>
-            <span class="kpi-value"><span class="countup" data-to="94.8">0</span>%</span>
-          </div>
-          <div class="kpi-bar"><div class="kpi-fill" data-fill="94.8"></div></div>
-          <div class="kpi-note">Low false positives.</div>
-        </div>
-
-        <div class="kpi-card glass" role="listitem">
-          <div class="kpi-top">
-            <span class="kpi-label">Recall (Sensitivity)</span>
-            <span class="kpi-value"><span class="countup" data-to="96.1">0</span>%</span>
-          </div>
-          <div class="kpi-bar"><div class="kpi-fill" data-fill="96.1"></div></div>
-          <div class="kpi-note">High-risk rarely missed.</div>
-        </div>
-
-        <div class="kpi-card glass" role="listitem">
-          <div class="kpi-top">
-            <span class="kpi-label">AUC</span>
-            <span class="kpi-value"><span class="countup" data-to="98.0">0</span>%</span>
-          </div>
-          <div class="kpi-bar"><div class="kpi-fill" data-fill="98.0"></div></div>
-          <div class="kpi-note">Strong separability.</div>
+      <div class="hero-copy">
+        <div class="eyebrow reveal-up"><span class="pulse-dot"></span> Research prototype · ECG screening intelligence</div>
+        <h1 class="hero-title" aria-label="From ECG to evidence">
+          <span class="title-line clip"><span>From ECG</span></span>
+          <span class="title-line clip italic"><span>to evidence.</span></span>
+        </h1>
+        <p class="hero-intro reveal-up">Upload a WFDB record or ECG image. Review signal-derived measurements, calibrated AI screening, quality context, and export a structured report from one connected workspace.</p>
+        <div class="hero-actions reveal-up">
+          <a class="app-spotlight magnetic" href="https://cardiac-pre-ischemia-production.up.railway.app/" target="_blank" rel="noopener">
+            <span class="app-spotlight-icon" aria-hidden="true">
+              <svg viewBox="0 0 44 44"><path d="M4 23h9l4-10 7 20 5-14 4 4h7"/></svg>
+            </span>
+            <span class="app-spotlight-copy">
+              <small>LIVE WEB APPLICATION</small>
+              <strong>Open Cardiac Pre-Ischemia</strong>
+              <em>Mobile &amp; desktop · No installation</em>
+            </span>
+            <i aria-hidden="true">↗</i>
+          </a>
+          <a class="text-link" href="#system">Explore how the system works <span>↓</span></a>
         </div>
       </div>
 
-      <div class="results-top">
-
-        <aside class="results-panel glass results-panel--tight">
-          <div class="panel-head">
-            <h3 class="panel-title">Key Outcome</h3>
-            <span class="panel-pill">Clinical Impact</span>
-          </div>
-
-          <p class="panel-text">
-            Micro-dynamic ECG analysis combined with AI enables earlier detection of silent ischemia and pre-stroke risk —
-            with high reliability under real-world conditions.
-          </p>
-
-          <div class="mini-metrics">
-            <div class="mini">
-              <span class="mini-k">Specificity</span>
-              <span class="mini-v">94.3%</span>
-            </div>
-            <div class="mini">
-              <span class="mini-k">Sensitivity</span>
-              <span class="mini-v">96.1%</span>
-            </div>
-            <div class="mini">
-              <span class="mini-k">MCC</span>
-              <span class="mini-v">0.92</span>
-            </div>
-          </div>
-        </aside>
-
-        <aside class="results-panel glass">
-          <div class="panel-head">
-            <h3 class="panel-title">Class-wise Reliability</h3>
-            <span class="panel-pill">Balanced</span>
-          </div>
-
-          <div class="table-shell">
-            <table class="data-table">
-              <thead>
-                <tr>
-                  <th>Class</th>
-                  <th>Precision</th>
-                  <th>Recall</th>
-                  <th>F1-Score</th>
-                  <th>Support</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Normal (Healthy)</td>
-                  <td>0.94</td>
-                  <td>0.93</td>
-                  <td>0.94</td>
-                  <td>2249</td>
-                </tr>
-                <tr>
-                  <td>Abnormal (Stroke Risk)</td>
-                  <td>0.95</td>
-                  <td>0.96</td>
-                  <td>0.96</td>
-                  <td>6451</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <div class="panel-foot">
-            High recall for abnormal cases ensures high-risk patients are rarely missed.
-          </div>
-        </aside>
-
+      <div class="hero-instrument reveal-scale">
+        <div class="instrument-top">
+          <span>LIVE SIGNAL STUDY</span>
+          <span class="live-state"><i></i> SYNTHETIC DEMO</span>
+        </div>
+        <div class="signal-stage">
+          <canvas id="heroEcg" aria-label="Animated synthetic ECG signal demonstration"></canvas>
+          <div class="scan-line" aria-hidden="true"></div>
+          <div class="axis-label axis-label-y">AMPLITUDE</div>
+          <div class="axis-label axis-label-x">TIME / 10 SEC</div>
+        </div>
+        <div class="instrument-readings">
+          <div><small>INPUT</small><strong>WFDB</strong><span>multi-lead</span></div>
+          <div><small>VECTOR</small><strong class="count" data-count="300">0</strong><span>features</span></div>
+          <div><small>ENGINE</small><strong>V15</strong><span>ensemble</span></div>
+        </div>
       </div>
 
-      <!-- CHARTS -->
-      <section class="results-charts">
-        <div class="fig-grid">
-
-          <article class="fig-card glass">
-            <div class="fig-head">
-              <h3 class="fig-title">Model Evolution (V12 → V14)</h3>
-              <div class="fig-pill">Accuracy / Sensitivity / Specificity</div>
-            </div>
-            <div class="chart-shell">
-              <canvas class="chart" id="chartVersions"></canvas>
-            </div>
-
-            <details class="fig-details">
-              <summary>Show table</summary>
-              <div class="table-shell">
-                <table class="data-table">
-                  <thead>
-                    <tr>
-                      <th>Version</th>
-                      <th>Accuracy (%)</th>
-                      <th>Sensitivity (%)</th>
-                      <th>Specificity (%)</th>
-                      <th>Key Feature</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>V12 (Baseline)</td>
-                      <td>86.2</td>
-                      <td>84.0</td>
-                      <td>88.1</td>
-                      <td>Basic ML</td>
-                    </tr>
-                    <tr>
-                      <td>V13 (Optimized)</td>
-                      <td>91.2</td>
-                      <td>90.4</td>
-                      <td>91.8</td>
-                      <td>Tuned Ensemble</td>
-                    </tr>
-                    <tr>
-                      <td>V14 (Final)</td>
-                      <td>95.4</td>
-                      <td>96.1</td>
-                      <td>94.3</td>
-                      <td>Micro-Dynamic Features + calibration</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </details>
-          </article>
-
-          <article class="fig-card glass">
-            <div class="fig-head">
-              <h3 class="fig-title">Confusion Matrix</h3>
-              <div class="fig-pill">Normal vs Abnormal</div>
-            </div>
-            <div class="chart-shell chart-shell--matrix">
-              <canvas class="chart" id="chartConfusion"></canvas>
-            </div>
-            <div class="fig-foot">Clear separation between normal and high-risk ECG patterns.</div>
-          </article>
-
-          <article class="fig-card glass">
-            <div class="fig-head">
-              <h3 class="fig-title">Learning Curve</h3>
-              <div class="fig-pill">Scale & stability</div>
-            </div>
-            <div class="chart-shell">
-              <canvas class="chart" id="chartLearning"></canvas>
-            </div>
-            <div class="fig-foot">Performance improves with increased training data (0 → ~87K windows).</div>
-          </article>
-
-          <article class="fig-card glass">
-            <div class="fig-head">
-              <h3 class="fig-title">ROC Curve</h3>
-              <div class="fig-pill">AUC ≈ 0.98</div>
-            </div>
-            <div class="chart-shell">
-              <canvas class="chart" id="chartROC"></canvas>
-            </div>
-            <div class="fig-foot">High AUC indicates robust generalization and clinical reliability.</div>
-          </article>
-
-        </div>
-      </section>
-
-    </div>
-  </section>
-
-  <div id="chartTip" class="chart-tip" role="status" aria-live="polite"></div>
-
-  <!-- FUTURE WORK -->
-  <section class="section reveal" id="future-work">
-    <div class="section-inner">
-      <header class="sec-head">
-        <h2 class="sec-title">Future Work</h2>
-        <p class="sec-sub">Roadmap items exactly aligned with the research direction.</p>
-      </header>
-
-      <div class="future-grid future-grid--6">
-
-        <article class="future-card glass">
-          <div class="future-head">
-            <div class="future-icon">🧪</div>
-            <h3 class="future-title">Statistical Calibration</h3>
-            <span class="future-no">01</span>
-          </div>
-          <p class="future-text">
-            Refining model calibration to reduce false positives and ensure stable performance across diverse patient profiles.
-            This aims to improve reliability under varying physiological and signal-quality conditions.
-          </p>
-        </article>
-
-        <article class="future-card glass">
-          <div class="future-head">
-            <div class="future-icon">🏥</div>
-            <h3 class="future-title">Clinical Scaling</h3>
-            <span class="future-no">02</span>
-          </div>
-          <p class="future-text">
-            Expanding from pilot studies to multi-center clinical validation using larger verified ECG datasets.
-            This strengthens clinical credibility and supports broader adoption.
-          </p>
-        </article>
-
-        <article class="future-card glass">
-          <div class="future-head">
-            <div class="future-icon">🦺</div>
-            <h3 class="future-title">Smart Vest</h3>
-            <span class="future-no">03</span>
-          </div>
-          <p class="future-text">
-            Transitioning the current system into a medical-grade smart vest with enhanced signal integrity during motion.
-            Future designs focus on comfort, safety, and continuous real-world usability.
-          </p>
-        </article>
-
-        <article class="future-card glass">
-          <div class="future-head">
-            <div class="future-icon">📡</div>
-            <h3 class="future-title">Electromagnetic Sensing</h3>
-            <span class="future-no">04</span>
-          </div>
-          <p class="future-text">
-            Exploring low-frequency electromagnetic sensing to detect subtle myocardial bio-impedance changes beyond surface ECG.
-            This may enable non-contact detection of early cardiac stress not visible in conventional signals.
-          </p>
-        </article>
-
-        <article class="future-card glass">
-          <div class="future-head">
-            <div class="future-icon">🧭</div>
-            <h3 class="future-title">Dynamic Remapping</h3>
-            <span class="future-no">05</span>
-          </div>
-          <p class="future-text">
-            Developing adaptive electrical heart mapping that updates reference patterns based on real-time energy redistribution.
-            This could reveal transient abnormalities masked by static cardiac models.
-          </p>
-        </article>
-
-        <article class="future-card glass">
-          <div class="future-head">
-            <div class="future-icon">🧩</div>
-            <h3 class="future-title">Energy Fingerprinting</h3>
-            <span class="future-no">06</span>
-          </div>
-          <p class="future-text">
-            Defining a unique cardiac energy signature for each individual to identify early pathological changes
-            despite normal ECG morphology. Enables personalized long-term monitoring beyond waveform analysis.
-          </p>
-        </article>
-
+      <div class="hero-foot reveal-up">
+        <span>01 / SIGNAL ACQUISITION</span>
+        <p>Built to make every transformation traceable, from source waveform to final screening result.</p>
+        <span>SCROLL TO DECODE ↓</span>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ================= CONTACT TEAM (same content, new look) ================= -->
-  <section class="section contact-section reveal" id="contact">
-    <div class="section-inner">
+    <section class="statement section-pad" id="system">
+      <div class="section-index reveal-up"><span>01</span> THE SYSTEM</div>
+      <div class="statement-layout">
+        <h2 class="display-title reveal-up">Not another ECG <em>viewer.</em><br>A complete analysis chain.</h2>
+        <div class="statement-side reveal-up">
+          <p>Cardiac Pre-Ischemia connects acquisition, signal conditioning, feature extraction, model inference, and report generation in one continuous workflow.</p>
+          <div class="status-row"><i></i><span>Current stage</span><strong>Research validation</strong></div>
+        </div>
+      </div>
 
-      <header class="contact-head">
-        <h2 class="contact-title">Contact Team</h2>
-        <p class="contact-sub">
-          Reach out for collaboration, questions, or project details.
-        </p>
-      </header>
+      <div class="capability-grid">
+        <article class="capability-card reveal-up">
+          <span class="card-no">A</span>
+          <svg viewBox="0 0 120 60" aria-hidden="true"><path d="M1 33h22l6-15 10 32 11-27 8 10h18l6-9 8 16 9-7h20"/></svg>
+          <h3>Signal integrity</h3>
+          <p>Filtering, baseline handling, normalization, and quality checks before inference.</p>
+          <small>PREPROCESSING LAYER</small>
+        </article>
+        <article class="capability-card reveal-up">
+          <span class="card-no">B</span>
+          <div class="feature-orbit" aria-hidden="true"><i></i><i></i><i></i><i></i><b>300</b></div>
+          <h3>Feature intelligence</h3>
+          <p>A fixed 300-dimensional vector keeps model input ordered and reproducible.</p>
+          <small>FEATURE CONTRACT</small>
+        </article>
+        <article class="capability-card reveal-up">
+          <span class="card-no">C</span>
+          <div class="stack-visual" aria-hidden="true"><i>ET</i><i>XGB</i><i>LGBM</i><b>CAL</b></div>
+          <h3>Calibrated ensemble</h3>
+          <p>Tree-based learners are stacked, then calibrated for interpretable probability output.</p>
+          <small>INFERENCE LAYER</small>
+        </article>
+        <article class="capability-card accent-card reveal-up">
+          <span class="card-no">D</span>
+          <div class="report-visual" aria-hidden="true"><i></i><i></i><i></i><b></b></div>
+          <h3>Review-ready output</h3>
+          <p>Measurements, screening result, quality context, and charts move together into a structured report.</p>
+          <small>REPORTING LAYER</small>
+        </article>
+      </div>
+    </section>
 
-      <!-- Contact form (on-page) -->
-      <div class="contact-form glass">
-        <div class="cf-head">
-          <h3 class="cf-title">Send a Message</h3>
-          <p class="cf-sub">Write your message here. It will be sent directly from the website.</p>
+    <section class="pipeline-section" id="pipeline">
+      <div class="pipeline-sticky">
+        <div class="section-index light reveal-up"><span>02</span> SIGNAL TO DECISION</div>
+        <div class="pipeline-head">
+          <h2 class="display-title light reveal-up">One recording.<br><em>Five accountable stages.</em></h2>
+          <p class="reveal-up">Select a stage to inspect what enters, what changes, and what leaves the pipeline.</p>
         </div>
 
-        <form class="cf-grid" id="contactForm"
-              action="https://formsubmit.co/kareem.2124071@stemobour.moe.edu.eg"
-              method="POST" autocomplete="on">
-          <input type="hidden" name="_cc" value="zeyad.2124067@stemobour.moe.edu.eg" />
-          <input type="hidden" name="_subject" value="Cardiac Pre-Stroke Project" />
-          <input type="hidden" name="_captcha" value="false" />
-          <input type="hidden" name="_template" value="table" />
-          <input type="text" name="_honey" class="cf-honey" tabindex="-1" autocomplete="off" />
-          <input type="hidden" name="_next" id="contactNext" value="" />
-
-          <label class="cf-field">
-            <span class="cf-label">Your Name</span>
-            <input type="text" name="name" placeholder="Full name" required />
-          </label>
-
-          <label class="cf-field">
-            <span class="cf-label">Your Email</span>
-            <input type="email" name="email" placeholder="you@example.com" required />
-          </label>
-
-          <div class="cf-field">
-            <span class="cf-label">Recipients</span>
-            <div class="cf-static">Kareem + Zeyad</div>
+        <div class="pipeline-console reveal-up">
+          <div class="pipeline-tabs" role="tablist" aria-label="ECG processing stages">
+            <button class="pipeline-tab active" type="button" role="tab" aria-selected="true" data-stage="0"><span>01</span> Acquire</button>
+            <button class="pipeline-tab" type="button" role="tab" aria-selected="false" data-stage="1"><span>02</span> Condition</button>
+            <button class="pipeline-tab" type="button" role="tab" aria-selected="false" data-stage="2"><span>03</span> Extract</button>
+            <button class="pipeline-tab" type="button" role="tab" aria-selected="false" data-stage="3"><span>04</span> Infer</button>
+            <button class="pipeline-tab" type="button" role="tab" aria-selected="false" data-stage="4"><span>05</span> Report</button>
           </div>
 
-          <label class="cf-field cf-field--full">
-            <span class="cf-label">Message</span>
-            <textarea name="message" rows="5" placeholder="Write your message..." required></textarea>
-          </label>
+          <div class="pipeline-display">
+            <div class="pipeline-visual">
+              <canvas id="pipelineCanvas" aria-label="Interactive signal-processing visualization"></canvas>
+              <div class="pipeline-reticle" aria-hidden="true"></div>
+            </div>
+            <div class="pipeline-detail" aria-live="polite">
+              <span class="detail-kicker" id="stageKicker">STAGE 01 / ACQUISITION</span>
+              <h3 id="stageTitle">Preserve the original recording.</h3>
+              <p id="stageDescription">Read a multi-lead WFDB record and retain source metadata, sampling rate, lead identity, and duration before any transformation.</p>
+              <dl>
+                <div><dt>Accepts</dt><dd id="stageInput">WFDB .hea + .dat record</dd></div>
+                <div><dt>Produces</dt><dd id="stageOutput">Lead-aligned waveform matrix</dd></div>
+                <div><dt>Guardrail</dt><dd id="stageGuard">Record and header consistency</dd></div>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-          <button class="cf-send" type="submit">Send Email</button>
+    <section class="signal-lab section-pad">
+      <div class="section-index reveal-up"><span>03</span> INTERACTIVE SIGNAL LAB</div>
+      <div class="lab-head">
+        <h2 class="display-title reveal-up">See variability.<br><em>Never fabricate it.</em></h2>
+        <p class="reveal-up">The traces below are explicitly synthetic UI demonstrations. Real results in the application are calculated from the uploaded ECG record.</p>
+      </div>
+
+      <div class="lab-shell reveal-up">
+        <div class="lab-toolbar">
+          <div class="lab-mode" role="group" aria-label="Synthetic signal type">
+            <button class="lab-button active" type="button" data-wave="stable">Stable rhythm</button>
+            <button class="lab-button" type="button" data-wave="variable">Variable rhythm</button>
+            <button class="lab-button" type="button" data-wave="noisy">Motion noise</button>
+          </div>
+          <span><i></i> SYNTHETIC / NOT PATIENT DATA</span>
+        </div>
+        <div class="lab-chart"><canvas id="labCanvas"></canvas></div>
+        <div class="lab-metrics">
+          <div><small>DEMO RATE</small><strong id="demoRate">72</strong><span>BPM</span></div>
+          <div><small>R-R VARIATION</small><strong id="demoVariation">LOW</strong><span>simulated</span></div>
+          <div><small>NOISE LOAD</small><strong id="demoNoise">02</strong><span>% display</span></div>
+          <div><small>INTERPRETATION</small><strong id="demoLabel">STABLE</strong><span>visual mode</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="model-section section-pad" id="model">
+      <div class="model-grid-bg" aria-hidden="true"></div>
+      <div class="section-index light reveal-up"><span>04</span> MODEL ARCHITECTURE</div>
+      <div class="model-layout">
+        <div class="model-copy">
+          <h2 class="display-title light reveal-up">A model card,<br>not a <em>magic trick.</em></h2>
+          <p class="reveal-up">The production package exposes its feature contract, learners, calibration step, decision threshold, and pipeline version. That makes inference inspectable and failures diagnosable.</p>
+          <a class="button button-light magnetic reveal-up" href="https://cardiac-pre-ischemia-production.up.railway.app/" target="_blank" rel="noopener">Run the platform <span>↗</span></a>
+        </div>
+
+        <div class="architecture reveal-scale">
+          <div class="architecture-core">
+            <span>CALIBRATED</span>
+            <strong>V15</strong>
+            <small>SCREENING ENGINE</small>
+          </div>
+          <div class="arch-node node-a"><small>BASE LEARNER</small><strong>LightGBM</strong><span>gradient boosting</span></div>
+          <div class="arch-node node-b"><small>BASE LEARNER</small><strong>XGBoost</strong><span>histogram trees</span></div>
+          <div class="arch-node node-c"><small>BASE LEARNER</small><strong>Extra Trees</strong><span>randomized forest</span></div>
+          <div class="arch-node node-d"><small>CALIBRATION</small><strong>Platt</strong><span>probability mapping</span></div>
+          <svg class="arch-lines" viewBox="0 0 700 590" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M350 295L130 115M350 295L570 115M350 295L130 475M350 295L570 475"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="model-specs reveal-up">
+        <div><small>FEATURE COUNT</small><strong>300</strong><span>ordered engineered inputs</span></div>
+        <div><small>DECISION THRESHOLD</small><strong>0.52</strong><span>package configuration</span></div>
+        <div><small>INPUT FORMAT</small><strong>WFDB</strong><span>multi-lead ECG records</span></div>
+        <div><small>PIPELINE</small><strong>V15</strong><span>verified inference contract</span></div>
+      </div>
+    </section>
+
+    <section class="outputs section-pad">
+      <div class="section-index reveal-up"><span>05</span> CLINICAL OUTPUT</div>
+      <div class="outputs-head">
+        <h2 class="display-title reveal-up">Less decoration.<br><em>More evidence density.</em></h2>
+        <p class="reveal-up">The interface separates measurements derived from the signal, model output, quality context, and review guidance so they cannot be confused with one another.</p>
+      </div>
+
+      <div class="output-board reveal-up">
+        <div class="board-header">
+          <div><span class="board-mark"></span><strong>ECG SCREENING / CASE VIEW</strong></div>
+          <span>AI-ASSISTED · CLINICIAN REVIEW REQUIRED</span>
+        </div>
+        <div class="board-main">
+          <div class="board-summary">
+            <small>SCREENING SUMMARY</small>
+            <strong>Case-specific output</strong>
+            <p>Risk category and confidence are generated from the current record, while signal measurements remain traceable to the analysis pipeline.</p>
+            <span class="quality-pill"><i></i> Quality context included</span>
+          </div>
+          <div class="board-wave"><canvas id="boardCanvas"></canvas></div>
+        </div>
+        <div class="board-cards">
+          <article><small>RATE & RHYTHM</small><strong>BPM / RR</strong><span>Derived from detected beats</span></article>
+          <article><small>MORPHOLOGY</small><strong>QRS / QTc</strong><span>Shown only when supported</span></article>
+          <article><small>VARIABILITY</small><strong>SDNN / RMSSD</strong><span>Window-dependent metrics</span></article>
+          <article><small>AI OUTPUT</small><strong>Score / Class</strong><span>Model and threshold exposed</span></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="platform-section section-pad">
+      <div class="platform-copy">
+        <div class="section-index reveal-up"><span>06</span> CONNECTED PLATFORM</div>
+        <h2 class="display-title reveal-up">From wearable signal<br>to <em>shared decision.</em></h2>
+        <p class="reveal-up">A responsive workspace for patients and physicians: upload records, review analysis, monitor sessions, manage history, and export shareable reports from one URL.</p>
+        <ul class="platform-list reveal-up">
+          <li><span>01</span> Role-based patient and physician workspaces</li>
+          <li><span>02</span> WFDB and ECG image intake routes</li>
+          <li><span>03</span> Persistent history and report generation</li>
+          <li><span>04</span> Mobile-ready browser access</li>
+        </ul>
+        <a class="button button-primary magnetic reveal-up" href="https://cardiac-pre-ischemia-production.up.railway.app/" target="_blank" rel="noopener">Open the live workspace <span>↗</span></a>
+      </div>
+
+      <div class="device-scene reveal-scale" aria-label="Application interface preview">
+        <div class="device-halo" aria-hidden="true"></div>
+        <div class="phone">
+          <div class="phone-top"><span>9:41</span><i></i><i></i><b></b></div>
+          <div class="phone-appbar"><span class="mini-brand">CPI</span><span>Overview</span><i>•••</i></div>
+          <div class="phone-greeting"><small>CARDIAC PRE-ISCHEMIA</small><strong>Signal workspace</strong><span>Research screening environment</span></div>
+          <div class="phone-signal"><canvas id="phoneCanvas"></canvas><span>LIVE</span></div>
+          <div class="phone-grid"><div><small>MODEL</small><b>V15</b></div><div><small>INPUT</small><b>WFDB</b></div><div><small>FEATURES</small><b>300</b></div><div><small>REPORT</small><b>PDF</b></div></div>
+          <div class="phone-action"><span>Start new analysis</span><b>→</b></div>
+          <div class="phone-nav"><i></i><i></i><i></i><i></i></div>
+        </div>
+        <div class="device-note note-one"><span>01</span><strong>Mobile first</strong><small>Responsive interaction</small></div>
+        <div class="device-note note-two"><span>02</span><strong>One workflow</strong><small>Analysis to report</small></div>
+      </div>
+    </section>
+
+    <section class="evidence-section section-pad" id="evidence">
+      <div class="section-index light reveal-up"><span>07</span> EVIDENCE & LIMITS</div>
+      <div class="evidence-intro">
+        <h2 class="display-title light reveal-up">Validation without<br><em>theater.</em></h2>
+        <p class="reveal-up">A credible medical AI project states what is verified, what is historical, and what still requires independent clinical validation.</p>
+      </div>
+
+      <div class="evidence-grid">
+        <article class="evidence-card verified reveal-up">
+          <div class="evidence-state"><i></i> VERIFIED IN PACKAGE</div>
+          <h3>Inference contract</h3>
+          <ul>
+            <li><span>Feature vector</span><strong>300 inputs</strong></li>
+            <li><span>Model family</span><strong>Stacked ensemble</strong></li>
+            <li><span>Calibration</span><strong>Platt scaling</strong></li>
+            <li><span>Threshold</span><strong>0.52</strong></li>
+          </ul>
+        </article>
+        <article class="evidence-card reported reveal-up">
+          <div class="evidence-state"><i></i> HISTORICALLY REPORTED</div>
+          <h3>V14 evaluation</h3>
+          <div class="reported-number">95.44<small>%</small></div>
+          <p>Recorded in project artifacts as a previous evaluation result. It is not presented here as independently reproduced clinical accuracy.</p>
+        </article>
+        <article class="evidence-card pending reveal-up">
+          <div class="evidence-state"><i></i> NEXT VALIDATION GATE</div>
+          <h3>Clinical generalization</h3>
+          <p>Patient-level external validation, subgroup analysis, calibration assessment, and prospective testing remain necessary before clinical use.</p>
+          <div class="gate"><span>RESEARCH</span><i></i><span>CLINICAL</span></div>
+        </article>
+      </div>
+
+      <div class="disclaimer reveal-up">
+        <strong>Important</strong>
+        <p>Cardiac Pre-Ischemia is an AI-assisted research screening system. It is not a medical diagnosis, does not predict a stroke with certainty, and must not replace evaluation by a qualified clinician.</p>
+      </div>
+    </section>
+
+    <section class="contact-section section-pad" id="contact">
+      <div class="contact-title-wrap">
+        <div class="section-index reveal-up"><span>08</span> COLLABORATE</div>
+        <h2 class="contact-display reveal-up">Build the next<br><em>signal layer</em><br>with us.</h2>
+      </div>
+
+      <div class="contact-panel reveal-up">
+        <div class="contact-copy">
+          <span>RESEARCH · ENGINEERING · VALIDATION</span>
+          <h3>Start a conversation.</h3>
+          <p>For scientific feedback, clinical validation opportunities, hardware collaboration, or a complete project demonstration.</p>
+          <div class="team-list">
+            <a href="mailto:kareem.2124071@stemobour.moe.edu.eg?subject=Cardiac%20Pre-Ischemia%20Project"><b>KI</b><span>Kareem Ismail<small>AI engineering</small></span><i>↗</i></a>
+            <a href="mailto:zeyad.2124067@stemobour.moe.edu.eg?subject=Cardiac%20Pre-Ischemia%20Project"><b>ZA</b><span>Zeyad Ayman<small>Research</small></span><i>↗</i></a>
+          </div>
+        </div>
+
+        <form class="contact-form" action="https://formsubmit.co/kareem.2124071@stemobour.moe.edu.eg" method="post">
+          <input type="hidden" name="_cc" value="zeyad.2124067@stemobour.moe.edu.eg">
+          <input type="hidden" name="_subject" value="Cardiac Pre-Ischemia Project Inquiry">
+          <input type="hidden" name="_captcha" value="false">
+          <input class="honey" type="text" name="_honey" tabindex="-1" autocomplete="off">
+          <label><span>YOUR NAME</span><input type="text" name="name" placeholder="Full name" required></label>
+          <label><span>EMAIL ADDRESS</span><input type="email" name="email" placeholder="name@example.com" required></label>
+          <label class="full"><span>MESSAGE</span><textarea name="message" rows="4" placeholder="Tell us what you would like to discuss" required></textarea></label>
+          <button class="button button-dark" type="submit">Send message <span>↗</span></button>
         </form>
-
-        <div class="cf-success" id="cfSuccess" role="status" aria-live="polite">
-          Your message was sent successfully. We will reply soon.
-        </div>
-
-        <div class="cf-note">
-          Tip: First submit will ask Kareem to confirm the FormSubmit email.
-        </div>
       </div>
+    </section>
 
-      <div class="contact-grid">
-
-        <!-- Kareem -->
-        <article class="contact-block glass">
-          <div class="cb-top">
-            <div class="cb-avatar">K</div>
-            <div class="cb-id">
-              <h3 class="cb-name">Kareem Ismail</h3>
-              <p class="cb-role">AI Engineer</p>
-            </div>
-            <span class="cb-tag">Core</span>
-          </div>
-
-          <div class="cb-actions">
-            <a class="cb-mail"
-               href="mailto:kareem.2124071@stemobour.moe.edu.eg-subject=Cardiac%20Pre-Stroke%20Project&body=Hello%20Kareem,%0D%0A%0D%0A"
-               target="_blank" rel="noopener">
-              kareem.2124071@stemobour.moe.edu.eg
-            </a>
-
-            <a class="cb-btn"
-               href="mailto:kareem.2124071@stemobour.moe.edu.eg-subject=Cardiac%20Pre-Stroke%20Project&body=Hello%20Kareem,%0D%0A%0D%0A"
-               target="_blank" rel="noopener">
-              Send Email
-            </a>
-          </div>
-        </article>
-
-        <!-- Zeyad -->
-        <article class="contact-block glass">
-          <div class="cb-top">
-            <div class="cb-avatar">Z</div>
-            <div class="cb-id">
-              <h3 class="cb-name">Zeyad Ayman</h3>
-              <p class="cb-role">Research</p>
-            </div>
-            <span class="cb-tag">Research</span>
-          </div>
-
-          <div class="cb-actions">
-            <a class="cb-mail"
-               href="mailto:zeyad.2124067@stemobour.moe.edu.eg-subject=Cardiac%20Pre-Stroke%20Project&body=Hello%20Zeyad,%0D%0A%0D%0A"
-               target="_blank" rel="noopener">
-              zeyad.2124067@stemobour.moe.edu.eg
-            </a>
-
-            <a class="cb-btn"
-               href="mailto:zeyad.2124067@stemobour.moe.edu.eg-subject=Cardiac%20Pre-Stroke%20Project&body=Hello%20Zeyad,%0D%0A%0D%0A"
-               target="_blank" rel="noopener">
-              Send Email
-            </a>
-          </div>
-        </article>
-
+    <section class="final-cta">
+      <div class="final-signal" aria-hidden="true"><canvas id="footerCanvas"></canvas></div>
+      <div class="final-cta-copy reveal-up">
+        <span>THE LIVE RESEARCH PLATFORM</span>
+        <h2>Ready to read<br><em>the signal?</em></h2>
+        <a class="button button-light magnetic" href="https://cardiac-pre-ischemia-production.up.railway.app/" target="_blank" rel="noopener">Launch Cardiac Pre-Ischemia <span>↗</span></a>
       </div>
+    </section>
+  </main>
 
-      <div class="contact-foot glass">
-        <span class="contact-hint">Tip:</span>
-        Clicking the email will open your mail app with a ready message.
-      </div>
-
-    </div>
-  </section>
-
-  <!-- Footer -->
   <footer class="site-footer">
-    <div class="footer-inner">
-      <div class="footer-left">
-        <span class="footer-title">Cardiac Pre-Stroke</span>
-        <span class="footer-dot">•</span>
-        <span class="footer-note">ECG Micro-Dynamics + AI Prediction</span>
-      </div>
-      <a class="footer-link" href="#top">Back to top</a>
+    <a class="brand footer-brand" href="#top">
+      <svg class="brand-symbol" viewBox="0 0 44 44" aria-hidden="true"><rect x="1" y="1" width="42" height="42" rx="13"/><path d="M8 23h8l3-8 6 16 4-10 3 2h5"/></svg>
+      <span>CARDIAC<br><strong>PRE-ISCHEMIA</strong></span>
+    </a>
+    <p>AI-assisted ECG research screening.</p>
+    <div><span>© <b id="year"></b> Research project</span><a href="#top">Back to top ↑</a></div>
+    <div class="creator-credit">
+      <span>DESIGNED &amp; ENGINEERED BY</span>
+      <strong>Kareem Ismail</strong>
     </div>
   </footer>
-
-  <!-- Back to Top -->
-  <button class="back-top" id="backTop" type="button" aria-label="Back to top">↑</button>
 
   <script src="script.js"></script>
 </body>

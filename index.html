@@ -229,6 +229,13 @@
         <div class="model-copy">
           <h2 class="display-title light reveal-up">A model card,<br>not a <em>magic trick.</em></h2>
           <p class="reveal-up">The production package exposes its feature contract, learners, calibration step, decision threshold, and pipeline version. That makes inference inspectable and failures diagnosable.</p>
+          <ol class="model-summary reveal-up" aria-label="How the screening model works">
+            <li><b>01</b><span><strong>Build the input</strong> The conditioned ECG is converted into the same ordered 300-feature vector used during training.</span></li>
+            <li><b>02</b><span><strong>Read the pattern</strong> LightGBM, XGBoost, and Extra Trees analyze the vector from complementary tree-based perspectives.</span></li>
+            <li><b>03</b><span><strong>Combine and calibrate</strong> The stacked model merges their predictions, then Platt scaling maps the output to a calibrated risk probability.</span></li>
+            <li><b>04</b><span><strong>Return the screening result</strong> The probability is compared with the configured 0.52 threshold and shown with signal measurements and quality context.</span></li>
+          </ol>
+          <p class="model-caution reveal-up">Research screening support only. The result is not a diagnosis and requires qualified clinical review.</p>
           <a class="button button-light magnetic reveal-up" href="https://cardiac-pre-ischemia-production.up.railway.app/" target="_blank" rel="noopener">Run the platform <span>↗</span></a>
         </div>
 

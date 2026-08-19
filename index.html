@@ -239,19 +239,34 @@
           <a class="button button-light magnetic reveal-up" href="https://cardiac-pre-ischemia-production.up.railway.app/" target="_blank" rel="noopener">Run the platform <span>↗</span></a>
         </div>
 
-        <div class="architecture reveal-scale">
-          <div class="architecture-core">
-            <span>CALIBRATED</span>
-            <strong>V15</strong>
-            <small>SCREENING ENGINE</small>
+        <div class="model-flow reveal-scale" aria-label="ECG model inference flow">
+          <div class="flow-step flow-ecg">
+            <svg viewBox="0 0 170 44" aria-hidden="true"><path d="M2 24h28l7-14 12 28 12-19 8 5h99"/></svg>
+            <span><small>RAW INPUT</small><strong>Multi-lead ECG</strong></span>
           </div>
-          <div class="arch-node node-a"><small>BASE LEARNER</small><strong>LightGBM</strong><span>gradient boosting</span></div>
-          <div class="arch-node node-b"><small>BASE LEARNER</small><strong>XGBoost</strong><span>histogram trees</span></div>
-          <div class="arch-node node-c"><small>BASE LEARNER</small><strong>Extra Trees</strong><span>randomized forest</span></div>
-          <div class="arch-node node-d"><small>CALIBRATION</small><strong>Platt</strong><span>probability mapping</span></div>
-          <svg class="arch-lines" viewBox="0 0 700 590" preserveAspectRatio="none" aria-hidden="true">
-            <path d="M350 295L130 115M350 295L570 115M350 295L130 475M350 295L570 475"/>
-          </svg>
+          <i class="flow-arrow" aria-hidden="true">↓</i>
+          <div class="flow-step"><small>01 · SIGNAL</small><strong>Preprocessing</strong><span>clean · normalize · quality check</span></div>
+          <i class="flow-arrow" aria-hidden="true">↓</i>
+          <div class="flow-step"><small>02 · MORPHOLOGY</small><strong>Feature Extraction</strong><span>rhythm · intervals · waveform statistics</span></div>
+          <i class="flow-arrow" aria-hidden="true">↓</i>
+          <div class="flow-step flow-vector"><small>03 · MODEL INPUT</small><strong>300-feature vector</strong><span>fixed names, order, shape, and finite values</span></div>
+          <i class="flow-split" aria-hidden="true">↓</i>
+          <div class="flow-models">
+            <div><small>LEARNER 01</small><strong>LightGBM</strong><span>Score 1</span></div>
+            <div><small>LEARNER 02</small><strong>XGBoost</strong><span>Score 2</span></div>
+            <div><small>LEARNER 03</small><strong>Extra Trees</strong><span>Score 3</span></div>
+          </div>
+          <div class="flow-merge" aria-hidden="true"><i></i><i></i><i></i></div>
+          <div class="flow-step flow-stack"><small>04 · COMBINE</small><strong>Stacking Ensemble</strong><span>learns how to combine the three model scores</span></div>
+          <i class="flow-arrow" aria-hidden="true">↓</i>
+          <div class="flow-step"><small>05 · CALIBRATE</small><strong>Platt Scaling</strong><span>maps model output to a calibrated probability</span></div>
+          <i class="flow-arrow" aria-hidden="true">↓</i>
+          <div class="flow-result">
+            <span><small>FINAL PROBABILITY</small><strong>0.00—1.00</strong></span>
+            <i aria-hidden="true">→</i>
+            <span><small>THRESHOLD 0.52</small><strong>Risk Score</strong></span>
+          </div>
+          <p>Screening output · not a clinical diagnosis</p>
         </div>
       </div>
 

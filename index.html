@@ -228,18 +228,20 @@
       <div class="model-layout">
         <div class="model-copy">
           <h2 class="display-title light reveal-up">A model card,<br>not a <em>magic trick.</em></h2>
-          <p class="reveal-up">The production package exposes its feature contract, learners, calibration step, decision threshold, and pipeline version. That makes inference inspectable and failures diagnosable.</p>
-          <ol class="model-summary reveal-up" aria-label="How the screening model works">
-            <li><b>01</b><span><strong>Build the input</strong> The conditioned ECG is converted into the same ordered 300-feature vector used during training.</span></li>
-            <li><b>02</b><span><strong>Read the pattern</strong> LightGBM, XGBoost, and Extra Trees analyze the vector from complementary tree-based perspectives.</span></li>
-            <li><b>03</b><span><strong>Combine and calibrate</strong> The stacked model merges their predictions, then Platt scaling maps the output to a calibrated risk probability.</span></li>
-            <li><b>04</b><span><strong>Return the screening result</strong> The probability is compared with the configured 0.52 threshold and shown with signal measurements and quality context.</span></li>
-          </ol>
-          <p class="model-caution reveal-up">Research screening support only. The result is not a diagnosis and requires qualified clinical review.</p>
-          <a class="button button-light magnetic reveal-up" href="https://cardiac-pre-ischemia-production.up.railway.app/" target="_blank" rel="noopener">Run the platform <span>↗</span></a>
+          <div class="model-copy-intro reveal-up">
+            <p>The complete path from a multi-lead ECG to a calibrated screening score. Every transformation, learner, and decision point stays visible.</p>
+            <p class="model-caution">Research screening support only. The result is not a diagnosis and requires qualified clinical review.</p>
+            <a class="button button-light magnetic" href="https://cardiac-pre-ischemia-production.up.railway.app/" target="_blank" rel="noopener">Run the platform <span>↗</span></a>
+          </div>
         </div>
 
         <div class="model-flow reveal-scale" aria-label="ECG model inference flow">
+          <div class="flow-head">
+            <span><i></i> LIVE ARCHITECTURE MAP</span>
+            <strong>KIMO ECG · V15</strong>
+            <small>CALIBRATED ENSEMBLE</small>
+          </div>
+          <div class="flow-glow" aria-hidden="true"></div>
           <div class="flow-step flow-ecg">
             <svg viewBox="0 0 170 44" aria-hidden="true"><path d="M2 24h28l7-14 12 28 12-19 8 5h99"/></svg>
             <span><small>RAW INPUT</small><strong>Multi-lead ECG</strong></span>
@@ -252,9 +254,9 @@
           <div class="flow-step flow-vector"><small>03 · MODEL INPUT</small><strong>300-feature vector</strong><span>fixed names, order, shape, and finite values</span></div>
           <i class="flow-split" aria-hidden="true">↓</i>
           <div class="flow-models">
-            <div><small>LEARNER 01</small><strong>LightGBM</strong><span>Score 1</span></div>
-            <div><small>LEARNER 02</small><strong>XGBoost</strong><span>Score 2</span></div>
-            <div><small>LEARNER 03</small><strong>Extra Trees</strong><span>Score 3</span></div>
+            <div><b>L</b><small>LEARNER 01</small><strong>LightGBM</strong><span>Score 1</span></div>
+            <div><b>X</b><small>LEARNER 02</small><strong>XGBoost</strong><span>Score 2</span></div>
+            <div><b>E</b><small>LEARNER 03</small><strong>Extra Trees</strong><span>Score 3</span></div>
           </div>
           <div class="flow-merge" aria-hidden="true"><i></i><i></i><i></i></div>
           <div class="flow-step flow-stack"><small>04 · COMBINE</small><strong>Stacking Ensemble</strong><span>learns how to combine the three model scores</span></div>

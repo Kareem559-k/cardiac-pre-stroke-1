@@ -41,6 +41,7 @@
       <a href="#system">System</a>
       <a href="#pipeline">Pipeline</a>
       <a href="#model">Model</a>
+      <a href="#wearable">Wearable</a>
       <a href="#evidence">Evidence</a>
     </nav>
 
@@ -58,8 +59,9 @@
       <a href="#system"><small>01</small> System</a>
       <a href="#pipeline"><small>02</small> Pipeline</a>
       <a href="#model"><small>03</small> Model</a>
-      <a href="#evidence"><small>04</small> Evidence</a>
-      <a href="#contact"><small>05</small> Contact</a>
+      <a href="#wearable"><small>04</small> Wearable</a>
+      <a href="#evidence"><small>05</small> Evidence</a>
+      <a href="#contact"><small>06</small> Contact</a>
     </nav>
     <a class="button button-dark" href="https://cardiac-pre-ischemia-production.up.railway.app/" target="_blank" rel="noopener">Open live application <span>↗</span></a>
   </div>
@@ -310,14 +312,109 @@
       </div>
     </section>
 
+    <section class="wearable-section section-pad" id="wearable">
+      <div class="wearable-intro">
+        <div>
+          <div class="section-index light reveal-up"><span>06</span> WEARABLE ACQUISITION</div>
+          <h2 class="display-title light reveal-up">Three electrodes.<br><em>One continuous signal.</em></h2>
+        </div>
+        <p class="reveal-up">A lightweight ECG vest concept places three skin-contact electrodes around the torso and routes their signals to a compact sensor hub for synchronized capture and transfer.</p>
+      </div>
+
+      <div class="wearable-stage reveal-scale">
+        <div class="wearable-stage-head">
+          <span><i></i> SENSOR MAP / ACTIVE</span>
+          <strong>3-LEAD WEARABLE VEST</strong>
+          <small>CONCEPT INTERFACE · FRONT VIEW</small>
+        </div>
+
+        <div class="wearable-aura" aria-hidden="true"></div>
+        <svg class="vest-illustration" viewBox="0 0 620 720" role="img" aria-labelledby="vestTitle vestDescription">
+          <title id="vestTitle">Wearable ECG vest with three electrodes and a central sensor</title>
+          <desc id="vestDescription">Front view of a wearable vest. Right-arm, left-arm, and left-leg electrode positions connect to a central sensor hub.</desc>
+          <defs>
+            <linearGradient id="vestBody" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#183f49"/>
+              <stop offset="0.5" stop-color="#0b2732"/>
+              <stop offset="1" stop-color="#061922"/>
+            </linearGradient>
+            <linearGradient id="vestPanel" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#1c4b54" stop-opacity=".9"/>
+              <stop offset="1" stop-color="#0a2530" stop-opacity=".4"/>
+            </linearGradient>
+            <filter id="electrodeGlow" x="-100%" y="-100%" width="300%" height="300%">
+              <feGaussianBlur stdDeviation="8" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+
+          <path class="vest-shadow" d="M220 62C196 91 165 104 122 116L72 244L154 281L177 224L169 624Q310 687 451 624L443 224L466 281L548 244L498 116C455 104 424 91 400 62C372 86 343 98 310 98C277 98 248 86 220 62Z"/>
+          <path class="vest-body" d="M220 62C196 91 165 104 122 116L72 244L154 281L177 224L169 624Q310 687 451 624L443 224L466 281L548 244L498 116C455 104 424 91 400 62C372 86 343 98 310 98C277 98 248 86 220 62Z"/>
+          <path class="vest-neck" d="M220 62C241 119 274 140 310 140C346 140 379 119 400 62"/>
+          <path class="vest-panel" d="M205 150Q310 181 415 150L426 602Q310 648 194 602Z"/>
+          <path class="vest-seam" d="M310 163V620M198 382H422M176 224Q310 261 444 224"/>
+          <path class="vest-edge" d="M122 116L177 224M498 116L443 224M169 624Q310 687 451 624"/>
+
+          <g class="signal-wires" aria-hidden="true">
+            <path d="M213 244C236 266 257 294 275 334"/>
+            <path d="M407 244C382 268 360 295 345 334"/>
+            <path d="M407 475C374 452 354 425 340 391"/>
+          </g>
+
+          <g class="vest-electrode electrode-ra" transform="translate(213 244)">
+            <circle class="electrode-pulse" r="42"/>
+            <circle class="electrode-ring" r="28"/>
+            <circle class="electrode-core" r="14"/>
+            <text y="4">RA</text>
+          </g>
+          <g class="vest-electrode electrode-la" transform="translate(407 244)">
+            <circle class="electrode-pulse" r="42"/>
+            <circle class="electrode-ring" r="28"/>
+            <circle class="electrode-core" r="14"/>
+            <text y="4">LA</text>
+          </g>
+          <g class="vest-electrode electrode-ll" transform="translate(407 475)">
+            <circle class="electrode-pulse" r="42"/>
+            <circle class="electrode-ring" r="28"/>
+            <circle class="electrode-core" r="14"/>
+            <text y="4">LL</text>
+          </g>
+
+          <g class="sensor-hub">
+            <rect x="251" y="327" width="118" height="78" rx="22"/>
+            <rect class="sensor-screen" x="263" y="339" width="94" height="54" rx="14"/>
+            <path d="M276 367H290L296 354L307 382L318 360L326 367H344"/>
+            <circle cx="347" cy="349" r="3"/>
+          </g>
+        </svg>
+
+        <div class="wearable-callout callout-ra"><b>01</b><span><small>RA ELECTRODE</small><strong>Upper-right contact</strong></span><i></i></div>
+        <div class="wearable-callout callout-la"><b>02</b><span><small>LA ELECTRODE</small><strong>Upper-left contact</strong></span><i></i></div>
+        <div class="wearable-callout callout-ll"><b>03</b><span><small>LL ELECTRODE</small><strong>Lower-torso contact</strong></span><i></i></div>
+        <div class="wearable-callout callout-hub"><b>H</b><span><small>SENSOR HUB</small><strong>Capture · sync · transmit</strong></span><i></i></div>
+
+        <div class="wearable-data-flow">
+          <span><i>3</i><small>SKIN CONTACTS</small></span><b>→</b>
+          <span><i>1</i><small>SENSOR HUB</small></span><b>→</b>
+          <span><i>ECG</i><small>SECURE SIGNAL STREAM</small></span>
+        </div>
+      </div>
+
+      <div class="wearable-features reveal-up">
+        <article><span>01</span><strong>Stable placement</strong><p>Integrated contact positions keep the three-lead layout simple and repeatable.</p></article>
+        <article><span>02</span><strong>Compact acquisition</strong><p>The central hub synchronizes electrode channels before downstream processing.</p></article>
+        <article><span>03</span><strong>Connected workflow</strong><p>Captured signal moves into the same analysis and reporting environment.</p></article>
+      </div>
+    </section>
+
     <section class="platform-section section-pad">
       <div class="platform-copy">
-        <div class="section-index reveal-up"><span>06</span> CONNECTED PLATFORM</div>
+        <div class="section-index reveal-up"><span>07</span> CONNECTED PLATFORM</div>
         <h2 class="display-title reveal-up">From wearable signal<br>to <em>shared decision.</em></h2>
         <p class="reveal-up">A responsive workspace for patients and physicians: upload records, review analysis, monitor sessions, manage history, and export shareable reports from one URL.</p>
         <ul class="platform-list reveal-up">
           <li><span>01</span> Role-based patient and physician workspaces</li>
-          <li><span>02</span> WFDB and ECG image intake routes</li>
+          <li><span>02</span> Wearable signal, WFDB, and ECG image intake routes</li>
           <li><span>03</span> Persistent history and report generation</li>
           <li><span>04</span> Mobile-ready browser access</li>
         </ul>
@@ -341,7 +438,7 @@
     </section>
 
     <section class="evidence-section section-pad" id="evidence">
-      <div class="section-index light reveal-up"><span>07</span> EVIDENCE & LIMITS</div>
+      <div class="section-index light reveal-up"><span>08</span> EVIDENCE & LIMITS</div>
       <div class="evidence-intro">
         <h2 class="display-title light reveal-up">Validation without<br><em>theater.</em></h2>
         <p class="reveal-up">A credible medical AI project states what is verified, what is historical, and what still requires independent clinical validation.</p>
@@ -380,7 +477,7 @@
 
     <section class="contact-section section-pad" id="contact">
       <div class="contact-title-wrap">
-        <div class="section-index reveal-up"><span>08</span> COLLABORATE</div>
+        <div class="section-index reveal-up"><span>09</span> COLLABORATE</div>
         <h2 class="contact-display reveal-up">Build the next<br><em>signal layer</em><br>with us.</h2>
       </div>
 

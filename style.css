@@ -360,6 +360,25 @@ canvas { display: block; width: 100%; height: 100%; }
 .board-cards article { display: grid; padding: 23px; border-right: 1px solid var(--line); }.board-cards article:last-child { border-right: 0; }
 .board-cards small { color: var(--muted); font: 8px var(--mono); letter-spacing: .1em; }.board-cards strong { margin: 8px 0 3px; font-size: 18px; }.board-cards span { color: var(--muted); font-size: 9px; }
 
+.wearable-section { position: relative; color: var(--paper); background-color: #061922; background-image: radial-gradient(circle at 50% 45%, rgba(22,215,192,.14), transparent 30%), linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px); background-size: auto, 52px 52px, 52px 52px; overflow: hidden; }
+.wearable-intro { display: grid; grid-template-columns: 1.2fr .8fr; gap: clamp(50px,9vw,150px); align-items: end; margin-bottom: 75px; }.wearable-intro .section-index { margin-bottom: 55px; }.wearable-intro > p { max-width: 560px; margin: 0 0 8px; color: rgba(255,255,255,.58); font-size: 14px; line-height: 1.85; }
+.wearable-stage { position: relative; width: min(100%, 1180px); min-height: 900px; margin: 0 auto; background: linear-gradient(145deg, rgba(13,49,59,.96), rgba(3,16,23,.98)); border: 1px solid rgba(125,255,235,.2); border-radius: 34px; box-shadow: 0 55px 130px rgba(0,0,0,.4), 0 0 90px rgba(22,215,192,.07); overflow: hidden; }
+.wearable-stage::before { position: absolute; inset: 0; content: ''; pointer-events: none; background: radial-gradient(circle at center, transparent 0 32%, rgba(22,215,192,.035) 32.3%, transparent 32.6% 42%, rgba(22,215,192,.025) 42.3%, transparent 42.6%); }
+.wearable-stage::after { position: absolute; z-index: 1; top: 76px; bottom: 92px; left: 50%; width: 1px; content: ''; background: linear-gradient(transparent, rgba(22,215,192,.2), transparent); }
+.wearable-stage-head { position: relative; z-index: 5; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 19px 28px; background: rgba(255,255,255,.035); border-bottom: 1px solid rgba(255,255,255,.1); }.wearable-stage-head span, .wearable-stage-head small { color: rgba(255,255,255,.42); font: 7px var(--mono); letter-spacing: .14em; }.wearable-stage-head span { display: flex; align-items: center; gap: 8px; }.wearable-stage-head span i { width: 6px; height: 6px; background: var(--acid); border-radius: 50%; box-shadow: 0 0 13px var(--acid); animation: pulse 1.5s ease-in-out infinite; }.wearable-stage-head strong { color: #fff; font: 13px var(--mono); letter-spacing: .06em; }.wearable-stage-head small { text-align: right; }
+.wearable-aura { position: absolute; z-index: 0; top: 120px; left: 50%; width: 590px; height: 590px; background: radial-gradient(circle, rgba(22,215,192,.2), rgba(22,215,192,.045) 42%, transparent 70%); border-radius: 50%; filter: blur(10px); transform: translateX(-50%); }
+.vest-illustration { position: relative; z-index: 2; display: block; width: min(620px,64vw); height: 720px; margin: 65px auto 105px; overflow: visible; filter: drop-shadow(0 32px 36px rgba(0,0,0,.38)); }
+.vest-shadow { fill: rgba(0,0,0,.38); transform: translateY(18px); filter: blur(15px); }.vest-body { fill: url(#vestBody); stroke: rgba(139,255,238,.35); stroke-width: 2; }.vest-neck, .vest-seam, .vest-edge { fill: none; stroke: rgba(255,255,255,.12); stroke-width: 2; }.vest-panel { fill: url(#vestPanel); stroke: rgba(22,215,192,.12); stroke-width: 1; stroke-dasharray: 5 8; }
+.signal-wires path { fill: none; stroke: var(--acid); stroke-width: 2.4; stroke-linecap: round; stroke-dasharray: 7 9; filter: url(#electrodeGlow); animation: wireSignal 1.3s linear infinite; }.signal-wires path:nth-child(2) { animation-delay: -.35s; }.signal-wires path:nth-child(3) { animation-delay: -.7s; }
+.electrode-pulse { fill: rgba(22,215,192,.04); stroke: rgba(22,215,192,.45); stroke-width: 2; transform-box: fill-box; transform-origin: center; animation: electrodePulse 2s ease-out infinite; }.electrode-ring { fill: #0a2832; stroke: var(--acid); stroke-width: 3; filter: url(#electrodeGlow); }.electrode-core { fill: var(--acid); }.vest-electrode text { fill: #052029; font: 700 9px var(--mono); text-anchor: middle; }
+.sensor-hub > rect:first-child { fill: #071419; stroke: rgba(255,255,255,.35); stroke-width: 2; filter: drop-shadow(0 10px 14px rgba(0,0,0,.5)); }.sensor-screen { fill: #123b43; stroke: rgba(22,215,192,.55); }.sensor-hub path { fill: none; stroke: var(--acid); stroke-width: 2.5; filter: url(#electrodeGlow); }.sensor-hub circle { fill: var(--acid); filter: url(#electrodeGlow); animation: pulse 1.5s ease-in-out infinite; }
+.wearable-callout { position: absolute; z-index: 4; display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 13px; min-width: 210px; padding: 14px 16px; background: rgba(6,25,34,.78); border: 1px solid rgba(255,255,255,.16); border-radius: 14px; box-shadow: 0 18px 45px rgba(0,0,0,.24); backdrop-filter: blur(14px); }.wearable-callout > b { display: grid; place-items: center; width: 34px; height: 34px; color: #06212a; background: var(--acid); border-radius: 9px; font: 10px var(--mono); }.wearable-callout span { display: grid; gap: 4px; }.wearable-callout small { color: var(--acid); font: 7px var(--mono); letter-spacing: .11em; }.wearable-callout strong { font-size: 10px; }.wearable-callout > i { position: absolute; top: 50%; width: 74px; height: 1px; background: linear-gradient(90deg, rgba(22,215,192,.7), transparent); }.wearable-callout > i::after { position: absolute; top: -3px; width: 7px; height: 7px; content: ''; background: var(--acid); border-radius: 50%; box-shadow: 0 0 10px var(--acid); }
+.callout-ra { top: 31%; left: 4%; }.callout-hub { bottom: 29%; left: 4%; }.callout-ra > i, .callout-hub > i { left: 100%; }.callout-ra > i::after, .callout-hub > i::after { right: 0; }.callout-la { top: 31%; right: 4%; }.callout-ll { right: 4%; bottom: 29%; }.callout-la > i, .callout-ll > i { right: 100%; transform: rotate(180deg); }.callout-la > i::after, .callout-ll > i::after { right: 0; }
+.wearable-data-flow { position: absolute; z-index: 5; right: 24px; bottom: 24px; left: 24px; display: grid; grid-template-columns: 1fr auto 1fr auto 1.35fr; align-items: center; gap: 18px; padding: 17px 22px; background: rgba(255,255,255,.045); border: 1px solid rgba(255,255,255,.1); border-radius: 17px; backdrop-filter: blur(12px); }.wearable-data-flow span { display: flex; align-items: center; gap: 11px; }.wearable-data-flow i { display: grid; place-items: center; min-width: 34px; height: 34px; padding: 0 8px; color: #06212a; background: var(--acid); border-radius: 9px; font: 9px var(--mono); font-style: normal; }.wearable-data-flow small { color: rgba(255,255,255,.6); font: 7px var(--mono); letter-spacing: .1em; }.wearable-data-flow > b { color: rgba(22,215,192,.6); font: 17px var(--mono); }
+.wearable-features { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; margin-top: 34px; overflow: hidden; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.12); border-radius: 20px; }.wearable-features article { min-height: 170px; padding: 28px; background: #08212a; }.wearable-features span { color: var(--acid); font: 9px var(--mono); }.wearable-features strong { display: block; margin: 18px 0 8px; font-size: 15px; }.wearable-features p { margin: 0; color: rgba(255,255,255,.46); font-size: 10px; line-height: 1.7; }
+@keyframes wireSignal { to { stroke-dashoffset: -32; } }
+@keyframes electrodePulse { 0% { opacity: .9; transform: scale(.65); } 75%,100% { opacity: 0; transform: scale(1.2); } }
+
 .platform-section { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(60px, 9vw, 150px); align-items: center; background: #e1eeec; overflow: hidden; }
 .platform-copy .section-index { margin-bottom: 60px; }
 .platform-copy > p { max-width: 640px; margin: 32px 0; color: var(--muted); font-size: 14px; line-height: 1.8; }
@@ -419,6 +438,8 @@ canvas { display: block; width: 100%; height: 100%; }
   .hero-instrument { max-width: 850px; width: 100%; margin: 0 auto; transform: none; }
   .hero-title { font-size: clamp(78px, 14vw, 150px); }
   .statement-layout, .pipeline-head, .lab-head, .outputs-head, .evidence-intro { grid-template-columns: 1fr; }
+  .wearable-intro { grid-template-columns: 1fr; gap: 28px; }
+  .wearable-intro > p { max-width: 720px; }
   .capability-grid { grid-template-columns: 1fr 1fr; }
   .model-layout { grid-template-columns: 1fr; }
   .architecture { max-width: 800px; width: 100%; margin: 0 auto; }
@@ -478,6 +499,11 @@ canvas { display: block; width: 100%; height: 100%; }
   .board-main { grid-template-columns: 1fr; }
   .board-wave { min-height: 300px; }
   .board-header { gap: 15px; }.board-header > span { text-align: right; }
+  .wearable-stage { min-height: 790px; border-radius: 24px; }
+  .wearable-stage-head { grid-template-columns: 1fr auto; }.wearable-stage-head small { display: none; }.wearable-stage-head strong { font-size: 10px; }
+  .vest-illustration { width: min(620px,92vw); height: auto; margin-top: 48px; margin-bottom: 125px; }
+  .wearable-callout { display: none; }
+  .wearable-features { grid-template-columns: 1fr; }.wearable-features article { min-height: auto; }
   .platform-section { grid-template-columns: 1fr; }
   .device-scene { min-height: 760px; }
   .device-note { display: none; }
@@ -499,6 +525,12 @@ canvas { display: block; width: 100%; height: 100%; }
   .instrument-top span:first-child { display: none; }
   .instrument-top { justify-content: flex-end; }
   .pipeline-detail h3 { font-size: 38px; }
+  .wearable-intro { margin-bottom: 48px; }.wearable-intro .section-index { margin-bottom: 42px; }
+  .wearable-stage { min-height: 655px; border-radius: 20px; }
+  .wearable-stage-head { padding: 14px 15px; }.wearable-stage-head span { font-size: 6px; }.wearable-stage-head strong { font-size: 8px; }
+  .vest-illustration { width: 100%; margin-top: 34px; margin-bottom: 135px; }
+  .wearable-aura { top: 120px; width: 105vw; height: 105vw; }
+  .wearable-data-flow { right: 10px; bottom: 10px; left: 10px; grid-template-columns: repeat(3,1fr); gap: 5px; padding: 10px 7px; }.wearable-data-flow > b { display: none; }.wearable-data-flow span { align-items: center; flex-direction: column; gap: 6px; text-align: center; }.wearable-data-flow i { min-width: 30px; height: 30px; }.wearable-data-flow small { font-size: 5.5px; line-height: 1.35; }
   .model-layout { gap: 38px; margin-top: 55px; }
   .model-flow { padding-right: 16px; padding-bottom: 28px; padding-left: 16px; border-radius: 20px; }
   .flow-head { grid-template-columns: 1fr auto; width: calc(100% + 32px); padding: 14px 16px; }.flow-head strong { font-size: 10px; }.flow-head small { display: none; }
